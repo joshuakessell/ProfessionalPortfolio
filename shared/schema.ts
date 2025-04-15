@@ -58,7 +58,7 @@ export const projects = pgTable("projects", {
   aiProject: boolean("ai_project").notNull().default(false),
 });
 
-// Comments Schema
+// Comments Schema with forward declarations to avoid circular references
 export const comments = pgTable("comments", {
   id: serial("id").primaryKey(),
   content: text("content").notNull(),
@@ -67,7 +67,7 @@ export const comments = pgTable("comments", {
   authorId: integer("author_id").references(() => users.id).notNull(),
   blogPostId: integer("blog_post_id").references(() => blogPosts.id),
   projectId: integer("project_id").references(() => projects.id),
-  parentId: integer("parent_id").references(() => comments.id),
+  parentId: integer("parent_id"), // Will be set up properly in relations
   status: text("status").notNull().default("published"),
 });
 
