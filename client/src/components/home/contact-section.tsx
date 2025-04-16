@@ -6,7 +6,6 @@ import {
   MapPin, 
   Github, 
   Linkedin, 
-  Twitter, 
   Info 
 } from "lucide-react";
 import { z } from "zod";
@@ -137,10 +136,10 @@ export function ContactSection() {
                   <div>
                     <div className="text-sm text-gray-500 dark:text-gray-400">Phone</div>
                     <a 
-                      href="tel:+11234567890" 
+                      href="tel:+12148641386" 
                       className="text-gray-900 dark:text-gray-100 font-medium hover:text-primary dark:hover:text-blue-400 transition-colors"
                     >
-                      +1 (123) 456-7890
+                      +1 (214) 864-1386
                     </a>
                   </div>
                 </div>
@@ -151,7 +150,7 @@ export function ContactSection() {
                   </div>
                   <div>
                     <div className="text-sm text-gray-500 dark:text-gray-400">Location</div>
-                    <div className="text-gray-900 dark:text-gray-100 font-medium">San Francisco, CA</div>
+                    <div className="text-gray-900 dark:text-gray-100 font-medium">Dallas, Texas</div>
                   </div>
                 </div>
               </div>
@@ -175,16 +174,6 @@ export function ContactSection() {
                   aria-label="LinkedIn Profile"
                 >
                   <Linkedin className="h-5 w-5 text-gray-700 dark:text-gray-300" />
-                </a>
-                
-                <a 
-                  href="https://twitter.com/joshuakessell" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full flex items-center justify-center transition-colors"
-                  aria-label="Twitter Profile"
-                >
-                  <Twitter className="h-5 w-5 text-gray-700 dark:text-gray-300" />
                 </a>
               </div>
             </div>

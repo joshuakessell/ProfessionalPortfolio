@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { Github, Linkedin, Twitter, Dribbble } from "lucide-react";
+import { Github, Linkedin, Dribbble } from "lucide-react";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -37,7 +37,6 @@ export function Footer() {
               <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
                 <li><a href="https://github.com/joshuakessell" className="hover:text-primary dark:hover:text-blue-400 transition-colors">GitHub</a></li>
                 <li><a href="https://linkedin.com/in/joshuakessell" className="hover:text-primary dark:hover:text-blue-400 transition-colors">LinkedIn</a></li>
-                <li><a href="https://twitter.com/joshuakessell" className="hover:text-primary dark:hover:text-blue-400 transition-colors">Twitter</a></li>
               </ul>
             </div>
           </div>
