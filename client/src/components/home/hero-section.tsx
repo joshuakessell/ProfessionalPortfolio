@@ -4,6 +4,7 @@ import { useParallax } from "@/hooks/use-parallax";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 import { ParallaxBackground } from "@/components/ui/parallax-background";
 import { AnimatedSection } from "@/components/ui/animated-section";
+import { ParticlesBackground } from "@/components/ui/particles-background";
 import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -23,6 +24,17 @@ export function HeroSection() {
       id="about" 
       className="relative min-h-screen flex items-center overflow-hidden"
     >
+      {/* Particle background animation */}
+      <ParticlesBackground 
+        quantity={40}
+        minSize={1}
+        maxSize={3}
+        speed={0.3}
+        colors={['#3b82f6', '#8b5cf6', '#6366f1']}
+        connectParticles={true}
+        className="opacity-30 dark:opacity-20"
+      />
+      
       {/* Parallax background decorative elements */}
       <div className="absolute inset-0 -z-10">
         <div 
