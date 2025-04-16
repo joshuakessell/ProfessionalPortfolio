@@ -41,11 +41,13 @@ export function ResumeSection() {
             My professional journey as a developer, showcasing experience, skills, and education.
           </p>
           <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm" className="flex items-center gap-2">
-              <Download className="h-4 w-4" />
-              Download Resume
-            </Button>
-            <span className="text-sm text-gray-500 dark:text-gray-400">Updated 2 weeks ago</span>
+            <a href="/joshua-kessell-resume.pdf" download target="_blank" rel="noopener noreferrer">
+              <Button variant="outline" size="sm" className="flex items-center gap-2">
+                <Download className="h-4 w-4" />
+                Download Resume
+              </Button>
+            </a>
+            <span className="text-sm text-gray-500 dark:text-gray-400">Updated April 2024</span>
           </div>
         </motion.div>
         
@@ -113,7 +115,7 @@ export function ResumeSection() {
                             <span className="font-medium text-sm">{skill.name}</span>
                             <span className="text-xs text-gray-500 dark:text-gray-400">{skill.percentage}%</span>
                           </div>
-                          <Progress value={skill.percentage} className="h-2" indicatorClassName={skill.name.includes("AI") ? "bg-violet-500" : undefined} />
+                          <Progress value={skill.percentage} className={`h-2 ${skill.name.includes("AI") ? "progress-violet" : ""}`} />
                         </div>
                       ))}
                     </div>
