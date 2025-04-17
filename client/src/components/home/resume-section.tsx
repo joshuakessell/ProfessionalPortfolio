@@ -24,6 +24,7 @@ import { AnimatedSection } from "@/components/ui/animated-section";
 import { useParallax } from "@/hooks/use-parallax";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 import { cn } from "@/lib/utils";
+import { SpatialScrollContainer, SpatialScrollSection } from "@/components/ui/spatial-scroll";
 
 export function ResumeSection() {
   const [activeTab, setActiveTab] = useState("experience");
@@ -50,27 +51,28 @@ export function ResumeSection() {
         />
       </div>
       
-      <div className="container mx-auto px-4">
-        <AnimatedHeading
-          title="Professional Experience"
-          subtitle="My professional journey as a developer, showcasing experience, skills, and education."
-          centered={true}
-          className="mb-8"
-        />
+      <SpatialScrollContainer className="container mx-auto px-4">
+        <SpatialScrollSection depth={0.5} className="mb-8">
+          <AnimatedHeading
+            title="Professional Experience"
+            subtitle="My professional journey as a developer, showcasing experience, skills, and education."
+            centered={true}
+          />
+        </SpatialScrollSection>
         
-        <AnimatedSection animation="fade-in" delay={1} className="flex items-center justify-center gap-2 mb-12">
+        <SpatialScrollSection depth={0.3} className="flex items-center justify-center gap-2 mb-12">
           <a href="/joshua-kessell-resume.pdf" download target="_blank" rel="noopener noreferrer">
             <Button 
               variant="outline" 
               size="sm" 
-              className="flex items-center gap-2 shadow-md hover:shadow-lg transition-shadow"
+              className="flex items-center gap-2 shadow-md hover:shadow-lg transition-shadow holo-card"
             >
               <Download className="h-4 w-4" />
               Download Resume
             </Button>
           </a>
           <span className="text-sm text-gray-500 dark:text-gray-400">Updated April 2024</span>
-        </AnimatedSection>
+        </SpatialScrollSection>
         
         <AnimatedSection animation="fade-in" delay={2}>
           <Tabs defaultValue="experience" onValueChange={setActiveTab} className="w-full">
@@ -95,55 +97,53 @@ export function ResumeSection() {
             <TabsContent value="experience" className="mt-0">
               <div className="grid md:grid-cols-2 gap-6 lg:gap-10">
                 {experiences.map((exp, index) => (
-                  <AnimatedSection 
+                  <SpatialScrollSection 
                     key={exp.id} 
-                    animation="fade-in" 
-                    delay={(index % 3 + 1) as 1 | 2 | 3}
+                    depth={0.6}
+                    scale={0.95}
                   >
-                    <Card className="hover:shadow-md transition-shadow duration-300 card-3d h-full">
-                      <CardContent className="p-6">
-                        <div className="flex justify-between mb-4">
-                          <div>
-                            <h3 className="text-lg font-semibold mb-1">{exp.title}</h3>
-                            <div className="text-primary dark:text-blue-400 font-medium">{exp.company}</div>
-                          </div>
-                          <div className="text-right">
-                            <div className="text-sm text-gray-600 dark:text-gray-400">{exp.period}</div>
-                            {exp.current && (
-                              <Badge variant="secondary" className="mt-1 bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400 animate-pulse-slow">
-                                Current
-                              </Badge>
-                            )}
-                          </div>
+                    <div className="holo-card h-full bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm p-6">
+                      <div className="flex justify-between mb-4">
+                        <div>
+                          <h3 className="text-lg font-semibold mb-1">{exp.title}</h3>
+                          <div className="text-primary dark:text-blue-400 font-medium">{exp.company}</div>
                         </div>
-                        <ul className="space-y-2 text-gray-600 dark:text-gray-300">
-                          {exp.responsibilities.map((item, idx) => (
-                            <li 
-                              key={idx} 
-                              className="flex items-start gap-2"
-                              style={{ 
-                                animationDelay: `${idx * 100}ms`,
-                                opacity: 0,
-                                animation: isSectionInView ? 'fadeIn 0.5s ease-out forwards' : 'none'
-                              }}
-                            >
-                              <CheckCircle2 className="h-5 w-5 text-primary dark:text-blue-400 shrink-0 mt-0.5" />
-                              <span>{item}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </CardContent>
-                    </Card>
-                  </AnimatedSection>
+                        <div className="text-right">
+                          <div className="text-sm text-gray-600 dark:text-gray-400">{exp.period}</div>
+                          {exp.current && (
+                            <Badge variant="secondary" className="mt-1 bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400 animate-pulse-slow">
+                              Current
+                            </Badge>
+                          )}
+                        </div>
+                      </div>
+                      <ul className="space-y-2 text-gray-600 dark:text-gray-300">
+                        {exp.responsibilities.map((item, idx) => (
+                          <li 
+                            key={idx} 
+                            className="flex items-start gap-2"
+                            style={{ 
+                              animationDelay: `${idx * 100}ms`,
+                              opacity: 0,
+                              animation: isSectionInView ? 'fadeIn 0.5s ease-out forwards' : 'none'
+                            }}
+                          >
+                            <CheckCircle2 className="h-5 w-5 text-primary dark:text-blue-400 shrink-0 mt-0.5" />
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </SpatialScrollSection>
                 ))}
               </div>
             </TabsContent>
             
             <TabsContent value="skills" className="mt-0">
               <div className="grid md:grid-cols-2 gap-8">
-                <AnimatedSection animation="slide-left">
-                  <Card className="card-3d">
-                    <CardContent className="p-6">
+                <SpatialScrollSection depth={0.7} scale={0.9}>
+                  <div className="holo-card h-full bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm">
+                    <div className="p-6">
                       <h3 className="text-lg font-semibold mb-4">Technical Skills</h3>
                       
                       <div className="space-y-4">
@@ -167,13 +167,13 @@ export function ResumeSection() {
                           </div>
                         ))}
                       </div>
-                    </CardContent>
-                  </Card>
-                </AnimatedSection>
+                    </div>
+                  </div>
+                </SpatialScrollSection>
                 
-                <AnimatedSection animation="slide-right">
-                  <Card className="card-3d">
-                    <CardContent className="p-6">
+                <SpatialScrollSection depth={0.7} scale={0.9}>
+                  <div className="holo-card h-full bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm">
+                    <div className="p-6">
                       <h3 className="text-lg font-semibold mb-4">Tools & Platforms</h3>
                       
                       <div className="grid grid-cols-2 gap-4">
@@ -205,22 +205,22 @@ export function ResumeSection() {
                           );
                         })}
                       </div>
-                    </CardContent>
-                  </Card>
-                </AnimatedSection>
+                    </div>
+                  </div>
+                </SpatialScrollSection>
               </div>
             </TabsContent>
             
             <TabsContent value="education" className="mt-0">
               <div className="space-y-8">
                 {education.map((edu, index) => (
-                  <AnimatedSection 
-                    key={edu.id} 
-                    animation="fade-in" 
-                    delay={(index % 3 + 1) as 1 | 2 | 3}
+                  <SpatialScrollSection 
+                    key={edu.id}
+                    depth={0.5 + (index * 0.2)}
+                    scale={0.9}
                   >
-                    <Card className="flex flex-col md:flex-row md:items-center hover:shadow-md transition-shadow duration-300 card-3d">
-                      <CardContent className="p-6 flex flex-col md:flex-row w-full">
+                    <div className="holo-card flex flex-col md:flex-row md:items-center bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm">
+                      <div className="p-6 flex flex-col md:flex-row w-full">
                         <div className="md:w-1/4 mb-4 md:mb-0">
                           <div className="w-16 h-16 bg-blue-50 dark:bg-blue-900/20 rounded-full flex items-center justify-center mb-2 animate-float">
                             <GraduationCap className="h-8 w-8 text-primary" />
@@ -235,15 +235,15 @@ export function ResumeSection() {
                             {edu.description}
                           </p>
                         </div>
-                      </CardContent>
-                    </Card>
-                  </AnimatedSection>
+                      </div>
+                    </div>
+                  </SpatialScrollSection>
                 ))}
               </div>
             </TabsContent>
           </Tabs>
         </AnimatedSection>
-      </div>
+      </SpatialScrollContainer>
     </section>
   );
 }

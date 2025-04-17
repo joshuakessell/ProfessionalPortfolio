@@ -105,47 +105,14 @@ export const education: Education[] = [
 export const featuredProjects: Project[] = [
   {
     id: 1,
-    title: "Airline Luggage Tracking App",
-    description: "Android application for a major airline that allows staff to track passenger luggage in real-time throughout the journey, reducing lost luggage incidents by 35%.",
-    tags: ["Android", "Java", "Spring Boot", "RESTful API"],
-    imageUrl: "https://images.unsplash.com/photo-1530521954074-e64f6810b32d?w=800&h=400&fit=crop",
-    demoUrl: "https://luggage-tracker-demo.joshuakessell.com",
-    githubUrl: "https://github.com/joshuakessell/airline-luggage-tracker",
+    title: "Code Genie VSCode Extension",
+    description: "VS Code extension that generates code using AI, allowing you to insert intelligent code completions directly in your editor with a right-click.",
+    tags: ["TypeScript", "VS Code API", "OpenAI", "Node.js"],
+    imageUrl: "https://images.unsplash.com/photo-1550439062-609e1531270e?w=800&h=400&fit=crop",
+    demoUrl: "https://marketplace.visualstudio.com/items?itemName=joshuakessell.code-genie",
+    githubUrl: "https://github.com/joshuakessell/CodeGenieExtension",
     featured: true,
-    aiProject: false
-  },
-  {
-    id: 2,
-    title: "Healthcare Training Platform",
-    description: "Interactive web application for healthcare professionals that gamifies training modules and improves user engagement. Replaced a legacy .NET system with a modern Angular solution.",
-    tags: ["Angular", "TypeScript", "MongoDB", "Express"],
-    imageUrl: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&h=400&fit=crop",
-    demoUrl: "https://health-training-demo.joshuakessell.com",
-    githubUrl: "https://github.com/joshuakessell/healthcare-training-platform",
-    featured: true,
-    aiProject: false
-  },
-  {
-    id: 3,
-    title: "Automotive Fulfillment API",
-    description: "Backend service built with Spring Boot and Kafka for an automobile manufacturer that handles product fulfillment requests, inventory management, and dealer communications.",
-    tags: ["Java", "Spring Boot", "Kafka", "RESTful API"],
-    imageUrl: "https://images.unsplash.com/photo-1553484771-371a605b060b?w=800&h=400&fit=crop",
-    demoUrl: "https://auto-api-demo.joshuakessell.com",
-    githubUrl: "https://github.com/joshuakessell/automotive-fulfillment-api",
-    featured: true,
-    aiProject: false
-  },
-  {
-    id: 4,
-    title: "Server Migration Automation Tool",
-    description: "DevOps automation solution developed for a U.S. defense contractor that uses Ansible scripts to automate server migration and deploy CI/CD pipelines to AWS Government Cloud.",
-    tags: ["Ansible", "Python", "AWS", "CI/CD"],
-    imageUrl: "https://images.unsplash.com/photo-1548092372-0d1bd40894a3?w=800&h=400&fit=crop",
-    demoUrl: "https://migration-tool-demo.joshuakessell.com",
-    githubUrl: "https://github.com/joshuakessell/server-migration-tools",
-    featured: true,
-    aiProject: false
+    aiProject: true
   }
 ];
 
