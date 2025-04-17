@@ -9,33 +9,22 @@ export function ScrollIndicator({ sectionIds }: ScrollIndicatorProps) {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Find which section is currently in view
-      const sections = sectionIds.map(id => document.getElementById(id));
-      const viewportHeight = window.innerHeight;
-      const scrollPosition = window.scrollY;
+      const sectionElements = sectionIds.map(id => document.getElementById(id));
+      const scrollPosition = window.scrollY + window.innerHeight / 2;
       
-      // Find the section that is currently in the viewport
-      for (let i = 0; i < sections.length; i++) {
-        const section = sections[i];
-        if (!section) continue;
+      sectionElements.forEach((section, index) => {
+        if (!section) return;
         
         const sectionTop = section.offsetTop;
-        const sectionHeight = section.offsetHeight;
+        const sectionBottom = sectionTop + section.offsetHeight;
         
-        // If the section is in the viewport
-        if (
-          scrollPosition >= sectionTop - viewportHeight / 3 &&
-          scrollPosition < sectionTop + sectionHeight - viewportHeight / 3
-        ) {
-          setActiveSection(i);
-          break;
+        if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+          setActiveSection(index);
         }
-      }
+      });
     };
-
-    // Add scroll event listener
-    window.addEventListener('scroll', handleScroll);
     
+    window.addEventListener('scroll', handleScroll);
     // Initial check
     handleScroll();
     
@@ -44,24 +33,31 @@ export function ScrollIndicator({ sectionIds }: ScrollIndicatorProps) {
     };
   }, [sectionIds]);
 
-  const scrollToSection = (index: number) => {
-    const section = document.getElementById(sectionIds[index]);
+  const handleClick = (index: number) => {
+    const sectionId = sectionIds[index];
+    const section = document.getElementById(sectionId);
+    
     if (section) {
       section.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
   return (
-    <div className="scroll-indicator">
-      {sectionIds.map((_, index) => (
-        <div
-          key={index}
-          className={`indicator-dot ${index === activeSection ? 'active' : ''}`}
-          onClick={() => scrollToSection(index)}
-          role="button"
-          aria-label={`Scroll to section ${index + 1}`}
-        />
-      ))}
+    <div className="fixed right-6 top-1/2 transform -translate-y-1/2 z-50 hidden md:block">
+      <div className="flex flex-col items-center space-y-4">
+        {sectionIds.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => handleClick(index)}
+            className={`w-3 h-3 rounded-full transition-all duration-300 ${
+              activeSection === index 
+                ? 'bg-primary scale-125' 
+                : 'bg-gray-300 dark:bg-gray-700 hover:bg-gray-400 dark:hover:bg-gray-600'
+            }`}
+            aria-label={`Scroll to section ${index + 1}`}
+          />
+        ))}
+      </div>
     </div>
   );
 }

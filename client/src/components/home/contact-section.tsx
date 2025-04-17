@@ -1,5 +1,4 @@
-import { useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
+import { useEffect, useState } from "react";
 import { 
   Mail, 
   Phone, 
@@ -19,7 +18,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -46,10 +44,13 @@ const formSchema = z.object({
 });
 
 export function ContactSection() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [isVisible, setIsVisible] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+  
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
   
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -90,16 +91,14 @@ export function ContactSection() {
   }
   
   return (
-    <section id="contact" className="py-16 md:py-24 bg-gray-50 dark:bg-gray-900/30" ref={ref}>
-      <div className="container mx-auto px-4">
+    <div className="w-full h-full overflow-y-auto">
+      <div className="max-w-6xl mx-auto px-4 py-8">
         <div className="flex flex-col md:flex-row gap-10 lg:gap-16">
-          <motion.div 
-            className="w-full md:w-1/2"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.6 }}
+          <div 
+            className={`w-full md:w-1/2 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}
+            style={{ animationDelay: '0.1s' }}
           >
-            <div className="sticky top-24">
+            <div>
               <div className="flex items-center gap-2 mb-4">
                 <div className="h-1 w-8 bg-primary rounded-full"></div>
                 <span className="text-sm font-medium text-primary">Get in Touch</span>
@@ -177,13 +176,11 @@ export function ContactSection() {
                 </a>
               </div>
             </div>
-          </motion.div>
+          </div>
           
-          <motion.div 
-            className="w-full md:w-1/2"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+          <div 
+            className={`w-full md:w-1/2 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}
+            style={{ animationDelay: '0.3s' }}
           >
             <div className="bg-white dark:bg-gray-800 rounded-xl p-6 md:p-8 shadow-sm">
               <h3 className="text-2xl font-semibold mb-6">Send a Message</h3>
@@ -300,9 +297,9 @@ export function ContactSection() {
                 </form>
               </Form>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
