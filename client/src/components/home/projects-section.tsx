@@ -162,7 +162,7 @@ export function ProjectsSection() {
         <div className="mt-10 text-center">
           <Button 
             variant="link" 
-            className="text-primary hover:text-primary/80 dark:text-blue-400 dark:hover:text-blue-300 animate-pulse-slow" 
+            className="text-primary hover:text-primary/80 dark:text-blue-400 dark:hover:text-blue-300 holographic-hover px-4 py-2 rounded-md" 
             asChild
           >
             <a 

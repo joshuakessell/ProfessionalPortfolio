@@ -9,6 +9,9 @@ import { useEffect, useState } from "react";
 
 export default function Home() {
   const [isInitialized, setIsInitialized] = useState(false);
+  
+  // Sections for the scroll indicator
+  const sectionIds = ['hero', 'resume', 'projects', 'contact'];
 
   // Initialize page and ensure correct navigation
   useEffect(() => {
@@ -20,7 +23,14 @@ export default function Home() {
         if (section) {
           // Small delay to ensure the DOM is ready
           setTimeout(() => {
-            section.scrollIntoView({ behavior: 'smooth' });
+            // Calculate any offset for fixed headers
+            const navbarHeight = 60; // Approximate height of the navbar
+            const offsetPosition = section.offsetTop - navbarHeight;
+            
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            });
           }, 300);
         }
       }
@@ -37,10 +47,7 @@ export default function Home() {
     return () => {
       window.removeEventListener('hashchange', handleHashChange);
     };
-  }, [isInitialized]);
-
-  // Sections for the scroll indicator
-  const sectionIds = ['hero', 'resume', 'projects', 'contact'];
+  }, [isInitialized, sectionIds]);
 
   return (
     <div className="scroll-container">

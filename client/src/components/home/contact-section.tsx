@@ -159,7 +159,7 @@ export function ContactSection() {
                   href="https://github.com/joshuakessell" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="w-10 h-10 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full flex items-center justify-center transition-colors"
+                  className="w-10 h-10 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full flex items-center justify-center transition-colors holographic-hover"
                   aria-label="GitHub Profile"
                 >
                   <Github className="h-5 w-5 text-gray-700 dark:text-gray-300" />
@@ -169,7 +169,7 @@ export function ContactSection() {
                   href="https://linkedin.com/in/joshuakessell" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="w-10 h-10 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full flex items-center justify-center transition-colors"
+                  className="w-10 h-10 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full flex items-center justify-center transition-colors holographic-hover"
                   aria-label="LinkedIn Profile"
                 >
                   <Linkedin className="h-5 w-5 text-gray-700 dark:text-gray-300" />
@@ -285,7 +285,7 @@ export function ContactSection() {
                   />
                   
                   <div className="flex items-center justify-between">
-                    <Button type="submit" disabled={isSubmitting}>
+                    <Button type="submit" disabled={isSubmitting} className="holographic-hover">
                       {isSubmitting ? "Sending..." : "Send Message"}
                     </Button>
                     
