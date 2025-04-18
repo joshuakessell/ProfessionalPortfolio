@@ -44,10 +44,17 @@ export function Navbar() {
                 const sectionId = item.href.replace('#', '');
                 const section = document.getElementById(sectionId);
                 if (section) {
+                  // Calculate any offset for fixed headers
+                  const navbarHeight = 60; // Approximate height of the navbar
+                  const offsetPosition = section.offsetTop - navbarHeight;
+                  
                   window.scrollTo({
-                    top: section.offsetTop,
+                    top: offsetPosition,
                     behavior: 'smooth'
                   });
+                  
+                  // Update URL hash for better navigation state
+                  window.history.pushState(null, '', item.href);
                 }
               }}
             >
@@ -75,10 +82,17 @@ export function Navbar() {
               e.preventDefault();
               const contactSection = document.getElementById('contact');
               if (contactSection) {
+                // Calculate any offset for fixed headers
+                const navbarHeight = 60; // Approximate height of the navbar
+                const offsetPosition = contactSection.offsetTop - navbarHeight;
+                
                 window.scrollTo({
-                  top: contactSection.offsetTop,
+                  top: offsetPosition,
                   behavior: 'smooth'
                 });
+                
+                // Update URL hash for better navigation state
+                window.history.pushState(null, '', '#contact');
               }
             }}
           >
@@ -104,10 +118,17 @@ export function Navbar() {
                 const sectionId = item.href.replace('#', '');
                 const section = document.getElementById(sectionId);
                 if (section) {
+                  // Calculate any offset for fixed headers
+                  const navbarHeight = 60; // Approximate height of the navbar
+                  const offsetPosition = section.offsetTop - navbarHeight;
+                  
                   window.scrollTo({
-                    top: section.offsetTop,
+                    top: offsetPosition,
                     behavior: 'smooth'
                   });
+                  
+                  // Update URL hash for better navigation state
+                  window.history.pushState(null, '', item.href);
                 }
               }}
             >

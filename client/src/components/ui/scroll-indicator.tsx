@@ -74,32 +74,65 @@ export function ScrollIndicator({ sectionIds }: ScrollIndicatorProps) {
     const section = document.getElementById(sectionId);
     
     if (section) {
-      // Use scrollTo with offset to account for any padding
-      window.scrollTo({
-        top: section.offsetTop,
-        behavior: 'smooth'
-      });
-      
-      // Update active section immediately for better feedback
-      setActiveSection(index);
+      // Set a small timeout to ensure any UI updates complete first
+      setTimeout(() => {
+        // Calculate any offset for fixed headers
+        const navbarHeight = 60; // Approximate height of the navbar
+        const offsetPosition = section.offsetTop - navbarHeight;
+        
+        // Use scrollTo with offset to account for any padding and the fixed navbar
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+        
+        // Update active section immediately for better feedback
+        setActiveSection(index);
+        
+        // Also update URL hash for better navigation state
+        window.history.pushState(null, '', `#${sectionId}`);
+      }, 50);
     }
   };
 
   return (
     <div className="fixed right-6 top-1/2 transform -translate-y-1/2 z-50 hidden md:block">
-      <div className="flex flex-col items-center space-y-4">
-        {sectionIds.map((sectionId, index) => (
-          <button
-            key={index}
-            onClick={() => handleClick(index)}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
-              activeSection === index 
-                ? 'bg-primary scale-125' 
-                : 'bg-gray-300 dark:bg-gray-700 hover:bg-gray-400 dark:hover:bg-gray-600'
-            }`}
-            aria-label={`Scroll to ${sectionId} section`}
-          />
-        ))}
+      <div className="flex flex-col items-center space-y-6">
+        {sectionIds.map((sectionId, index) => {
+          // Convert sectionId to display name
+          let sectionName = '';
+          switch(sectionId) {
+            case 'hero': sectionName = 'About'; break;
+            case 'resume': sectionName = 'Resume'; break;
+            case 'projects': sectionName = 'Projects'; break;
+            case 'contact': sectionName = 'Contact'; break;
+            default: sectionName = sectionId.charAt(0).toUpperCase() + sectionId.slice(1);
+          }
+          
+          return (
+            <div key={index} className="group relative">
+              {/* Tooltip */}
+              <div className="absolute right-full mr-3 top-1/2 -translate-y-1/2 px-2 py-1 bg-gray-800 dark:bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                {sectionName}
+              </div>
+              
+              <button
+                onClick={() => handleClick(index)}
+                className={`w-4 h-4 rounded-full transition-all duration-300 flex items-center justify-center
+                  hover:scale-125 ${
+                  activeSection === index 
+                    ? 'bg-primary border-2 border-white dark:border-gray-800 scale-125' 
+                    : 'bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500 border border-gray-200 dark:border-gray-700'
+                }`}
+                aria-label={`Scroll to ${sectionName} section`}
+              >
+                {activeSection === index && (
+                  <div className="w-1 h-1 rounded-full bg-white dark:bg-gray-200"></div>
+                )}
+              </button>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
