@@ -76,7 +76,7 @@ export function HeroSection() {
             </a>
             <a 
               href="/joshua-kessell-resume.pdf" 
-              download="Joshua-Kessell-Resume.pdf" 
+              download="Joshua_Kessell_Resume.pdf" 
               target="_blank" 
               rel="noopener noreferrer"
             >

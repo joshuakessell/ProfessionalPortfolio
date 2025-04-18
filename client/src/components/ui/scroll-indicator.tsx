@@ -7,96 +7,70 @@ interface ScrollIndicatorProps {
 export function ScrollIndicator({ sectionIds }: ScrollIndicatorProps) {
   const [activeSection, setActiveSection] = useState(0);
 
+  // Listen for scroll events to detect the active section
   useEffect(() => {
     const handleScroll = () => {
-      const sectionElements = sectionIds.map(id => document.getElementById(id));
-      const scrollPosition = window.scrollY + window.innerHeight / 3; // Adjusted for better detection
+      // Get current scroll position plus some offset for better detection
+      const scrollPosition = window.scrollY + window.innerHeight * 0.3;
       
-      // First determine if we're in the viewport of one of the sections
-      let inViewport = false;
+      // Check each section
+      let activeIndex = 0;
+      let closestDistance = Infinity;
       
-      for (let i = 0; i < sectionElements.length; i++) {
-        const section = sectionElements[i];
+      for (let i = 0; i < sectionIds.length; i++) {
+        const section = document.getElementById(sectionIds[i]);
         if (!section) continue;
         
-        const sectionTop = section.offsetTop - 50; // Add some tolerance
-        const sectionBottom = sectionTop + section.offsetHeight;
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+        const sectionMiddle = sectionTop + sectionHeight / 2;
         
-        // Special case for resume section which might be scrollable
-        if (sectionIds[i] === 'resume') {
-          const resumeSection = section;
-          const resumeContent = resumeSection.querySelector('.scroll-content');
-          
-          if (resumeContent) {
-            // Check if we're within the resume section's viewport
-            if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-              // We're in the resume section
-              setActiveSection(i);
-              inViewport = true;
-              break;
-            }
-          }
-        }
+        // Calculate how close we are to this section's middle
+        const distance = Math.abs(scrollPosition - sectionMiddle);
         
-        // Check for other sections
-        if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-          setActiveSection(i);
-          inViewport = true;
-          break; // Stop checking once we found the active section
+        // If this section is closer to our current scroll position, make it active
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          activeIndex = i;
         }
       }
       
-      // If not in any section's viewport, we might be scrolling through the resume content
-      if (!inViewport) {
-        // Default to resume section if we haven't matched any section
-        // This assumes we're scrolling through the resume content
-        const resumeIndex = sectionIds.indexOf('resume');
-        if (resumeIndex !== -1) {
-          setActiveSection(resumeIndex);
-        }
-      }
+      setActiveSection(activeIndex);
     };
     
-    window.addEventListener('scroll', handleScroll);
-    // Initial check after a short delay to ensure DOM is ready
-    const timer = setTimeout(() => {
-      handleScroll();
-    }, 200);
+    // Set initial active section
+    setTimeout(handleScroll, 100);
+    
+    // Add event listener for scroll
+    window.addEventListener('scroll', handleScroll, { passive: true });
     
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      clearTimeout(timer);
     };
   }, [sectionIds]);
 
+  // Handle click on dot indicators to navigate to sections
   const handleClick = (index: number) => {
     const sectionId = sectionIds[index];
     const section = document.getElementById(sectionId);
     
     if (section) {
-      // Set a small timeout to ensure any UI updates complete first
-      setTimeout(() => {
-        // Calculate any offset for fixed headers
-        const navbarHeight = 60; // Approximate height of the navbar
-        const offsetPosition = section.offsetTop - navbarHeight;
-        
-        // Use scrollTo with offset to account for any padding and the fixed navbar
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth'
-        });
-        
-        // Update active section immediately for better feedback
-        setActiveSection(index);
-        
-        // Also update URL hash for better navigation state
-        window.history.pushState(null, '', `#${sectionId}`);
-      }, 50);
+      // Manually set active section for immediate feedback
+      setActiveSection(index);
+      
+      // Scroll to the section with smooth animation
+      section.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+      
+      // Update URL hash for better navigation state
+      window.history.pushState(null, '', `#${sectionId}`);
     }
   };
 
   return (
-    <div className="fixed right-6 top-1/2 transform -translate-y-1/2 z-50 hidden md:block">
+    <div className="scroll-indicator">
       <div className="flex flex-col items-center space-y-6">
         {sectionIds.map((sectionId, index) => {
           // Convert sectionId to display name
@@ -118,18 +92,9 @@ export function ScrollIndicator({ sectionIds }: ScrollIndicatorProps) {
               
               <button
                 onClick={() => handleClick(index)}
-                className={`w-4 h-4 rounded-full transition-all duration-300 flex items-center justify-center
-                  hover:scale-125 ${
-                  activeSection === index 
-                    ? 'bg-primary border-2 border-white dark:border-gray-800 scale-125' 
-                    : 'bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500 border border-gray-200 dark:border-gray-700'
-                }`}
+                className={`indicator-dot ${activeSection === index ? 'active' : ''}`}
                 aria-label={`Scroll to ${sectionName} section`}
-              >
-                {activeSection === index && (
-                  <div className="w-1 h-1 rounded-full bg-white dark:bg-gray-200"></div>
-                )}
-              </button>
+              />
             </div>
           );
         })}

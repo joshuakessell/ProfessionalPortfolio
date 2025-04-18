@@ -36,7 +36,7 @@ export function ResumeSection() {
         </div>
         
         <div className="flex items-center justify-center gap-2 mb-12">
-          <a href="/joshua-kessell-resume.pdf" download="Joshua-Kessell-Resume.pdf" target="_blank" rel="noopener noreferrer">
+          <a href="/joshua-kessell-resume.pdf" download="Joshua_Kessell_Resume.pdf" target="_blank" rel="noopener noreferrer">
             <Button 
               variant="outline" 
               size="sm" 

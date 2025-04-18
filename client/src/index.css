@@ -73,15 +73,22 @@ html {
   scroll-behavior: smooth;
 }
 
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
 .scroll-container {
   height: 100vh;
   overflow-y: scroll;
   scroll-snap-type: y mandatory;
-  perspective: 1px; /* Add perspective for zoom effect */
-  perspective-origin: center center;
+  perspective: 10px; /* Add perspective for zoom effect */
+  perspective-origin: center top;
   scroll-behavior: smooth;
   background-color: var(--background);
-  overscroll-behavior: none; /* Prevent browser default overscroll behaviors */
+  overflow-x: hidden;
+  position: relative;
 }
 
 .scroll-section {
@@ -97,18 +104,37 @@ html {
   box-sizing: border-box;
   padding: 80px 0;
   overflow: hidden; /* Ensure content doesn't overflow during zoom transitions */
-  transform-style: preserve-3d; /* Maintain 3D effect */
-  will-change: transform, scale; /* Optimize for animations */
-  transition: transform 0.5s ease-out; /* Smooth transition for zoom effect */
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1); /* Smooth zoom transition with a nice easing curve */
 }
 
-/* Zoom effect on section change */
-.scroll-section:not(.active) {
-  transform: scale(0.9) translateZ(-0.5px); /* Slight zoom out when not active */
+/* The zoom effect - scale up when section becomes active */
+.scroll-section {
+  transform: scale(0.85);
+  transform-origin: center center;
+  opacity: 0.8;
+  filter: blur(2px);
 }
 
 .scroll-section.active {
-  transform: scale(1) translateZ(0); /* Normal scale when active */
+  transform: scale(1);
+  opacity: 1;
+  filter: blur(0);
+  z-index: 1;
+}
+
+/* Additional transition for content inside each section */
+.scroll-section .scroll-content {
+  transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+}
+
+.scroll-section:not(.active) .scroll-content {
+  transform: translateY(20px);
+  opacity: 0.7;
+}
+
+.scroll-section.active .scroll-content {
+  transform: translateY(0);
+  opacity: 1;
 }
 
 /* Section background colors */

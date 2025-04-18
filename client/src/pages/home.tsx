@@ -18,57 +18,89 @@ export default function Home() {
   // Handle scroll events to detect active section and apply zoom effects
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + window.innerHeight / 3;
+      const scrollPosition = window.scrollY + window.innerHeight * 0.3;
       
       // Find which section is currently in view
-      const sections = sectionIds.map(id => {
+      let foundActive = false;
+      let closestSection = null;
+      let closestDistance = Infinity;
+      
+      // First pass: check if any section is directly in view
+      sectionIds.forEach(id => {
         const element = document.getElementById(id);
-        if (!element) return null;
+        if (!element) return;
         
-        const top = element.offsetTop;
-        const height = element.offsetHeight;
+        const rect = element.getBoundingClientRect();
+        const sectionTop = window.scrollY + rect.top;
+        const sectionMiddle = sectionTop + rect.height / 2;
         
-        return {
-          id,
-          element,
-          top,
-          bottom: top + height,
-          inView: scrollPosition >= top && scrollPosition < top + height
-        };
-      }).filter(Boolean);
-      
-      // Find the section that's currently in view
-      const currentSection = sections.find(section => section?.inView);
-      
-      if (currentSection) {
-        // Update active section state
-        setActiveSection(currentSection.id);
-        
-        // Apply active class to current section for zoom effect
-        sections.forEach(section => {
-          if (section) {
-            if (section.id === currentSection.id) {
-              section.element.classList.add('active');
-            } else {
-              section.element.classList.remove('active');
+        // Check if this section is in view (prioritize sections that are directly visible)
+        if (scrollPosition >= sectionTop && scrollPosition < (sectionTop + rect.height)) {
+          foundActive = true;
+          setActiveSection(id);
+          
+          // Set active class
+          element.classList.add('active');
+          
+          // Special case for resume section - maintain active state when scrolling within
+          if (id === 'resume') {
+            const resumeContent = element.querySelector('.scroll-content');
+            if (resumeContent && resumeContent.scrollHeight > resumeContent.clientHeight) {
+              // Resume section has scrollable content
+              foundActive = true;
             }
           }
-        });
+        } else {
+          element.classList.remove('active');
+          
+          // Calculate distance to section middle for fallback
+          const distance = Math.abs(scrollPosition - sectionMiddle);
+          if (distance < closestDistance) {
+            closestDistance = distance;
+            closestSection = { id, element };
+          }
+        }
+      });
+      
+      // If no section is directly in view, activate the closest one
+      if (!foundActive && closestSection) {
+        setActiveSection(closestSection.id);
+        closestSection.element.classList.add('active');
       }
     };
     
-    // Set initial active section after DOM is ready
-    setTimeout(handleScroll, 100);
+    // Set up initial state after a short delay
+    setTimeout(() => {
+      // Force initial active section
+      const heroSection = document.getElementById('hero');
+      if (heroSection) {
+        heroSection.classList.add('active');
+      }
+      
+      // Then handle actual scroll position
+      handleScroll();
+    }, 300);
     
-    // Add scroll event listener
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    // Add scroll event listener with throttling for performance
+    let lastScrollTime = 0;
+    const scrollThrottle = 100; // ms
+    
+    const throttledScroll = () => {
+      const now = Date.now();
+      if (now - lastScrollTime > scrollThrottle) {
+        lastScrollTime = now;
+        handleScroll();
+      }
+    };
+    
+    window.addEventListener('scroll', throttledScroll, { passive: true });
     
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', throttledScroll);
     };
   }, [sectionIds]);
 
-  // Initialize page and ensure correct navigation
+  // Handle direct navigation (hash changes and initial load)
   useEffect(() => {
     // When page loads, handle direct links and URL hash navigation
     const handleHashChange = () => {
@@ -78,18 +110,22 @@ export default function Home() {
         if (section) {
           // Small delay to ensure the DOM is ready
           setTimeout(() => {
-            // Calculate any offset for fixed headers
-            const navbarHeight = 60; // Approximate height of the navbar
-            const offsetPosition = section.offsetTop - navbarHeight;
-            
-            window.scrollTo({
-              top: offsetPosition,
-              behavior: 'smooth'
-            });
+            section.scrollIntoView({ behavior: 'smooth' });
             
             // Update active section immediately for visual feedback
             setActiveSection(hash);
-          }, 300);
+            
+            // Clear any existing active classes
+            sectionIds.forEach(id => {
+              const elem = document.getElementById(id);
+              if (elem) {
+                elem.classList.remove('active');
+              }
+            });
+            
+            // Add active class to target section
+            section.classList.add('active');
+          }, 100);
         }
       }
     };
@@ -97,7 +133,17 @@ export default function Home() {
     // Wait for page to fully load, then check hash
     if (!isInitialized) {
       setIsInitialized(true);
-      handleHashChange();
+      
+      // If no hash is present, make sure the first section is active
+      if (!window.location.hash) {
+        const firstSection = document.getElementById(sectionIds[0]);
+        if (firstSection) {
+          firstSection.classList.add('active');
+        }
+      } else {
+        // Handle initial hash navigation
+        handleHashChange();
+      }
     }
 
     // Listen for hash changes to navigate correctly
