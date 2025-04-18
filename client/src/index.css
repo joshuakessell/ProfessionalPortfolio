@@ -71,70 +71,161 @@
 /* Zoom Scroll Effect (Based on codepen.io/giana/pen/BabdgjB) */
 html {
   scroll-behavior: smooth;
+  /* Create a snapping rule on the html element */
+  scroll-snap-type: y mandatory;
+  /* Create a timeline scope for animation */
+  scroll-timeline-name: --section-scroll;
+  scroll-timeline-axis: y;
 }
 
 body {
   margin: 0;
   padding: 0;
   overflow: hidden;
+  background-color: var(--background);
 }
 
 .scroll-container {
   height: 100vh;
   overflow-y: scroll;
   scroll-snap-type: y mandatory;
-  perspective: 10px; /* Add perspective for zoom effect */
-  perspective-origin: center top;
   scroll-behavior: smooth;
   background-color: var(--background);
-  overflow-x: hidden;
   position: relative;
+  /* Handle scrollbar */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.scroll-container::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 
 .scroll-section {
   scroll-snap-align: start;
   scroll-snap-stop: always;
   height: 100vh;
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* Fixed content layout for zoom effect */
+.scroll-section .scroll-content {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
-  width: 100%;
-  min-height: 100vh;
-  box-sizing: border-box;
+  z-index: 0;
+  opacity: 0;
+  visibility: hidden;
   padding: 80px 0;
-  overflow: hidden; /* Ensure content doesn't overflow during zoom transitions */
-  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1); /* Smooth zoom transition with a nice easing curve */
+  max-width: 1200px;
+  margin: 0 auto;
+  transform: scale(0.8);
+  filter: blur(3px);
+  transition: all 0.7s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* The zoom effect - scale up when section becomes active */
-.scroll-section {
-  transform: scale(0.85);
-  transform-origin: center center;
-  opacity: 0.8;
-  filter: blur(2px);
-}
-
-.scroll-section.active {
-  transform: scale(1);
-  opacity: 1;
-  filter: blur(0);
-  z-index: 1;
-}
-
-/* Additional transition for content inside each section */
-.scroll-section .scroll-content {
-  transition: transform 0.5s ease-out, opacity 0.5s ease-out;
-}
-
-.scroll-section:not(.active) .scroll-content {
-  transform: translateY(20px);
-  opacity: 0.7;
-}
-
+/* The active section becomes visible with zoom in effect */
 .scroll-section.active .scroll-content {
-  transform: translateY(0);
   opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+  filter: blur(0);
+  z-index: 10; /* Higher z-index to ensure active content is on top */
+}
+
+/* Special case for the resume section */
+#resume .scroll-content {
+  overflow-y: auto;
+}
+
+/* Apply a different z-index based on section order to manage stacking when transitioning */
+#hero .scroll-content { z-index: 4; }
+#resume .scroll-content { z-index: 3; }
+#projects .scroll-content { z-index: 2; }
+#contact .scroll-content { z-index: 1; }
+
+/* Add more realistic zoom in/out animations for different sections */
+/* Hero section zoom effect */
+#hero.scroll-section .scroll-content {
+  transform: scale(0.8) translateY(-30px);
+  filter: blur(3px);
+}
+
+#hero.scroll-section.active .scroll-content {
+  transform: scale(1) translateY(0);
+  filter: blur(0);
+}
+
+/* Resume section zoom effect */
+#resume.scroll-section .scroll-content {
+  transform: scale(0.85);
+  filter: blur(3px);
+}
+
+#resume.scroll-section.active .scroll-content {
+  transform: scale(1);
+  filter: blur(0);
+}
+
+/* Projects section zoom effect */
+#projects.scroll-section .scroll-content {
+  transform: scale(0.9) translateY(20px);
+  filter: blur(3px);
+}
+
+#projects.scroll-section.active .scroll-content {
+  transform: scale(1) translateY(0);
+  filter: blur(0);
+}
+
+/* Contact section zoom effect */
+#contact.scroll-section .scroll-content {
+  transform: scale(0.8) translateY(30px);
+  filter: blur(3px);
+}
+
+#contact.scroll-section.active .scroll-content {
+  transform: scale(1) translateY(0);
+  filter: blur(0);
+}
+
+/* General keyframes for reference - not directly used but can be applied to specific elements */
+@keyframes zoom-in-section {
+  from {
+    filter: blur(5px);
+    transform: scale(0.8);
+    opacity: 0;
+    visibility: hidden;
+  }
+  to {
+    filter: blur(0);
+    transform: scale(1);
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@keyframes zoom-out-section {
+  from {
+    filter: blur(0);
+    transform: scale(1);
+    opacity: 1;
+    visibility: visible;
+  }
+  to {
+    filter: blur(5px);
+    transform: scale(1.2);
+    opacity: 0;
+    visibility: hidden;
+  }
 }
 
 /* Section background colors */

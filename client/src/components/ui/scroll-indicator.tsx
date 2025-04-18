@@ -5,66 +5,98 @@ interface ScrollIndicatorProps {
 }
 
 export function ScrollIndicator({ sectionIds }: ScrollIndicatorProps) {
-  const [activeSection, setActiveSection] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  // Listen for scroll events to detect the active section
+  // Listen for active section changes by checking for the 'active' class
   useEffect(() => {
-    const handleScroll = () => {
-      // Get current scroll position plus some offset for better detection
-      const scrollPosition = window.scrollY + window.innerHeight * 0.3;
-      
-      // Check each section
-      let activeIndex = 0;
-      let closestDistance = Infinity;
-      
+    const checkActiveSection = () => {
       for (let i = 0; i < sectionIds.length; i++) {
         const section = document.getElementById(sectionIds[i]);
-        if (!section) continue;
-        
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.offsetHeight;
-        const sectionMiddle = sectionTop + sectionHeight / 2;
-        
-        // Calculate how close we are to this section's middle
-        const distance = Math.abs(scrollPosition - sectionMiddle);
-        
-        // If this section is closer to our current scroll position, make it active
-        if (distance < closestDistance) {
-          closestDistance = distance;
-          activeIndex = i;
+        if (section?.classList.contains('active')) {
+          setActiveIndex(i);
+          break;
         }
       }
-      
-      setActiveSection(activeIndex);
     };
     
-    // Set initial active section
-    setTimeout(handleScroll, 100);
+    // Set up an observer to watch for changes to the 'active' class on sections
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'class') {
+          checkActiveSection();
+        }
+      });
+    });
     
-    // Add event listener for scroll
+    // Observe all sections for class changes
+    sectionIds.forEach(id => {
+      const section = document.getElementById(id);
+      if (section) {
+        observer.observe(section, { attributes: true });
+      }
+    });
+    
+    // Set initial active index
+    checkActiveSection();
+    
+    // Also listen for scroll events as a backup
+    const handleScroll = () => {
+      // Find which section is most visible in the viewport
+      let maxVisibleArea = 0;
+      let mostVisibleIndex = activeIndex;
+      
+      sectionIds.forEach((id, index) => {
+        const section = document.getElementById(id);
+        if (!section) return;
+        
+        const rect = section.getBoundingClientRect();
+        // Calculate how much of the section is visible in the viewport
+        const visibleHeight = Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0);
+        const visibleArea = Math.max(0, visibleHeight) / rect.height;
+        
+        if (visibleArea > maxVisibleArea) {
+          maxVisibleArea = visibleArea;
+          mostVisibleIndex = index;
+        }
+      });
+      
+      if (mostVisibleIndex !== activeIndex) {
+        setActiveIndex(mostVisibleIndex);
+      }
+    };
+    
     window.addEventListener('scroll', handleScroll, { passive: true });
     
     return () => {
+      observer.disconnect();
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [sectionIds]);
+  }, [sectionIds, activeIndex]);
 
-  // Handle click on dot indicators to navigate to sections
+  // Handle click on dot indicators
   const handleClick = (index: number) => {
     const sectionId = sectionIds[index];
     const section = document.getElementById(sectionId);
     
     if (section) {
-      // Manually set active section for immediate feedback
-      setActiveSection(index);
-      
-      // Scroll to the section with smooth animation
-      section.scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'start'
+      // First, mark all sections as inactive
+      sectionIds.forEach(id => {
+        const elem = document.getElementById(id);
+        if (elem) {
+          elem.classList.remove('active');
+        }
       });
       
-      // Update URL hash for better navigation state
+      // Then mark target section as active
+      section.classList.add('active');
+      
+      // Set active index immediately
+      setActiveIndex(index);
+      
+      // Scroll to section
+      section.scrollIntoView({ behavior: 'smooth' });
+      
+      // Update URL hash
       window.history.pushState(null, '', `#${sectionId}`);
     }
   };
@@ -92,7 +124,7 @@ export function ScrollIndicator({ sectionIds }: ScrollIndicatorProps) {
               
               <button
                 onClick={() => handleClick(index)}
-                className={`indicator-dot ${activeSection === index ? 'active' : ''}`}
+                className={`indicator-dot ${activeIndex === index ? 'active' : ''}`}
                 aria-label={`Scroll to ${sectionName} section`}
               />
             </div>
