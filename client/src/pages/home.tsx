@@ -5,13 +5,68 @@ import { ContactSection } from "@/components/home/contact-section";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { ScrollIndicator } from "@/components/ui/scroll-indicator";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 export default function Home() {
   const [isInitialized, setIsInitialized] = useState(false);
+  const [activeSection, setActiveSection] = useState('hero');
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   
   // Sections for the scroll indicator
   const sectionIds = ['hero', 'resume', 'projects', 'contact'];
+
+  // Handle scroll events to detect active section and apply zoom effects
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + window.innerHeight / 3;
+      
+      // Find which section is currently in view
+      const sections = sectionIds.map(id => {
+        const element = document.getElementById(id);
+        if (!element) return null;
+        
+        const top = element.offsetTop;
+        const height = element.offsetHeight;
+        
+        return {
+          id,
+          element,
+          top,
+          bottom: top + height,
+          inView: scrollPosition >= top && scrollPosition < top + height
+        };
+      }).filter(Boolean);
+      
+      // Find the section that's currently in view
+      const currentSection = sections.find(section => section?.inView);
+      
+      if (currentSection) {
+        // Update active section state
+        setActiveSection(currentSection.id);
+        
+        // Apply active class to current section for zoom effect
+        sections.forEach(section => {
+          if (section) {
+            if (section.id === currentSection.id) {
+              section.element.classList.add('active');
+            } else {
+              section.element.classList.remove('active');
+            }
+          }
+        });
+      }
+    };
+    
+    // Set initial active section after DOM is ready
+    setTimeout(handleScroll, 100);
+    
+    // Add scroll event listener
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [sectionIds]);
 
   // Initialize page and ensure correct navigation
   useEffect(() => {
@@ -31,6 +86,9 @@ export default function Home() {
               top: offsetPosition,
               behavior: 'smooth'
             });
+            
+            // Update active section immediately for visual feedback
+            setActiveSection(hash);
           }, 300);
         }
       }
@@ -50,35 +108,35 @@ export default function Home() {
   }, [isInitialized, sectionIds]);
 
   return (
-    <div className="scroll-container">
+    <div className="scroll-container" ref={scrollContainerRef}>
       <Navbar />
       
       {/* Scroll Indicator */}
       <ScrollIndicator sectionIds={sectionIds} />
       
       {/* Hero Section */}
-      <section id="hero" className="scroll-section">
+      <section id="hero" className={`scroll-section ${activeSection === 'hero' ? 'active' : ''}`}>
         <div className="scroll-content">
           <HeroSection />
         </div>
       </section>
       
       {/* Resume Section */}
-      <section id="resume" className="scroll-section">
+      <section id="resume" className={`scroll-section ${activeSection === 'resume' ? 'active' : ''}`}>
         <div className="scroll-content overflow-y-auto scrollbar-hide">
           <ResumeSection />
         </div>
       </section>
       
       {/* Projects Section */}
-      <section id="projects" className="scroll-section">
+      <section id="projects" className={`scroll-section ${activeSection === 'projects' ? 'active' : ''}`}>
         <div className="scroll-content">
           <ProjectsSection />
         </div>
       </section>
       
       {/* Contact Section */}
-      <section id="contact" className="scroll-section">
+      <section id="contact" className={`scroll-section ${activeSection === 'contact' ? 'active' : ''}`}>
         <div className="scroll-content">
           <ContactSection />
           <Footer />

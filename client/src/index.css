@@ -68,7 +68,7 @@
 .stagger-5 { animation-delay: 0.5s; }
 .stagger-6 { animation-delay: 0.6s; }
 
-/* Smooth Scroll Snap Effect */
+/* Zoom Scroll Effect (Based on codepen.io/giana/pen/BabdgjB) */
 html {
   scroll-behavior: smooth;
 }
@@ -77,7 +77,11 @@ html {
   height: 100vh;
   overflow-y: scroll;
   scroll-snap-type: y mandatory;
-  scroll-behavior: smooth; /* Enable smooth scrolling */
+  perspective: 1px; /* Add perspective for zoom effect */
+  perspective-origin: center center;
+  scroll-behavior: smooth;
+  background-color: var(--background);
+  overscroll-behavior: none; /* Prevent browser default overscroll behaviors */
 }
 
 .scroll-section {
@@ -89,9 +93,22 @@ html {
   justify-content: center;
   position: relative;
   width: 100%;
-  min-height: 100vh; /* Ensure full height */
-  box-sizing: border-box; /* Include padding in height calculation */
-  padding: 80px 0; /* Add padding to prevent overlap with navbar */
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 80px 0;
+  overflow: hidden; /* Ensure content doesn't overflow during zoom transitions */
+  transform-style: preserve-3d; /* Maintain 3D effect */
+  will-change: transform, scale; /* Optimize for animations */
+  transition: transform 0.5s ease-out; /* Smooth transition for zoom effect */
+}
+
+/* Zoom effect on section change */
+.scroll-section:not(.active) {
+  transform: scale(0.9) translateZ(-0.5px); /* Slight zoom out when not active */
+}
+
+.scroll-section.active {
+  transform: scale(1) translateZ(0); /* Normal scale when active */
 }
 
 /* Section background colors */
