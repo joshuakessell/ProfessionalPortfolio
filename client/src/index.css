@@ -87,47 +87,51 @@ html {
   align-items: center;
   justify-content: center;
   position: relative;
+  width: 100%;
+  min-height: 100vh; /* Ensure full height */
+  box-sizing: border-box; /* Include padding in height calculation */
+  padding: 80px 0; /* Add padding to prevent overlap with navbar */
 }
 
 /* Section background colors */
-.scroll-section:nth-child(1) {
+.scroll-section:nth-of-type(1) {
   background: linear-gradient(135deg, rgba(29, 78, 216, 0.05) 0%, rgba(30, 64, 175, 0.1) 100%);
 }
 
-.scroll-section:nth-child(2) {
+.scroll-section:nth-of-type(2) {
   background: linear-gradient(135deg, rgba(79, 70, 229, 0.05) 0%, rgba(67, 56, 202, 0.1) 100%);
 }
 
-.scroll-section:nth-child(3) {
+.scroll-section:nth-of-type(3) {
   background: linear-gradient(135deg, rgba(124, 58, 237, 0.05) 0%, rgba(109, 40, 217, 0.1) 100%);
 }
 
-.scroll-section:nth-child(4) {
+.scroll-section:nth-of-type(4) {
   background: linear-gradient(135deg, rgba(168, 85, 247, 0.05) 0%, rgba(147, 51, 234, 0.1) 100%);
 }
 
-.scroll-section:nth-child(5) {
+.scroll-section:nth-of-type(5) {
   background: linear-gradient(135deg, rgba(192, 132, 252, 0.05) 0%, rgba(168, 85, 247, 0.1) 100%);
 }
 
 /* Dark theme gradients */
-.dark .scroll-section:nth-child(1) {
+.dark .scroll-section:nth-of-type(1) {
   background: linear-gradient(135deg, rgba(29, 78, 216, 0.1) 0%, rgba(30, 64, 175, 0.2) 100%);
 }
 
-.dark .scroll-section:nth-child(2) {
+.dark .scroll-section:nth-of-type(2) {
   background: linear-gradient(135deg, rgba(79, 70, 229, 0.1) 0%, rgba(67, 56, 202, 0.2) 100%);
 }
 
-.dark .scroll-section:nth-child(3) {
+.dark .scroll-section:nth-of-type(3) {
   background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(109, 40, 217, 0.2) 100%);
 }
 
-.dark .scroll-section:nth-child(4) {
+.dark .scroll-section:nth-of-type(4) {
   background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(147, 51, 234, 0.2) 100%);
 }
 
-.dark .scroll-section:nth-child(5) {
+.dark .scroll-section:nth-of-type(5) {
   background: linear-gradient(135deg, rgba(192, 132, 252, 0.1) 0%, rgba(168, 85, 247, 0.2) 100%);
 }
 
@@ -136,6 +140,8 @@ html {
   width: 100%;
   padding: 2rem;
   margin: 0 auto;
+  overflow-y: auto; /* Allow content to scroll if needed */
+  max-height: calc(100vh - 160px); /* Limit height to prevent overflow */
 }
 
 /* Progress indicator */
@@ -156,6 +162,7 @@ html {
   border-radius: 50%;
   background-color: rgba(148, 163, 184, 0.5);
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .indicator-dot.active {

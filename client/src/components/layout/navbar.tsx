@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Link } from "wouter";
 import { Menu } from "lucide-react";
 import { ModeToggle } from "@/components/ui/mode-toggle";
 import { Button } from "@/components/ui/button";
@@ -11,7 +10,7 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { label: "About", href: "#about" },
+  { label: "About", href: "#hero" },
   { label: "Resume", href: "#resume" },
   { label: "Projects", href: "#projects" },
   { label: "Blog", href: "#blog" },
@@ -41,6 +40,17 @@ export function Navbar() {
               key={item.label}
               href={item.href} 
               className="hover:text-primary dark:hover:text-blue-400 transition-colors"
+              onClick={(e) => {
+                e.preventDefault();
+                const sectionId = item.href.replace('#', '');
+                const section = document.getElementById(sectionId);
+                if (section) {
+                  window.scrollTo({
+                    top: section.offsetTop,
+                    behavior: 'smooth'
+                  });
+                }
+              }}
             >
               {item.label}
             </a>
@@ -59,7 +69,20 @@ export function Navbar() {
             <Menu className="h-6 w-6" />
           </Button>
           
-          <a href="#contact" className="hidden sm:block">
+          <a 
+            href="#contact" 
+            className="hidden sm:block"
+            onClick={(e) => {
+              e.preventDefault();
+              const contactSection = document.getElementById('contact');
+              if (contactSection) {
+                window.scrollTo({
+                  top: contactSection.offsetTop,
+                  behavior: 'smooth'
+                });
+              }
+            }}
+          >
             <Button>Let's Connect</Button>
           </a>
         </div>
@@ -76,7 +99,18 @@ export function Navbar() {
               key={item.label}
               href={item.href} 
               className="py-2 hover:text-primary"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={(e) => {
+                e.preventDefault();
+                setMobileMenuOpen(false);
+                const sectionId = item.href.replace('#', '');
+                const section = document.getElementById(sectionId);
+                if (section) {
+                  window.scrollTo({
+                    top: section.offsetTop,
+                    behavior: 'smooth'
+                  });
+                }
+              }}
             >
               {item.label}
             </a>

@@ -55,7 +55,13 @@ export function HeroSection() {
           <div className="flex flex-col sm:flex-row gap-4">
             <a href="#projects" onClick={(e) => {
               e.preventDefault();
-              document.getElementById('projects')?.scrollIntoView({behavior: 'smooth'});
+              const projectsSection = document.getElementById('projects');
+              if (projectsSection) {
+                window.scrollTo({
+                  top: projectsSection.offsetTop,
+                  behavior: 'smooth'
+                });
+              }
             }}>
               <Button size="lg" className="shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-shadow">
                 View My Projects
@@ -63,7 +69,13 @@ export function HeroSection() {
             </a>
             <a href="#resume" onClick={(e) => {
               e.preventDefault();
-              document.getElementById('resume')?.scrollIntoView({behavior: 'smooth'});
+              const resumeSection = document.getElementById('resume');
+              if (resumeSection) {
+                window.scrollTo({
+                  top: resumeSection.offsetTop,
+                  behavior: 'smooth'
+                });
+              }
             }}>
               <Button variant="outline" size="lg" className="hover:bg-background/80 transition-colors">
                 Check My Resume
@@ -102,7 +114,13 @@ export function HeroSection() {
       <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-float hidden md:block">
         <Button 
           onClick={() => {
-            document.getElementById('resume')?.scrollIntoView({behavior: 'smooth'});
+            const resumeSection = document.getElementById('resume');
+            if (resumeSection) {
+              window.scrollTo({
+                top: resumeSection.offsetTop,
+                behavior: 'smooth'
+              });
+            }
           }}
           variant="ghost" 
           size="icon"

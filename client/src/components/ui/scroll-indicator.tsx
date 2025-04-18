@@ -10,26 +10,31 @@ export function ScrollIndicator({ sectionIds }: ScrollIndicatorProps) {
   useEffect(() => {
     const handleScroll = () => {
       const sectionElements = sectionIds.map(id => document.getElementById(id));
-      const scrollPosition = window.scrollY + window.innerHeight / 2;
+      const scrollPosition = window.scrollY + window.innerHeight / 3; // Adjusted for better detection
       
-      sectionElements.forEach((section, index) => {
-        if (!section) return;
+      for (let i = 0; i < sectionElements.length; i++) {
+        const section = sectionElements[i];
+        if (!section) continue;
         
-        const sectionTop = section.offsetTop;
+        const sectionTop = section.offsetTop - 50; // Add some tolerance
         const sectionBottom = sectionTop + section.offsetHeight;
         
         if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-          setActiveSection(index);
+          setActiveSection(i);
+          break; // Stop checking once we found the active section
         }
-      });
+      }
     };
     
     window.addEventListener('scroll', handleScroll);
-    // Initial check
-    handleScroll();
+    // Initial check after a short delay to ensure DOM is ready
+    const timer = setTimeout(() => {
+      handleScroll();
+    }, 200);
     
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      clearTimeout(timer);
     };
   }, [sectionIds]);
 
@@ -38,14 +43,21 @@ export function ScrollIndicator({ sectionIds }: ScrollIndicatorProps) {
     const section = document.getElementById(sectionId);
     
     if (section) {
-      section.scrollIntoView({ behavior: 'smooth' });
+      // Use scrollTo with offset to account for any padding
+      window.scrollTo({
+        top: section.offsetTop,
+        behavior: 'smooth'
+      });
+      
+      // Update active section immediately for better feedback
+      setActiveSection(index);
     }
   };
 
   return (
     <div className="fixed right-6 top-1/2 transform -translate-y-1/2 z-50 hidden md:block">
       <div className="flex flex-col items-center space-y-4">
-        {sectionIds.map((_, index) => (
+        {sectionIds.map((sectionId, index) => (
           <button
             key={index}
             onClick={() => handleClick(index)}
@@ -54,7 +66,7 @@ export function ScrollIndicator({ sectionIds }: ScrollIndicatorProps) {
                 ? 'bg-primary scale-125' 
                 : 'bg-gray-300 dark:bg-gray-700 hover:bg-gray-400 dark:hover:bg-gray-600'
             }`}
-            aria-label={`Scroll to section ${index + 1}`}
+            aria-label={`Scroll to ${sectionId} section`}
           />
         ))}
       </div>

@@ -6,22 +6,39 @@ import { ContactSection } from "@/components/home/contact-section";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { ScrollIndicator } from "@/components/ui/scroll-indicator";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function Home() {
-  // Detect scroll position and update active section
+  const [isInitialized, setIsInitialized] = useState(false);
+
+  // Initialize page and ensure correct navigation
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      
-      // Your scroll handling logic if needed
+    // When page loads, handle direct links and URL hash navigation
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash && sectionIds.includes(hash)) {
+        const section = document.getElementById(hash);
+        if (section) {
+          // Small delay to ensure the DOM is ready
+          setTimeout(() => {
+            section.scrollIntoView({ behavior: 'smooth' });
+          }, 300);
+        }
+      }
     };
-    
-    window.addEventListener('scroll', handleScroll);
+
+    // Wait for page to fully load, then check hash
+    if (!isInitialized) {
+      setIsInitialized(true);
+      handleHashChange();
+    }
+
+    // Listen for hash changes to navigate correctly
+    window.addEventListener('hashchange', handleHashChange);
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('hashchange', handleHashChange);
     };
-  }, []);
+  }, [isInitialized]);
 
   // Sections for the scroll indicator
   const sectionIds = ['hero', 'resume', 'projects', 'blog', 'contact'];
