@@ -150,9 +150,13 @@ export default function Home() {
         <section id="contact" className="scroll-section">
           <div className="scroll-content">
             <ContactSection />
-            <Footer />
           </div>
         </section>
+        
+        {/* Footer Section - Completely below Contact */}
+        <div className="footer-wrapper">
+          <Footer />
+        </div>
       </div>
     </>
   );

@@ -372,6 +372,14 @@ body {
   background-color: rgba(59, 130, 246, 1);
 }
 
+/* Footer styles to make it appear below the scroll sections */
+.footer-wrapper {
+  position: relative;
+  width: 100%;
+  z-index: 5;
+  margin-top: -50px; /* Adjust to create overlap with the contact section */
+}
+
 @layer base {
   * {
     @apply border-border;
