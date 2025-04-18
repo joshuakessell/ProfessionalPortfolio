@@ -29,7 +29,7 @@ export function ProjectsSection() {
         </div>
 
         <div className="mb-8 flex justify-center">
-          <Button variant="outline" className="bg-gray-800 hover:bg-black text-white shadow-lg hover:shadow-xl transition-all" asChild>
+          <Button variant="outline" className="bg-gray-800 hover:bg-black text-white shadow-lg holographic-hover" asChild>
             <a href="https://github.com/joshuakessell" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
               <Github className="h-5 w-5" />
               View GitHub Profile

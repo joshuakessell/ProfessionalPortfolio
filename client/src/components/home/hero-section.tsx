@@ -57,27 +57,30 @@ export function HeroSection() {
               e.preventDefault();
               const projectsSection = document.getElementById('projects');
               if (projectsSection) {
+                // Calculate any offset for fixed headers
+                const navbarHeight = 60; // Approximate height of the navbar
+                const offsetPosition = projectsSection.offsetTop - navbarHeight;
+                
                 window.scrollTo({
-                  top: projectsSection.offsetTop,
+                  top: offsetPosition,
                   behavior: 'smooth'
                 });
+                
+                // Update URL hash for better navigation state
+                window.history.pushState(null, '', '#projects');
               }
             }}>
-              <Button size="lg" className="shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-shadow">
+              <Button size="lg" className="shadow-lg shadow-primary/20 holographic-hover">
                 View My Projects
               </Button>
             </a>
-            <a href="#resume" onClick={(e) => {
-              e.preventDefault();
-              const resumeSection = document.getElementById('resume');
-              if (resumeSection) {
-                window.scrollTo({
-                  top: resumeSection.offsetTop,
-                  behavior: 'smooth'
-                });
-              }
-            }}>
-              <Button variant="outline" size="lg" className="hover:bg-background/80 transition-colors">
+            <a 
+              href="/joshua-kessell-resume.pdf" 
+              download="Joshua-Kessell-Resume.pdf" 
+              target="_blank" 
+              rel="noopener noreferrer"
+            >
+              <Button variant="outline" size="lg" className="hover:bg-background/80 holographic-hover">
                 Check My Resume
               </Button>
             </a>
@@ -116,10 +119,17 @@ export function HeroSection() {
           onClick={() => {
             const resumeSection = document.getElementById('resume');
             if (resumeSection) {
+              // Calculate any offset for fixed headers
+              const navbarHeight = 60; // Approximate height of the navbar
+              const offsetPosition = resumeSection.offsetTop - navbarHeight;
+              
               window.scrollTo({
-                top: resumeSection.offsetTop,
+                top: offsetPosition,
                 behavior: 'smooth'
               });
+              
+              // Update URL hash for better navigation state
+              window.history.pushState(null, '', '#resume');
             }
           }}
           variant="ghost" 

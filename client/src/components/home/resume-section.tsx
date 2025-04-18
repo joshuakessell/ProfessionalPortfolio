@@ -36,11 +36,11 @@ export function ResumeSection() {
         </div>
         
         <div className="flex items-center justify-center gap-2 mb-12">
-          <a href="/joshua-kessell-resume.pdf" download target="_blank" rel="noopener noreferrer">
+          <a href="/joshua-kessell-resume.pdf" download="Joshua-Kessell-Resume.pdf" target="_blank" rel="noopener noreferrer">
             <Button 
               variant="outline" 
               size="sm" 
-              className="flex items-center gap-2 shadow-md hover:shadow-lg transition-shadow"
+              className="flex items-center gap-2 shadow-md holographic-hover"
             >
               <Download className="h-4 w-4" />
               Download Resume
