@@ -1,7 +1,6 @@
 import { HeroSection } from "@/components/home/hero-section";
 import { ResumeSection } from "@/components/home/resume-section";
 import { ProjectsSection } from "@/components/home/projects-section";
-import { BlogSection } from "@/components/home/blog-section";
 import { ContactSection } from "@/components/home/contact-section";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
@@ -41,7 +40,7 @@ export default function Home() {
   }, [isInitialized]);
 
   // Sections for the scroll indicator
-  const sectionIds = ['hero', 'resume', 'projects', 'blog', 'contact'];
+  const sectionIds = ['hero', 'resume', 'projects', 'contact'];
 
   return (
     <div className="scroll-container">
@@ -68,13 +67,6 @@ export default function Home() {
       <section id="projects" className="scroll-section">
         <div className="scroll-content">
           <ProjectsSection />
-        </div>
-      </section>
-      
-      {/* Blog Section */}
-      <section id="blog" className="scroll-section">
-        <div className="scroll-content">
-          <BlogSection />
         </div>
       </section>
       

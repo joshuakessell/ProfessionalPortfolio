@@ -95,7 +95,7 @@ export function HeroSection() {
               <img 
                 src="/profile.jpg" 
                 alt="Joshua Kessell - Professional headshot"
-                className="w-full h-auto rounded-2xl"
+                className="w-full h-auto max-h-[55vh] object-cover object-center rounded-2xl"
               />
             </div>
             

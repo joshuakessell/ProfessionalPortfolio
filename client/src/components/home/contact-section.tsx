@@ -135,10 +135,10 @@ export function ContactSection() {
                   <div>
                     <div className="text-sm text-gray-500 dark:text-gray-400">Phone</div>
                     <a 
-                      href="tel:+12148641386" 
+                      href="tel:+14692785289" 
                       className="text-gray-900 dark:text-gray-100 font-medium hover:text-primary dark:hover:text-blue-400 transition-colors"
                     >
-                      +1 (214) 864-1386
+                      +1 (469) 278-5289
                     </a>
                   </div>
                 </div>

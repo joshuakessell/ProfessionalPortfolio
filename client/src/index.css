@@ -140,7 +140,7 @@ html {
   width: 100%;
   padding: 2rem;
   margin: 0 auto;
-  overflow-y: auto; /* Allow content to scroll if needed */
+  overflow: hidden; /* Completely hide any overflowing content */
   max-height: calc(100vh - 160px); /* Limit height to prevent overflow */
 }
 

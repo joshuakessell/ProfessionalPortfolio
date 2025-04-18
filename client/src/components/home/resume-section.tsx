@@ -66,7 +66,7 @@ export function ResumeSection() {
           </TabsList>
           
           <TabsContent value="experience" className="mt-0">
-            <div className="grid md:grid-cols-2 gap-6 lg:gap-10">
+            <div className="flex flex-col gap-6">
               {experiences.map((exp, index) => (
                 <div 
                   key={exp.id}
@@ -74,12 +74,12 @@ export function ResumeSection() {
                     ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
-                  <div className="flex justify-between mb-4">
-                    <div>
+                  <div className="flex flex-col sm:flex-row sm:justify-between mb-4">
+                    <div className="mb-2 sm:mb-0">
                       <h3 className="text-lg font-semibold mb-1">{exp.title}</h3>
                       <div className="text-primary dark:text-blue-400 font-medium">{exp.company}</div>
                     </div>
-                    <div className="text-right">
+                    <div className="text-left sm:text-right">
                       <div className="text-sm text-gray-600 dark:text-gray-400">{exp.period}</div>
                       {exp.current && (
                         <Badge variant="secondary" className="mt-1 bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400 animate-pulse-slow">
