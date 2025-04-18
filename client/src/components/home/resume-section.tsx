@@ -26,7 +26,7 @@ export function ResumeSection() {
   }, []);
   
   return (
-    <div className="w-full h-full overflow-y-auto">
+    <div className="w-full h-full overflow-x-hidden">
       <div className="max-w-6xl mx-auto px-4 py-8">
         <div className="text-center mb-8">
           <h2 className="text-3xl md:text-4xl font-bold mb-3">Professional Experience</h2>

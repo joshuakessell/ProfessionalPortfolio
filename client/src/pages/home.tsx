@@ -58,7 +58,7 @@ export default function Home() {
       
       {/* Resume Section */}
       <section id="resume" className="scroll-section">
-        <div className="scroll-content">
+        <div className="scroll-content overflow-y-auto scrollbar-hide">
           <ResumeSection />
         </div>
       </section>

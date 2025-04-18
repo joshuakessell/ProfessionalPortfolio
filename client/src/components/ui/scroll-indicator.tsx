@@ -12,6 +12,9 @@ export function ScrollIndicator({ sectionIds }: ScrollIndicatorProps) {
       const sectionElements = sectionIds.map(id => document.getElementById(id));
       const scrollPosition = window.scrollY + window.innerHeight / 3; // Adjusted for better detection
       
+      // First determine if we're in the viewport of one of the sections
+      let inViewport = false;
+      
       for (let i = 0; i < sectionElements.length; i++) {
         const section = sectionElements[i];
         if (!section) continue;
@@ -19,9 +22,37 @@ export function ScrollIndicator({ sectionIds }: ScrollIndicatorProps) {
         const sectionTop = section.offsetTop - 50; // Add some tolerance
         const sectionBottom = sectionTop + section.offsetHeight;
         
+        // Special case for resume section which might be scrollable
+        if (sectionIds[i] === 'resume') {
+          const resumeSection = section;
+          const resumeContent = resumeSection.querySelector('.scroll-content');
+          
+          if (resumeContent) {
+            // Check if we're within the resume section's viewport
+            if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+              // We're in the resume section
+              setActiveSection(i);
+              inViewport = true;
+              break;
+            }
+          }
+        }
+        
+        // Check for other sections
         if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
           setActiveSection(i);
+          inViewport = true;
           break; // Stop checking once we found the active section
+        }
+      }
+      
+      // If not in any section's viewport, we might be scrolling through the resume content
+      if (!inViewport) {
+        // Default to resume section if we haven't matched any section
+        // This assumes we're scrolling through the resume content
+        const resumeIndex = sectionIds.indexOf('resume');
+        if (resumeIndex !== -1) {
+          setActiveSection(resumeIndex);
         }
       }
     };
