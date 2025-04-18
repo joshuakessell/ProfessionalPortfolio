@@ -66,48 +66,76 @@ export function ResumeSection() {
           </TabsList>
           
           <TabsContent value="experience" className="mt-0">
-            <div className="flex flex-col gap-6">
-              {experiences.map((exp, index) => (
-                <div 
-                  key={exp.id}
-                  className={`bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm p-6 
-                    ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  <div className="flex flex-col sm:flex-row sm:justify-between mb-4">
-                    <div className="mb-2 sm:mb-0">
-                      <h3 className="text-lg font-semibold mb-1">{exp.title}</h3>
-                      <div className="text-primary dark:text-blue-400 font-medium">{exp.company}</div>
+            <div className="relative w-full">
+              {/* Horizontal scrollable container for experience cards */}
+              <div className="flex overflow-x-auto gap-6 pb-4 scrollbar-hide snap-x snap-mandatory">
+                {experiences.map((exp, index) => (
+                  <div 
+                    key={exp.id}
+                    className={`bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm p-6 
+                      flex-shrink-0 w-[300px] md:w-[350px] lg:w-[400px] snap-start
+                      ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}
+                    style={{ animationDelay: `${index * 100}ms` }}
+                  >
+                    <div className="flex flex-col sm:flex-row sm:justify-between mb-4">
+                      <div className="mb-2 sm:mb-0">
+                        <h3 className="text-lg font-semibold mb-1">{exp.title}</h3>
+                        <div className="text-primary dark:text-blue-400 font-medium">{exp.company}</div>
+                      </div>
+                      <div className="text-left sm:text-right">
+                        <div className="text-sm text-gray-600 dark:text-gray-400">{exp.period}</div>
+                        {exp.current && (
+                          <Badge variant="secondary" className="mt-1 bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400 animate-pulse-slow">
+                            Current
+                          </Badge>
+                        )}
+                      </div>
                     </div>
-                    <div className="text-left sm:text-right">
-                      <div className="text-sm text-gray-600 dark:text-gray-400">{exp.period}</div>
-                      {exp.current && (
-                        <Badge variant="secondary" className="mt-1 bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400 animate-pulse-slow">
-                          Current
-                        </Badge>
-                      )}
-                    </div>
+                    <ul className="space-y-2 text-gray-600 dark:text-gray-300">
+                      {exp.responsibilities.map((item, idx) => (
+                        <li 
+                          key={idx} 
+                          className="flex items-start gap-2"
+                        >
+                          <CheckCircle2 className="h-5 w-5 text-primary dark:text-blue-400 shrink-0 mt-0.5" />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                  <ul className="space-y-2 text-gray-600 dark:text-gray-300">
-                    {exp.responsibilities.map((item, idx) => (
-                      <li 
-                        key={idx} 
-                        className="flex items-start gap-2"
-                      >
-                        <CheckCircle2 className="h-5 w-5 text-primary dark:text-blue-400 shrink-0 mt-0.5" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
+                ))}
+              </div>
+              
+              {/* Scroll indicators */}
+              <div className="hidden md:flex justify-center mt-4 gap-1">
+                {experiences.map((_, index) => (
+                  <button 
+                    key={index}
+                    className="w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500"
+                    onClick={() => {
+                      const container = document.querySelector('.snap-x');
+                      const cards = container?.querySelectorAll('.snap-start');
+                      if (container && cards && cards[index]) {
+                        container.scrollTo({
+                          left: (cards[index] as HTMLElement).offsetLeft - 16,
+                          behavior: 'smooth'
+                        });
+                      }
+                    }}
+                  />
+                ))}
+              </div>
             </div>
           </TabsContent>
           
           <TabsContent value="skills" className="mt-0">
-            <div className="grid md:grid-cols-2 gap-8">
-              <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm">
-                <div className="p-6">
+            <div className="relative w-full">
+              {/* Horizontal scrollable container for skills cards */}
+              <div className="flex overflow-x-auto gap-6 pb-4 scrollbar-hide snap-x snap-mandatory">
+                <div 
+                  className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm p-6 
+                    flex-shrink-0 w-[300px] md:w-[450px] lg:w-[500px] snap-start"
+                >
                   <h3 className="text-lg font-semibold mb-4">Technical Skills</h3>
                   
                   <div className="space-y-4">
@@ -129,10 +157,11 @@ export function ResumeSection() {
                     ))}
                   </div>
                 </div>
-              </div>
-              
-              <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm">
-                <div className="p-6">
+                
+                <div 
+                  className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm p-6 
+                    flex-shrink-0 w-[300px] md:w-[450px] lg:w-[500px] snap-start"
+                >
                   <h3 className="text-lg font-semibold mb-4">Tools & Platforms</h3>
                   
                   <div className="grid grid-cols-2 gap-4">
@@ -163,36 +192,80 @@ export function ResumeSection() {
                   </div>
                 </div>
               </div>
+              
+              {/* Scroll indicators */}
+              <div className="hidden md:flex justify-center mt-4 gap-1">
+                {[0, 1].map((index) => (
+                  <button 
+                    key={index}
+                    className="w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500"
+                    onClick={() => {
+                      const container = document.querySelectorAll('.snap-x')[0]; // First snap container is skills
+                      const cards = container?.querySelectorAll('.snap-start');
+                      if (container && cards && cards[index]) {
+                        container.scrollTo({
+                          left: (cards[index] as HTMLElement).offsetLeft - 16,
+                          behavior: 'smooth'
+                        });
+                      }
+                    }}
+                  />
+                ))}
+              </div>
             </div>
           </TabsContent>
           
           <TabsContent value="education" className="mt-0">
-            <div className="space-y-8">
-              {education.map((edu, index) => (
-                <div 
-                  key={edu.id}
-                  className={`flex flex-col md:flex-row md:items-center bg-white dark:bg-gray-800 
-                    rounded-xl overflow-hidden shadow-sm ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}
-                  style={{ animationDelay: `${index * 150}ms` }}
-                >
-                  <div className="p-6 flex flex-col md:flex-row w-full">
-                    <div className="md:w-1/4 mb-4 md:mb-0">
-                      <div className="w-16 h-16 bg-blue-50 dark:bg-blue-900/20 rounded-full flex items-center justify-center mb-2 animate-float">
-                        <GraduationCap className="h-8 w-8 text-primary" />
+            <div className="relative w-full">
+              {/* Horizontal scrollable container for education cards */}
+              <div className="flex overflow-x-auto gap-6 pb-4 scrollbar-hide snap-x snap-mandatory">
+                {education.map((edu, index) => (
+                  <div 
+                    key={edu.id}
+                    className={`bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm p-6 
+                      flex-shrink-0 w-[300px] md:w-[450px] lg:w-[500px] snap-start
+                      ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}
+                    style={{ animationDelay: `${index * 150}ms` }}
+                  >
+                    <div className="flex flex-col w-full">
+                      <div className="flex items-center gap-4 mb-4">
+                        <div className="w-16 h-16 bg-blue-50 dark:bg-blue-900/20 rounded-full flex items-center justify-center animate-float shrink-0">
+                          <GraduationCap className="h-8 w-8 text-primary" />
+                        </div>
+                        <div>
+                          <h3 className="text-xl font-semibold">{edu.degree}</h3>
+                          <div className="text-primary dark:text-blue-400 font-medium">{edu.institution}</div>
+                          <div className="text-gray-600 dark:text-gray-400 text-sm">{edu.period}</div>
+                        </div>
                       </div>
-                      <div className="text-gray-600 dark:text-gray-400 text-sm">{edu.period}</div>
-                    </div>
-                    
-                    <div className="md:w-3/4">
-                      <h3 className="text-xl font-semibold mb-2">{edu.degree}</h3>
-                      <div className="text-primary dark:text-blue-400 font-medium mb-2">{edu.institution}</div>
+                      
                       <p className="text-gray-600 dark:text-gray-300">
                         {edu.description}
                       </p>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
+              
+              {/* Scroll indicators */}
+              <div className="hidden md:flex justify-center mt-4 gap-1">
+                {education.map((_, index) => (
+                  <button 
+                    key={index}
+                    className="w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500"
+                    onClick={() => {
+                      const container = document.querySelectorAll('.snap-x')[1]; // Second snap container is education
+                      const cards = container?.querySelectorAll('.snap-start');
+                      if (container && cards && cards[index]) {
+                        container.scrollTo({
+                          left: (cards[index] as HTMLElement).offsetLeft - 16,
+                          behavior: 'smooth'
+                        });
+                      }
+                    }}
+                  />
+                ))}
+              </div>
             </div>
           </TabsContent>
         </Tabs>

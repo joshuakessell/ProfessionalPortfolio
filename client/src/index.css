@@ -142,8 +142,10 @@ body {
 }
 
 /* Special case for the resume section */
-#resume .scroll-content {
-  overflow-y: auto;
+/* Instead of making the resume content scrollable, we've made it horizontally scrollable */
+/* These styles help with the horizontal scrolling */
+.scrollbar-hide.snap-x {
+  cursor: grab;
 }
 
 /* Apply a different z-index based on section order to manage stacking when transitioning */
