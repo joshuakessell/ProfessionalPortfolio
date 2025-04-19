@@ -91,8 +91,8 @@ export function ContactSection() {
   }
   
   return (
-    <div className="w-full h-full overflow-y-auto">
-      <div className="max-w-6xl mx-auto px-4 py-8">
+    <div className="w-full h-full overflow-y-auto min-h-screen flex flex-col justify-center">
+      <div className="max-w-6xl mx-auto px-4 py-20 flex-grow flex flex-col justify-center">
         <div className="flex flex-col md:flex-row gap-10 lg:gap-16">
           <div 
             className={`w-full md:w-1/2 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}
