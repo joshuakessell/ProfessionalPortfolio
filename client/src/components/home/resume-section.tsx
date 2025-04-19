@@ -96,7 +96,7 @@ export function ResumeSection() {
               
               {/* Single experience card container */}
               <div className="flex justify-center items-center pb-6 pt-2 px-4 overflow-hidden">
-                <div className="w-full max-w-4xl mx-auto relative h-[300px]">
+                <div className="w-full max-w-[85%] md:max-w-[90%] lg:max-w-[95%] mx-auto relative h-[300px]">
                   <AnimatePresence initial={false}>
                     <motion.div
                       key={experiences[currentExperienceIndex].id}
@@ -210,7 +210,7 @@ export function ResumeSection() {
               
               {/* Single skills card container */}
               <div className="flex justify-center items-center pb-6 pt-2 px-4 overflow-hidden">
-                <div className="w-full max-w-4xl mx-auto relative h-[300px]">
+                <div className="w-full max-w-[85%] md:max-w-[90%] lg:max-w-[95%] mx-auto relative h-[300px]">
                   <AnimatePresence initial={false}>
                     <motion.div
                       key={`skills-${currentSkillsIndex}`}
@@ -369,7 +369,7 @@ export function ResumeSection() {
               
               {/* Single education card container */}
               <div className="flex justify-center items-center pb-6 pt-2 px-4 overflow-hidden">
-                <div className="w-full max-w-4xl mx-auto relative h-[300px]">
+                <div className="w-full max-w-[85%] md:max-w-[90%] lg:max-w-[95%] mx-auto relative h-[300px]">
                   <AnimatePresence initial={false}>
                     <motion.div
                       key={education[currentEducationIndex].id}
