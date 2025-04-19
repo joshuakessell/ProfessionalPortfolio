@@ -191,21 +191,24 @@ export function ResumeSection() {
                   >
                     <h3 className="text-lg font-semibold mb-4">Technical Skills</h3>
                     
-                    <div className="space-y-4">
+                    <div className="grid grid-cols-2 gap-4">
                       {skills.map((skill, index) => (
                         <div 
                           key={index}
-                          className={isVisible ? 'animate-fade-in' : 'opacity-0'}
+                          className={`bg-gray-50 dark:bg-gray-800 p-4 rounded-lg ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}
                           style={{ animationDelay: `${index * 100}ms` }}
                         >
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium text-sm">{skill.name}</span>
-                            <span className="text-xs text-gray-500 dark:text-gray-400">{skill.percentage}%</span>
+                          <div className="flex flex-col">
+                            <span className="font-medium text-sm mb-1">{skill.name}</span>
+                            <div className="flex items-center gap-2">
+                              <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+                                <span className="font-bold text-blue-600 dark:text-blue-400">{skill.years}</span>
+                              </div>
+                              <span className="text-xs text-gray-500 dark:text-gray-400">
+                                {skill.years} {skill.years === 1 ? 'year' : 'years'} of experience
+                              </span>
+                            </div>
                           </div>
-                          <Progress 
-                            value={isVisible ? skill.percentage : 0} 
-                            className={`h-2 ${skill.name.includes("AI") ? "progress-violet" : ""} transition-all duration-1000 ease-in-out`} 
-                          />
                         </div>
                       ))}
                     </div>

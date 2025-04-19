@@ -63,15 +63,15 @@ export const experiences: Experience[] = [
 ];
 
 export const skills: Skill[] = [
-  { name: "JavaScript/HTML5/CSS3", percentage: 95 },
-  { name: "React", percentage: 90 },
-  { name: "Java", percentage: 90 },
-  { name: "MongoDB", percentage: 85 },
-  { name: "Spring Boot", percentage: 85 },
-  { name: "Angular", percentage: 82 },
-  { name: "Android SDK", percentage: 80 },
-  { name: "REST Services", percentage: 80 },
-  { name: "Agile Development", percentage: 75 }
+  { name: "JavaScript/HTML5/CSS3", years: 6 },
+  { name: "React", years: 2 },
+  { name: "Java", years: 5 },
+  { name: "MongoDB", years: 2 },
+  { name: "Spring Boot", years: 5 },
+  { name: "Angular", years: 2 },
+  { name: "Android SDK", years: 3 },
+  { name: "REST Services", years: 5 },
+  { name: "Agile Development", years: 6 }
 ];
 
 export const tools: Tool[] = [
