@@ -28,8 +28,8 @@ export function ResumeSection() {
   }, []);
   
   return (
-    <div className="w-full h-full overflow-x-hidden">
-      <div className="max-w-6xl mx-auto px-4 py-8">
+    <div className="w-full h-full overflow-x-hidden flex flex-col justify-between min-h-screen">
+      <div className="max-w-6xl mx-auto px-4 py-8 flex-grow flex flex-col justify-center">
         <div className="text-center mb-8">
           <h2 className="text-3xl md:text-4xl font-bold mb-3">Professional Experience</h2>
           <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">

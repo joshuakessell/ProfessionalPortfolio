@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 export function HeroSection() {
   return (
-    <div className="w-full h-full flex items-center justify-center">
+    <div className="w-full h-full min-h-screen flex items-center justify-center">
       {/* Background effects */}
       <ParticlesBackground 
         quantity={40}
@@ -19,7 +19,7 @@ export function HeroSection() {
         className="opacity-30 dark:opacity-20"
       />
       
-      <div className="w-full max-w-6xl mx-auto px-4 py-8 flex flex-col md:flex-row items-center justify-between gap-8 lg:gap-16">
+      <div className="w-full max-w-6xl mx-auto px-4 py-20 flex flex-col md:flex-row items-center justify-center gap-8 lg:gap-16 min-h-screen">
         <div className="w-full md:w-1/2 space-y-6">
           <div className="flex items-center gap-2 mb-4">
             <div className="h-1 w-8 bg-primary rounded-full"></div>
