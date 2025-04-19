@@ -220,7 +220,7 @@ export function ResumeSection() {
                           </div>
                           <div className="relative h-1.5 w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
                             <div 
-                              className={`h-full ${skill.name.includes("JavaScript") ? "bg-blue-500" : skill.name.includes("React") ? "bg-blue-400" : skill.name.includes("Java") ? "bg-indigo-500" : skill.name.includes("Spring") ? "bg-green-500" : skill.name.includes("Angular") ? "bg-red-500" : skill.name.includes("Android") ? "bg-green-400" : skill.name.includes("REST") ? "bg-purple-500" : "bg-blue-600"} transition-all duration-1000 ease-in-out`}
+                              className="h-full bg-black dark:bg-white transition-all duration-1000 ease-in-out"
                               style={{ width: isVisible ? `${(skill.years / 6) * 100}%` : '0%' }}
                             ></div>
                           </div>

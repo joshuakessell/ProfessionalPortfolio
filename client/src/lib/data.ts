@@ -64,14 +64,14 @@ export const experiences: Experience[] = [
 
 export const skills: Skill[] = [
   { name: "JavaScript/HTML5/CSS3", years: 6 },
-  { name: "React", years: 2 },
+  { name: "Agile Development", years: 6 },
   { name: "Java", years: 5 },
-  { name: "MongoDB", years: 2 },
   { name: "Spring Boot", years: 5 },
-  { name: "Angular", years: 2 },
-  { name: "Android SDK", years: 3 },
   { name: "REST Services", years: 5 },
-  { name: "Agile Development", years: 6 }
+  { name: "Android SDK", years: 3 },
+  { name: "React", years: 2 },
+  { name: "MongoDB", years: 2 },
+  { name: "Angular", years: 2 }
 ];
 
 export const tools: Tool[] = [
