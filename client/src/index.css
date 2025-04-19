@@ -104,11 +104,15 @@ body {
 .scroll-section {
   scroll-snap-align: start;
   scroll-snap-stop: always;
-  height: 100vh;
+  height: 100vh; /* Full viewport height for snap points */
+  min-height: 100vh; /* Ensures section is at least as tall as the viewport */
   width: 100%;
   position: relative;
   box-sizing: border-box;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center content vertically */
 }
 
 /* Fixed content layout for zoom effect */
@@ -273,11 +277,15 @@ body {
 }
 
 .scroll-content {
-  max-width: 1200px;
+  max-width: 1400px; /* Increased for wider content */
   width: 100%;
   padding: 2rem;
   margin: 0 auto;
-  max-height: calc(100vh - 160px); /* Limit height to prevent overflow */
+  height: 100vh; /* Full height to match viewport */
+  max-height: calc(100vh - 120px); /* Limit height to prevent overflow */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center content vertically */
 }
 
 /* Add a helper class to hide scrollbars but allow scrolling */

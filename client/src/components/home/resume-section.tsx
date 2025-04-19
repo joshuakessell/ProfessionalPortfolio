@@ -8,7 +8,9 @@ import {
   Database, 
   BrainCircuit,
   CheckCircle2,
-  GraduationCap
+  GraduationCap,
+  ChevronLeft,
+  ChevronRight
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -67,20 +69,46 @@ export function ResumeSection() {
           
           <TabsContent value="experience" className="mt-0">
             <div className="relative w-full">
+              {/* Left scroll button */}
+              <button 
+                className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white/80 dark:bg-gray-800/80 rounded-full p-2 shadow-md hover:bg-white hover:scale-110 transition-all"
+                onClick={() => {
+                  const container = document.querySelector('#experience-cards');
+                  if (container) {
+                    container.scrollBy({ left: -500, behavior: 'smooth' });
+                  }
+                }}
+              >
+                <ChevronLeft className="h-6 w-6 text-primary" />
+              </button>
+              
+              {/* Right scroll button */}
+              <button 
+                className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white/80 dark:bg-gray-800/80 rounded-full p-2 shadow-md hover:bg-white hover:scale-110 transition-all"
+                onClick={() => {
+                  const container = document.querySelector('#experience-cards');
+                  if (container) {
+                    container.scrollBy({ left: 500, behavior: 'smooth' });
+                  }
+                }}
+              >
+                <ChevronRight className="h-6 w-6 text-primary" />
+              </button>
+              
               {/* Horizontal scrollable container for experience cards */}
-              <div className="flex overflow-x-auto gap-6 pb-4 scrollbar-hide snap-x snap-mandatory">
+              <div id="experience-cards" className="flex overflow-x-auto gap-8 pb-6 pt-2 px-10 scrollbar-hide snap-x">
                 {experiences.map((exp, index) => (
                   <div 
                     key={exp.id}
-                    className={`bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm p-6 
-                      flex-shrink-0 w-[300px] md:w-[350px] lg:w-[400px] snap-start
+                    className={`bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm p-8 
+                      flex-shrink-0 w-[65%] md:w-[70%] lg:w-[65%] snap-center
                       ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}
                     style={{ animationDelay: `${index * 100}ms` }}
                   >
-                    <div className="flex flex-col sm:flex-row sm:justify-between mb-4">
-                      <div className="mb-2 sm:mb-0">
-                        <h3 className="text-lg font-semibold mb-1">{exp.title}</h3>
-                        <div className="text-primary dark:text-blue-400 font-medium">{exp.company}</div>
+                    <div className="flex flex-col sm:flex-row sm:justify-between mb-6">
+                      <div className="mb-3 sm:mb-0">
+                        <h3 className="text-xl font-semibold mb-1">{exp.title}</h3>
+                        <div className="text-primary dark:text-blue-400 font-medium text-lg">{exp.company}</div>
                       </div>
                       <div className="text-left sm:text-right">
                         <div className="text-sm text-gray-600 dark:text-gray-400">{exp.period}</div>
@@ -91,14 +119,14 @@ export function ResumeSection() {
                         )}
                       </div>
                     </div>
-                    <ul className="space-y-2 text-gray-600 dark:text-gray-300">
+                    <ul className="space-y-3 text-gray-600 dark:text-gray-300">
                       {exp.responsibilities.map((item, idx) => (
                         <li 
                           key={idx} 
-                          className="flex items-start gap-2"
+                          className="flex items-start gap-3"
                         >
-                          <CheckCircle2 className="h-5 w-5 text-primary dark:text-blue-400 shrink-0 mt-0.5" />
-                          <span>{item}</span>
+                          <CheckCircle2 className="h-5 w-5 text-primary dark:text-blue-400 shrink-0 mt-1" />
+                          <span className="text-base">{item}</span>
                         </li>
                       ))}
                     </ul>
@@ -107,17 +135,17 @@ export function ResumeSection() {
               </div>
               
               {/* Scroll indicators */}
-              <div className="hidden md:flex justify-center mt-4 gap-1">
+              <div className="flex justify-center mt-6 gap-2">
                 {experiences.map((_, index) => (
                   <button 
                     key={index}
                     className="w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500"
                     onClick={() => {
-                      const container = document.querySelector('.snap-x');
-                      const cards = container?.querySelectorAll('.snap-start');
+                      const container = document.querySelector('#experience-cards');
+                      const cards = container?.querySelectorAll('.snap-center');
                       if (container && cards && cards[index]) {
                         container.scrollTo({
-                          left: (cards[index] as HTMLElement).offsetLeft - 16,
+                          left: (cards[index] as HTMLElement).offsetLeft - container.clientWidth / 2 + (cards[index] as HTMLElement).clientWidth / 2,
                           behavior: 'smooth'
                         });
                       }
@@ -130,11 +158,37 @@ export function ResumeSection() {
           
           <TabsContent value="skills" className="mt-0">
             <div className="relative w-full">
+              {/* Left scroll button */}
+              <button 
+                className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white/80 dark:bg-gray-800/80 rounded-full p-2 shadow-md hover:bg-white hover:scale-110 transition-all"
+                onClick={() => {
+                  const container = document.querySelector('#skills-cards');
+                  if (container) {
+                    container.scrollBy({ left: -500, behavior: 'smooth' });
+                  }
+                }}
+              >
+                <ChevronLeft className="h-6 w-6 text-primary" />
+              </button>
+              
+              {/* Right scroll button */}
+              <button 
+                className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white/80 dark:bg-gray-800/80 rounded-full p-2 shadow-md hover:bg-white hover:scale-110 transition-all"
+                onClick={() => {
+                  const container = document.querySelector('#skills-cards');
+                  if (container) {
+                    container.scrollBy({ left: 500, behavior: 'smooth' });
+                  }
+                }}
+              >
+                <ChevronRight className="h-6 w-6 text-primary" />
+              </button>
+              
               {/* Horizontal scrollable container for skills cards */}
-              <div className="flex overflow-x-auto gap-6 pb-4 scrollbar-hide snap-x snap-mandatory">
+              <div id="skills-cards" className="flex overflow-x-auto gap-8 pb-6 pt-2 px-10 scrollbar-hide snap-x">
                 <div 
-                  className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm p-6 
-                    flex-shrink-0 w-[300px] md:w-[450px] lg:w-[500px] snap-start"
+                  className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm p-8 
+                    flex-shrink-0 w-[65%] md:w-[70%] lg:w-[65%] snap-center"
                 >
                   <h3 className="text-lg font-semibold mb-4">Technical Skills</h3>
                   
@@ -159,8 +213,8 @@ export function ResumeSection() {
                 </div>
                 
                 <div 
-                  className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm p-6 
-                    flex-shrink-0 w-[300px] md:w-[450px] lg:w-[500px] snap-start"
+                  className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm p-8 
+                    flex-shrink-0 w-[65%] md:w-[70%] lg:w-[65%] snap-center"
                 >
                   <h3 className="text-lg font-semibold mb-4">Tools & Platforms</h3>
                   
@@ -194,17 +248,17 @@ export function ResumeSection() {
               </div>
               
               {/* Scroll indicators */}
-              <div className="hidden md:flex justify-center mt-4 gap-1">
+              <div className="flex justify-center mt-6 gap-2">
                 {[0, 1].map((index) => (
                   <button 
                     key={index}
                     className="w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500"
                     onClick={() => {
-                      const container = document.querySelectorAll('.snap-x')[0]; // First snap container is skills
-                      const cards = container?.querySelectorAll('.snap-start');
+                      const container = document.querySelector('#skills-cards');
+                      const cards = container?.querySelectorAll('.snap-center');
                       if (container && cards && cards[index]) {
                         container.scrollTo({
-                          left: (cards[index] as HTMLElement).offsetLeft - 16,
+                          left: (cards[index] as HTMLElement).offsetLeft - container.clientWidth / 2 + (cards[index] as HTMLElement).clientWidth / 2,
                           behavior: 'smooth'
                         });
                       }
@@ -217,18 +271,44 @@ export function ResumeSection() {
           
           <TabsContent value="education" className="mt-0">
             <div className="relative w-full">
+              {/* Left scroll button */}
+              <button 
+                className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white/80 dark:bg-gray-800/80 rounded-full p-2 shadow-md hover:bg-white hover:scale-110 transition-all"
+                onClick={() => {
+                  const container = document.querySelector('#education-cards');
+                  if (container) {
+                    container.scrollBy({ left: -500, behavior: 'smooth' });
+                  }
+                }}
+              >
+                <ChevronLeft className="h-6 w-6 text-primary" />
+              </button>
+              
+              {/* Right scroll button */}
+              <button 
+                className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white/80 dark:bg-gray-800/80 rounded-full p-2 shadow-md hover:bg-white hover:scale-110 transition-all"
+                onClick={() => {
+                  const container = document.querySelector('#education-cards');
+                  if (container) {
+                    container.scrollBy({ left: 500, behavior: 'smooth' });
+                  }
+                }}
+              >
+                <ChevronRight className="h-6 w-6 text-primary" />
+              </button>
+              
               {/* Horizontal scrollable container for education cards */}
-              <div className="flex overflow-x-auto gap-6 pb-4 scrollbar-hide snap-x snap-mandatory">
+              <div id="education-cards" className="flex overflow-x-auto gap-8 pb-6 pt-2 px-10 scrollbar-hide snap-x">
                 {education.map((edu, index) => (
                   <div 
                     key={edu.id}
-                    className={`bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm p-6 
-                      flex-shrink-0 w-[300px] md:w-[450px] lg:w-[500px] snap-start
+                    className={`bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm p-8 
+                      flex-shrink-0 w-[65%] md:w-[70%] lg:w-[65%] snap-center
                       ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}
                     style={{ animationDelay: `${index * 150}ms` }}
                   >
                     <div className="flex flex-col w-full">
-                      <div className="flex items-center gap-4 mb-4">
+                      <div className="flex items-center gap-4 mb-6">
                         <div className="w-16 h-16 bg-blue-50 dark:bg-blue-900/20 rounded-full flex items-center justify-center animate-float shrink-0">
                           <GraduationCap className="h-8 w-8 text-primary" />
                         </div>
@@ -239,7 +319,7 @@ export function ResumeSection() {
                         </div>
                       </div>
                       
-                      <p className="text-gray-600 dark:text-gray-300">
+                      <p className="text-gray-600 dark:text-gray-300 text-base leading-relaxed">
                         {edu.description}
                       </p>
                     </div>
@@ -248,17 +328,17 @@ export function ResumeSection() {
               </div>
               
               {/* Scroll indicators */}
-              <div className="hidden md:flex justify-center mt-4 gap-1">
+              <div className="flex justify-center mt-6 gap-2">
                 {education.map((_, index) => (
                   <button 
                     key={index}
                     className="w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500"
                     onClick={() => {
-                      const container = document.querySelectorAll('.snap-x')[1]; // Second snap container is education
-                      const cards = container?.querySelectorAll('.snap-start');
+                      const container = document.querySelector('#education-cards');
+                      const cards = container?.querySelectorAll('.snap-center');
                       if (container && cards && cards[index]) {
                         container.scrollTo({
-                          left: (cards[index] as HTMLElement).offsetLeft - 16,
+                          left: (cards[index] as HTMLElement).offsetLeft - container.clientWidth / 2 + (cards[index] as HTMLElement).clientWidth / 2,
                           behavior: 'smooth'
                         });
                       }
