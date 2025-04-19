@@ -32,26 +32,9 @@ export function ResumeSection() {
   
   return (
     <div className="w-full h-full overflow-x-hidden flex flex-col justify-between min-h-screen">
-      <div className="max-w-6xl mx-auto px-4 py-8 flex-grow flex flex-col justify-center">
-        <div className="text-center mb-8">
-          <h2 className="text-3xl md:text-4xl font-bold mb-3">Professional Experience</h2>
-          <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            My professional journey as a developer, showcasing experience, skills, and education.
-          </p>
-        </div>
-        
-        <div className="flex items-center justify-center gap-2 mb-12">
-          <a href="/joshua-kessell-resume.pdf" download="Joshua_Kessell_Resume.pdf" target="_blank" rel="noopener noreferrer">
-            <Button 
-              variant="outline" 
-              size="sm" 
-              className="flex items-center gap-2 shadow-md holographic-hover"
-            >
-              <Download className="h-4 w-4" />
-              Download Resume
-            </Button>
-          </a>
-          <span className="text-sm text-gray-500 dark:text-gray-400">Updated April 2024</span>
+      <div className="max-w-6xl mx-auto px-4 py-6 flex-grow flex flex-col justify-center">
+        <div className="text-center mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold">Professional Experience</h2>
         </div>
         
         <Tabs defaultValue="experience" onValueChange={setActiveTab} className="w-full">
@@ -191,18 +174,18 @@ export function ResumeSection() {
                   >
                     <h3 className="text-lg font-semibold mb-4">Technical Skills</h3>
                     
-                    <div className="space-y-3">
+                    <div className="space-y-2">
                       {skills.map((skill, index) => (
                         <div 
                           key={index}
                           className={isVisible ? 'animate-fade-in' : 'opacity-0'}
                           style={{ animationDelay: `${index * 100}ms` }}
                         >
-                          <div className="flex justify-between mb-1">
-                            <span className="font-medium text-sm">{skill.name}</span>
-                            <span className="text-xs text-gray-500 dark:text-gray-400">{skill.years} {skill.years === 1 ? 'year' : 'years'}</span>
+                          <div className="flex justify-between mb-0.5">
+                            <span className="font-medium text-xs">{skill.name}</span>
+                            <span className="text-xs text-gray-500 dark:text-gray-400">{skill.years} {skill.years === 1 ? 'yr' : 'yrs'}</span>
                           </div>
-                          <div className="relative h-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                          <div className="relative h-1.5 w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
                             <div 
                               className={`h-full ${skill.name.includes("JavaScript") ? "bg-blue-500" : skill.name.includes("React") ? "bg-blue-400" : skill.name.includes("Java") ? "bg-indigo-500" : skill.name.includes("Spring") ? "bg-green-500" : skill.name.includes("Angular") ? "bg-red-500" : skill.name.includes("Android") ? "bg-green-400" : skill.name.includes("REST") ? "bg-purple-500" : "bg-blue-600"} transition-all duration-1000 ease-in-out`}
                               style={{ width: isVisible ? `${(skill.years / 6) * 100}%` : '0%' }}
@@ -338,6 +321,20 @@ export function ResumeSection() {
             </div>
           </TabsContent>
         </Tabs>
+        
+        <div className="flex items-center justify-center gap-2 mt-6">
+          <a href="/joshua-kessell-resume.pdf" download="Joshua_Kessell_Resume.pdf" target="_blank" rel="noopener noreferrer">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="flex items-center gap-2 shadow-md holographic-hover"
+            >
+              <Download className="h-4 w-4" />
+              Download Resume
+            </Button>
+          </a>
+          <span className="text-sm text-gray-500 dark:text-gray-400">Updated April 2024</span>
+        </div>
       </div>
     </div>
   );
