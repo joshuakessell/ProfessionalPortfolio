@@ -38,7 +38,7 @@ export function ResumeSection() {
         </div>
         
         <Tabs defaultValue="experience" onValueChange={setActiveTab} className="w-full">
-          <div className="flex justify-center mb-8">
+          <div className="flex justify-center mb-4">
             <TabsList className="flex gap-3 justify-center bg-transparent">
               {resumeTabs.map((tab) => (
                 <TabsTrigger 
@@ -88,32 +88,32 @@ export function ResumeSection() {
               <div className="flex justify-center items-center pb-6 pt-2 px-4">
                 <div 
                   key={experiences[currentExperienceIndex].id}
-                  className={`bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm p-8 
+                  className={`bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm p-5 
                     w-full max-w-3xl mx-auto
                     ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}
                 >
-                  <div className="flex flex-col sm:flex-row sm:justify-between mb-6">
-                    <div className="mb-3 sm:mb-0">
-                      <h3 className="text-xl font-semibold mb-1">{experiences[currentExperienceIndex].title}</h3>
-                      <div className="text-primary dark:text-blue-400 font-medium text-lg">{experiences[currentExperienceIndex].company}</div>
+                  <div className="flex flex-col sm:flex-row sm:justify-between mb-3">
+                    <div className="mb-2 sm:mb-0">
+                      <h3 className="text-lg font-semibold mb-0.5">{experiences[currentExperienceIndex].title}</h3>
+                      <div className="text-primary dark:text-blue-400 font-medium text-sm">{experiences[currentExperienceIndex].company}</div>
                     </div>
                     <div className="text-left sm:text-right">
-                      <div className="text-sm text-gray-600 dark:text-gray-400">{experiences[currentExperienceIndex].period}</div>
+                      <div className="text-xs text-gray-600 dark:text-gray-400">{experiences[currentExperienceIndex].period}</div>
                       {experiences[currentExperienceIndex].current && (
-                        <Badge variant="secondary" className="mt-1 bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400 animate-pulse-slow">
+                        <Badge variant="secondary" className="mt-0.5 bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400 animate-pulse-slow text-xs">
                           Current
                         </Badge>
                       )}
                     </div>
                   </div>
-                  <ul className="space-y-3 text-gray-600 dark:text-gray-300">
+                  <ul className="space-y-2 text-gray-600 dark:text-gray-300">
                     {experiences[currentExperienceIndex].responsibilities.map((item, idx) => (
                       <li 
                         key={idx} 
-                        className="flex items-start gap-3"
+                        className="flex items-start gap-2"
                       >
-                        <CheckCircle2 className="h-5 w-5 text-primary dark:text-blue-400 shrink-0 mt-1" />
-                        <span className="text-base">{item}</span>
+                        <CheckCircle2 className="h-4 w-4 text-primary dark:text-blue-400 shrink-0 mt-0.5" />
+                        <span className="text-sm">{item}</span>
                       </li>
                     ))}
                   </ul>
@@ -169,10 +169,10 @@ export function ResumeSection() {
               <div className="flex justify-center items-center pb-6 pt-2 px-4">
                 {currentSkillsIndex === 0 ? (
                   <div 
-                    className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm p-8 
+                    className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm p-5 
                       w-full max-w-3xl mx-auto"
                   >
-                    <h3 className="text-lg font-semibold mb-4">Technical Skills</h3>
+                    <h3 className="text-md font-semibold mb-3">Technical Skills</h3>
                     
                     <div className="space-y-2">
                       {skills.map((skill, index) => (
@@ -197,10 +197,10 @@ export function ResumeSection() {
                   </div>
                 ) : (
                   <div 
-                    className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm p-8 
+                    className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm p-5 
                       w-full max-w-3xl mx-auto"
                   >
-                    <h3 className="text-lg font-semibold mb-4">Tools & Platforms</h3>
+                    <h3 className="text-md font-semibold mb-3">Tools & Platforms</h3>
                     
                     <div className="grid grid-cols-4 gap-3">
                       {tools.map((tool, index) => {
@@ -281,23 +281,23 @@ export function ResumeSection() {
               <div className="flex justify-center items-center pb-6 pt-2 px-4">
                 <div 
                   key={education[currentEducationIndex].id}
-                  className={`bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm p-8 
+                  className={`bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm p-5 
                     w-full max-w-3xl mx-auto
                     ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}
                 >
                   <div className="flex flex-col w-full">
-                    <div className="flex items-center gap-4 mb-6">
-                      <div className="w-16 h-16 bg-blue-50 dark:bg-blue-900/20 rounded-full flex items-center justify-center animate-float shrink-0">
-                        <GraduationCap className="h-8 w-8 text-primary" />
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-12 h-12 bg-blue-50 dark:bg-blue-900/20 rounded-full flex items-center justify-center animate-float shrink-0">
+                        <GraduationCap className="h-6 w-6 text-primary" />
                       </div>
                       <div>
-                        <h3 className="text-xl font-semibold">{education[currentEducationIndex].degree}</h3>
-                        <div className="text-primary dark:text-blue-400 font-medium">{education[currentEducationIndex].institution}</div>
-                        <div className="text-gray-600 dark:text-gray-400 text-sm">{education[currentEducationIndex].period}</div>
+                        <h3 className="text-lg font-semibold">{education[currentEducationIndex].degree}</h3>
+                        <div className="text-primary dark:text-blue-400 font-medium text-sm">{education[currentEducationIndex].institution}</div>
+                        <div className="text-gray-600 dark:text-gray-400 text-xs">{education[currentEducationIndex].period}</div>
                       </div>
                     </div>
                     
-                    <p className="text-gray-600 dark:text-gray-300 text-base leading-relaxed">
+                    <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
                       {education[currentEducationIndex].description}
                     </p>
                   </div>
