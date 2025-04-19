@@ -55,20 +55,23 @@ export function ResumeSection() {
         </div>
         
         <Tabs defaultValue="experience" onValueChange={setActiveTab} className="w-full">
-          <TabsList className="mb-8 flex w-full justify-start border-b border-gray-200 dark:border-gray-800">
-            {resumeTabs.map((tab) => (
-              <TabsTrigger 
-                key={tab.id} 
-                value={tab.id}
-                className={cn(
-                  "px-6 py-3 data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none",
-                  "transition-all hover:bg-gray-100 dark:hover:bg-gray-800/50"
-                )}
-              >
-                {tab.label}
-              </TabsTrigger>
-            ))}
-          </TabsList>
+          <div className="flex justify-center mb-8">
+            <TabsList className="flex gap-3 justify-center bg-transparent">
+              {resumeTabs.map((tab) => (
+                <TabsTrigger 
+                  key={tab.id} 
+                  value={tab.id}
+                  className={cn(
+                    "px-6 py-3 rounded-full shadow-sm bg-white dark:bg-gray-800",
+                    "transition-all hover:bg-gray-50 dark:hover:bg-gray-700",
+                    "data-[state=active]:bg-primary data-[state=active]:text-white"
+                  )}
+                >
+                  {tab.label}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </div>
           
           <TabsContent value="experience" className="mt-0">
             <div className="relative w-full">

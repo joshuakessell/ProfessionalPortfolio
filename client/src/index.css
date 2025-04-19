@@ -162,6 +162,7 @@ body {
 #hero .scroll-content { z-index: 4; }
 #resume .scroll-content { z-index: 3; overflow: hidden; }
 #projects .scroll-content { z-index: 2; overflow: hidden; }
+#projects, #projects * { overflow-y: hidden !important; }
 #contact .scroll-content { z-index: 1; }
 
 /* Ensure scrollable containers don't show scrollbars */
@@ -432,5 +433,9 @@ body {
   body {
     @apply font-sans antialiased bg-background text-foreground;
     overflow: hidden;
+  }
+  
+  html.is-scrolling {
+    scroll-behavior: smooth;
   }
 }

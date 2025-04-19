@@ -75,8 +75,59 @@ export default function Home() {
       firstSection.classList.add('active');
     }
     
-    return cleanup;
-  }, [sectionIds]);
+    // Add wheel event listener to handle vertical scrolling between sections
+    const handleWheelEvent = (event: WheelEvent) => {
+      event.preventDefault();
+      
+      // If already scrolling, don't trigger again
+      if (document.documentElement.classList.contains('is-scrolling')) {
+        return;
+      }
+      
+      // Find current active section index
+      const currentIndex = sectionIds.indexOf(activeSection);
+      let targetIndex = currentIndex;
+      
+      // Determine scrolling direction and set target section
+      if (event.deltaY > 0 && currentIndex < sectionIds.length - 1) {
+        // Scrolling down - go to next section
+        targetIndex = currentIndex + 1;
+      } else if (event.deltaY < 0 && currentIndex > 0) {
+        // Scrolling up - go to previous section
+        targetIndex = currentIndex - 1;
+      } else {
+        return; // No change needed (first or last section)
+      }
+      
+      // Add a class to prevent multiple scroll events
+      document.documentElement.classList.add('is-scrolling');
+      
+      // Scroll to the target section
+      const targetSection = document.getElementById(sectionIds[targetIndex]);
+      if (targetSection) {
+        targetSection.scrollIntoView({ behavior: 'smooth' });
+        
+        // After scrolling is complete, remove the marker class
+        setTimeout(() => {
+          document.documentElement.classList.remove('is-scrolling');
+        }, 1000); // Adjust timing to match scroll duration
+      }
+    };
+    
+    // Add wheel event listener
+    const scrollContainer = scrollContainerRef.current;
+    if (scrollContainer) {
+      scrollContainer.addEventListener('wheel', handleWheelEvent, { passive: false });
+    }
+    
+    return () => {
+      cleanup();
+      // Remove wheel event listener
+      if (scrollContainer) {
+        scrollContainer.removeEventListener('wheel', handleWheelEvent);
+      }
+    };
+  }, [sectionIds, activeSection]);
 
   // Handle direct navigation (hash changes and initial load)
   useEffect(() => {
