@@ -27,6 +27,8 @@ export function ResumeSection() {
   const [currentSkillsIndex, setCurrentSkillsIndex] = useState(0);
   const [currentEducationIndex, setCurrentEducationIndex] = useState(0);
   const [swipeDirection, setSwipeDirection] = useState<'left' | 'right' | null>(null);
+  const [skillsSwipeDirection, setSkillsSwipeDirection] = useState<'left' | 'right' | null>(null);
+  const [educationSwipeDirection, setEducationSwipeDirection] = useState<'left' | 'right' | null>(null);
   
   useEffect(() => {
     setIsVisible(true);
@@ -94,7 +96,7 @@ export function ResumeSection() {
               
               {/* Single experience card container */}
               <div className="flex justify-center items-center pb-6 pt-2 px-4 overflow-hidden">
-                <div className="w-full max-w-3xl mx-auto relative h-[300px]">
+                <div className="w-full max-w-4xl mx-auto relative h-[300px]">
                   <AnimatePresence initial={false}>
                     <motion.div
                       key={experiences[currentExperienceIndex].id}
@@ -177,10 +179,13 @@ export function ResumeSection() {
               {/* Left scroll button - only show if not on first card */}
               {currentSkillsIndex > 0 && (
                 <button 
-                  className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white/80 dark:bg-gray-800/80 rounded-full p-2 shadow-md hover:bg-white hover:scale-110 transition-all"
+                  className="absolute left-0 top-1/2 transform -translate-y-1/2 z-20 bg-white/80 dark:bg-gray-800/80 rounded-full p-2 shadow-md hover:bg-white hover:scale-110 transition-all"
                   onClick={() => {
-                    const newIndex = Math.max(0, currentSkillsIndex - 1);
-                    setCurrentSkillsIndex(newIndex);
+                    setSkillsSwipeDirection('right');
+                    setTimeout(() => {
+                      const newIndex = Math.max(0, currentSkillsIndex - 1);
+                      setCurrentSkillsIndex(newIndex);
+                    }, 50);
                   }}
                 >
                   <ChevronLeft className="h-6 w-6 text-primary" />
@@ -190,10 +195,13 @@ export function ResumeSection() {
               {/* Right scroll button - only show if not on last card */}
               {currentSkillsIndex < 1 && (
                 <button 
-                  className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white/80 dark:bg-gray-800/80 rounded-full p-2 shadow-md hover:bg-white hover:scale-110 transition-all"
+                  className="absolute right-0 top-1/2 transform -translate-y-1/2 z-20 bg-white/80 dark:bg-gray-800/80 rounded-full p-2 shadow-md hover:bg-white hover:scale-110 transition-all"
                   onClick={() => {
-                    const newIndex = Math.min(1, currentSkillsIndex + 1);
-                    setCurrentSkillsIndex(newIndex);
+                    setSkillsSwipeDirection('left');
+                    setTimeout(() => {
+                      const newIndex = Math.min(1, currentSkillsIndex + 1);
+                      setCurrentSkillsIndex(newIndex);
+                    }, 50);
                   }}
                 >
                   <ChevronRight className="h-6 w-6 text-primary" />
@@ -201,70 +209,106 @@ export function ResumeSection() {
               )}
               
               {/* Single skills card container */}
-              <div className="flex justify-center items-center pb-6 pt-2 px-4">
-                {currentSkillsIndex === 0 ? (
-                  <div 
-                    className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm p-5 
-                      w-full max-w-3xl mx-auto"
-                  >
-                    <h3 className="text-md font-semibold mb-3">Technical Skills</h3>
-                    
-                    <div className="space-y-2">
-                      {skills.map((skill, index) => (
-                        <div 
-                          key={index}
-                          className={isVisible ? 'animate-fade-in' : 'opacity-0'}
-                          style={{ animationDelay: `${index * 100}ms` }}
-                        >
-                          <div className="flex justify-between mb-0.5">
-                            <span className="font-medium text-xs">{skill.name}</span>
-                            <span className="text-xs text-gray-500 dark:text-gray-400">{skill.years} {skill.years === 1 ? 'yr' : 'yrs'}</span>
+              <div className="flex justify-center items-center pb-6 pt-2 px-4 overflow-hidden">
+                <div className="w-full max-w-4xl mx-auto relative h-[300px]">
+                  <AnimatePresence initial={false}>
+                    <motion.div
+                      key={`skills-${currentSkillsIndex}`}
+                      initial={{ 
+                        opacity: 0, 
+                        x: skillsSwipeDirection === 'left' ? 300 : skillsSwipeDirection === 'right' ? -300 : 0 
+                      }}
+                      animate={{ 
+                        opacity: 1, 
+                        x: 0
+                      }}
+                      transition={{ 
+                        type: "spring", 
+                        stiffness: 300, 
+                        damping: 30,
+                        duration: 0.3
+                      }}
+                      exit={{ 
+                        opacity: 0, 
+                        x: skillsSwipeDirection === 'left' ? -300 : skillsSwipeDirection === 'right' ? 300 : 0 
+                      }}
+                      className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm p-5 
+                        w-full absolute inset-0"
+                      onAnimationComplete={() => setSkillsSwipeDirection(null)}
+                    >
+                      {currentSkillsIndex === 0 ? (
+                        <>
+                          <h3 className="text-md font-semibold mb-3">Technical Skills</h3>
+                          
+                          <div className="space-y-2">
+                            {skills.map((skill, index) => (
+                              <div 
+                                key={index}
+                                className="opacity-0"
+                                style={{ 
+                                  animationName: isVisible ? 'fadeIn' : 'none',
+                                  animationDuration: '0.5s',
+                                  animationDelay: `${index * 100}ms`,
+                                  animationFillMode: 'forwards'
+                                }}
+                              >
+                                <div className="flex justify-between mb-0.5">
+                                  <span className="font-medium text-xs">{skill.name}</span>
+                                  <span className="text-xs text-gray-500 dark:text-gray-400">{skill.years} {skill.years === 1 ? 'yr' : 'yrs'}</span>
+                                </div>
+                                <div className="relative h-1.5 w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                                  <div 
+                                    className="h-full bg-black dark:bg-white"
+                                    style={{ 
+                                      transition: isVisible ? `width 1s ease-out ${index * 100 + 400}ms` : 'none',
+                                      width: isVisible ? `${(skill.years / 6) * 100}%` : '0%'
+                                    }}
+                                  ></div>
+                                </div>
+                              </div>
+                            ))}
                           </div>
-                          <div className="relative h-1.5 w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                            <div 
-                              className="h-full bg-black dark:bg-white transition-all duration-1000 ease-in-out"
-                              style={{ width: isVisible ? `${(skill.years / 6) * 100}%` : '0%' }}
-                            ></div>
+                        </>
+                      ) : (
+                        <>
+                          <h3 className="text-md font-semibold mb-3">Tools & Platforms</h3>
+                          
+                          <div className="grid grid-cols-4 gap-3">
+                            {tools.map((tool, index) => {
+                              let Icon;
+                              switch (tool.icon) {
+                                case "Code": Icon = Code; break;
+                                case "Server": Icon = Server; break;
+                                case "Box": Icon = Box; break;
+                                case "GitBranch": Icon = GitBranch; break;
+                                case "Database": Icon = Database; break;
+                                case "BrainCircuit": Icon = BrainCircuit; break;
+                                default: Icon = Code;
+                              }
+                              
+                              return (
+                                <div 
+                                  key={index} 
+                                  className="flex flex-col items-center justify-center p-2 rounded-lg bg-gray-50 dark:bg-gray-800 
+                                    hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors opacity-0"
+                                  style={{ 
+                                    animationName: isVisible ? 'fadeIn' : 'none',
+                                    animationDuration: '0.5s',
+                                    animationDelay: `${index * 100}ms`,
+                                    animationFillMode: 'forwards'
+                                  }}
+                                >
+                                  <Icon className="h-5 w-5 text-primary dark:text-blue-400 mb-1" />
+                                  <span className="font-medium text-xs text-center">{tool.name}</span>
+                                </div>
+                              );
+                            })}
                           </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ) : (
-                  <div 
-                    className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm p-5 
-                      w-full max-w-3xl mx-auto"
-                  >
-                    <h3 className="text-md font-semibold mb-3">Tools & Platforms</h3>
-                    
-                    <div className="grid grid-cols-4 gap-3">
-                      {tools.map((tool, index) => {
-                        let Icon;
-                        switch (tool.icon) {
-                          case "Code": Icon = Code; break;
-                          case "Server": Icon = Server; break;
-                          case "Box": Icon = Box; break;
-                          case "GitBranch": Icon = GitBranch; break;
-                          case "Database": Icon = Database; break;
-                          case "BrainCircuit": Icon = BrainCircuit; break;
-                          default: Icon = Code;
-                        }
-                        
-                        return (
-                          <div 
-                            key={index} 
-                            className={`flex flex-col items-center justify-center p-2 rounded-lg bg-gray-50 dark:bg-gray-800 
-                              hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}
-                            style={{ animationDelay: `${index * 100}ms` }}
-                          >
-                            <Icon className="h-5 w-5 text-primary dark:text-blue-400 mb-1" />
-                            <span className="font-medium text-xs text-center">{tool.name}</span>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                )}
+                        </>
+                      )}
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
               </div>
               
               {/* Dot indicators */}
@@ -277,7 +321,12 @@ export function ResumeSection() {
                         ? 'bg-primary scale-125' 
                         : 'bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500'
                     }`}
-                    onClick={() => setCurrentSkillsIndex(index)}
+                    onClick={() => {
+                      setSkillsSwipeDirection(index > currentSkillsIndex ? 'left' : 'right');
+                      setTimeout(() => {
+                        setCurrentSkillsIndex(index);
+                      }, 50);
+                    }}
                   />
                 ))}
               </div>
@@ -289,10 +338,13 @@ export function ResumeSection() {
               {/* Left scroll button - only show if not on first card */}
               {currentEducationIndex > 0 && (
                 <button 
-                  className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white/80 dark:bg-gray-800/80 rounded-full p-2 shadow-md hover:bg-white hover:scale-110 transition-all"
+                  className="absolute left-0 top-1/2 transform -translate-y-1/2 z-20 bg-white/80 dark:bg-gray-800/80 rounded-full p-2 shadow-md hover:bg-white hover:scale-110 transition-all"
                   onClick={() => {
-                    const newIndex = Math.max(0, currentEducationIndex - 1);
-                    setCurrentEducationIndex(newIndex);
+                    setEducationSwipeDirection('right');
+                    setTimeout(() => {
+                      const newIndex = Math.max(0, currentEducationIndex - 1);
+                      setCurrentEducationIndex(newIndex);
+                    }, 50);
                   }}
                 >
                   <ChevronLeft className="h-6 w-6 text-primary" />
@@ -302,10 +354,13 @@ export function ResumeSection() {
               {/* Right scroll button - only show if not on last card */}
               {currentEducationIndex < education.length - 1 && (
                 <button 
-                  className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white/80 dark:bg-gray-800/80 rounded-full p-2 shadow-md hover:bg-white hover:scale-110 transition-all"
+                  className="absolute right-0 top-1/2 transform -translate-y-1/2 z-20 bg-white/80 dark:bg-gray-800/80 rounded-full p-2 shadow-md hover:bg-white hover:scale-110 transition-all"
                   onClick={() => {
-                    const newIndex = Math.min(education.length - 1, currentEducationIndex + 1);
-                    setCurrentEducationIndex(newIndex);
+                    setEducationSwipeDirection('left');
+                    setTimeout(() => {
+                      const newIndex = Math.min(education.length - 1, currentEducationIndex + 1);
+                      setCurrentEducationIndex(newIndex);
+                    }, 50);
                   }}
                 >
                   <ChevronRight className="h-6 w-6 text-primary" />
@@ -313,29 +368,51 @@ export function ResumeSection() {
               )}
               
               {/* Single education card container */}
-              <div className="flex justify-center items-center pb-6 pt-2 px-4">
-                <div 
-                  key={education[currentEducationIndex].id}
-                  className={`bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm p-5 
-                    w-full max-w-3xl mx-auto
-                    ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}
-                >
-                  <div className="flex flex-col w-full">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="w-12 h-12 bg-blue-50 dark:bg-blue-900/20 rounded-full flex items-center justify-center animate-float shrink-0">
-                        <GraduationCap className="h-6 w-6 text-primary" />
+              <div className="flex justify-center items-center pb-6 pt-2 px-4 overflow-hidden">
+                <div className="w-full max-w-4xl mx-auto relative h-[300px]">
+                  <AnimatePresence initial={false}>
+                    <motion.div
+                      key={education[currentEducationIndex].id}
+                      initial={{ 
+                        opacity: 0, 
+                        x: educationSwipeDirection === 'left' ? 300 : educationSwipeDirection === 'right' ? -300 : 0 
+                      }}
+                      animate={{ 
+                        opacity: 1, 
+                        x: 0
+                      }}
+                      transition={{ 
+                        type: "spring", 
+                        stiffness: 300, 
+                        damping: 30,
+                        duration: 0.3
+                      }}
+                      exit={{ 
+                        opacity: 0, 
+                        x: educationSwipeDirection === 'left' ? -300 : educationSwipeDirection === 'right' ? 300 : 0 
+                      }}
+                      className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm p-5 
+                        w-full absolute inset-0"
+                      onAnimationComplete={() => setEducationSwipeDirection(null)}
+                    >
+                      <div className="flex flex-col w-full">
+                        <div className="flex items-center gap-3 mb-3">
+                          <div className="w-12 h-12 bg-blue-50 dark:bg-blue-900/20 rounded-full flex items-center justify-center animate-float shrink-0">
+                            <GraduationCap className="h-6 w-6 text-primary" />
+                          </div>
+                          <div>
+                            <h3 className="text-lg font-semibold">{education[currentEducationIndex].degree}</h3>
+                            <div className="text-primary dark:text-blue-400 font-medium text-sm">{education[currentEducationIndex].institution}</div>
+                            <div className="text-gray-600 dark:text-gray-400 text-xs">{education[currentEducationIndex].period}</div>
+                          </div>
+                        </div>
+                        
+                        <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+                          {education[currentEducationIndex].description}
+                        </p>
                       </div>
-                      <div>
-                        <h3 className="text-lg font-semibold">{education[currentEducationIndex].degree}</h3>
-                        <div className="text-primary dark:text-blue-400 font-medium text-sm">{education[currentEducationIndex].institution}</div>
-                        <div className="text-gray-600 dark:text-gray-400 text-xs">{education[currentEducationIndex].period}</div>
-                      </div>
-                    </div>
-                    
-                    <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
-                      {education[currentEducationIndex].description}
-                    </p>
-                  </div>
+                    </motion.div>
+                  </AnimatePresence>
                 </div>
               </div>
               
@@ -349,7 +426,12 @@ export function ResumeSection() {
                         ? 'bg-primary scale-125' 
                         : 'bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500'
                     }`}
-                    onClick={() => setCurrentEducationIndex(index)}
+                    onClick={() => {
+                      setEducationSwipeDirection(index > currentEducationIndex ? 'left' : 'right');
+                      setTimeout(() => {
+                        setCurrentEducationIndex(index);
+                      }, 50);
+                    }}
                   />
                 ))}
               </div>
