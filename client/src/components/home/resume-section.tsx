@@ -94,58 +94,60 @@ export function ResumeSection() {
               
               {/* Single experience card container */}
               <div className="flex justify-center items-center pb-6 pt-2 px-4 overflow-hidden">
-                <AnimatePresence mode="wait" initial={false}>
-                  <motion.div
-                    key={experiences[currentExperienceIndex].id}
-                    initial={{ 
-                      opacity: 0, 
-                      x: swipeDirection === 'left' ? 300 : swipeDirection === 'right' ? -300 : 0 
-                    }}
-                    animate={{ 
-                      opacity: 1, 
-                      x: 0 
-                    }}
-                    exit={{ 
-                      opacity: 0, 
-                      x: swipeDirection === 'left' ? -300 : swipeDirection === 'right' ? 300 : 0 
-                    }}
-                    transition={{ 
-                      type: "spring", 
-                      stiffness: 300, 
-                      damping: 30,
-                      duration: 0.3
-                    }}
-                    className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm p-5 
-                      w-full max-w-3xl mx-auto"
-                    onAnimationComplete={() => setSwipeDirection(null)}
-                  >
-                    <div className="flex flex-col sm:flex-row sm:justify-between mb-3">
-                      <div className="mb-2 sm:mb-0">
-                        <h3 className="text-lg font-semibold mb-0.5">{experiences[currentExperienceIndex].title}</h3>
-                        <div className="text-primary dark:text-blue-400 font-medium text-sm">{experiences[currentExperienceIndex].company}</div>
+                <div className="w-full max-w-3xl mx-auto relative h-[300px]">
+                  <AnimatePresence initial={false}>
+                    <motion.div
+                      key={experiences[currentExperienceIndex].id}
+                      initial={{ 
+                        opacity: 0, 
+                        x: swipeDirection === 'left' ? 300 : swipeDirection === 'right' ? -300 : 0 
+                      }}
+                      animate={{ 
+                        opacity: 1, 
+                        x: 0
+                      }}
+                      transition={{ 
+                        type: "spring", 
+                        stiffness: 300, 
+                        damping: 30,
+                        duration: 0.3
+                      }}
+                      exit={{ 
+                        opacity: 0, 
+                        x: swipeDirection === 'left' ? -300 : swipeDirection === 'right' ? 300 : 0 
+                      }}
+                      className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm p-5 
+                        w-full absolute inset-0"
+                      onAnimationComplete={() => setSwipeDirection(null)}
+                    >
+                      <div className="flex flex-col sm:flex-row sm:justify-between mb-3">
+                        <div className="mb-2 sm:mb-0">
+                          <h3 className="text-lg font-semibold mb-0.5">{experiences[currentExperienceIndex].title}</h3>
+                          <div className="text-primary dark:text-blue-400 font-medium text-sm">{experiences[currentExperienceIndex].company}</div>
+                        </div>
+                        <div className="text-left sm:text-right">
+                          <div className="text-xs text-gray-600 dark:text-gray-400">{experiences[currentExperienceIndex].period}</div>
+                          {experiences[currentExperienceIndex].current && (
+                            <Badge variant="secondary" className="mt-0.5 bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400 animate-pulse-slow text-xs">
+                              Current
+                            </Badge>
+                          )}
+                        </div>
                       </div>
-                      <div className="text-left sm:text-right">
-                        <div className="text-xs text-gray-600 dark:text-gray-400">{experiences[currentExperienceIndex].period}</div>
-                        {experiences[currentExperienceIndex].current && (
-                          <Badge variant="secondary" className="mt-0.5 bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400 animate-pulse-slow text-xs">
-                            Current
-                          </Badge>
-                        )}
-                      </div>
-                    </div>
-                    <ul className="space-y-2 text-gray-600 dark:text-gray-300">
-                      {experiences[currentExperienceIndex].responsibilities.map((item, idx) => (
-                        <li 
-                          key={idx} 
-                          className="flex items-start gap-2"
-                        >
-                          <CheckCircle2 className="h-4 w-4 text-primary dark:text-blue-400 shrink-0 mt-0.5" />
-                          <span className="text-sm">{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </motion.div>
-                </AnimatePresence>
+                      <ul className="space-y-2 text-gray-600 dark:text-gray-300">
+                        {experiences[currentExperienceIndex].responsibilities.map((item, idx) => (
+                          <li 
+                            key={idx} 
+                            className="flex items-start gap-2"
+                          >
+                            <CheckCircle2 className="h-4 w-4 text-primary dark:text-blue-400 shrink-0 mt-0.5" />
+                            <span className="text-sm">{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
               </div>
               
               {/* Dot indicators */}
