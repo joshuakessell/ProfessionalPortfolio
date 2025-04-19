@@ -88,6 +88,7 @@ body {
 .scroll-container {
   height: 100vh;
   overflow-y: scroll;
+  overflow-x: hidden; /* Hide horizontal scrollbar */
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
   background-color: var(--background);
@@ -113,31 +114,32 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center; /* Center content vertically */
-  padding: 80px 0; /* Increased padding for top/bottom to give more space */
+  padding: 80px 0 0; /* Adding padding to top only to account for navbar */
+  padding-top: calc(80px + 60px); /* 80px padding + 60px navbar height */
 }
 
 /* Fixed content layout for zoom effect */
 .scroll-section .scroll-content {
   position: fixed;
-  top: 0;
+  top: 60px; /* Set to navbar height to start below navbar */
   left: 0;
   right: 0;
   bottom: 0;
   width: 100%;
-  height: 100vh;
+  height: calc(100vh - 60px); /* Adjust height to account for navbar */
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 0;
   opacity: 0;
   visibility: hidden;
-  padding: 80px 20px; /* More padding on top/bottom, horizontal padding for responsiveness */
+  padding: 20px; /* Consistent padding all around */
   max-width: 1400px; /* Match max-width with scroll-content above */
   margin: 0 auto;
   transform: scale(0.8);
   filter: blur(3px);
   transition: all 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-  overflow-y: auto; /* Add vertical scroll when content exceeds the view */
+  overflow: hidden; /* Hide overflow to remove any scrollbars */
 }
 
 /* The active section becomes visible with zoom in effect */
@@ -161,6 +163,19 @@ body {
 #resume .scroll-content { z-index: 3; }
 #projects .scroll-content { z-index: 2; }
 #contact .scroll-content { z-index: 1; }
+
+/* Ensure scrollable containers don't show scrollbars */
+#experience-cards, #skills-cards, #education-cards {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  overflow-x: auto;
+}
+
+#experience-cards::-webkit-scrollbar, 
+#skills-cards::-webkit-scrollbar, 
+#education-cards::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
 
 /* Add more realistic zoom in/out animations for different sections */
 /* Hero section zoom effect */
