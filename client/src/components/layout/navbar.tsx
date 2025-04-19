@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Menu } from "lucide-react";
 import { ModeToggle } from "@/components/ui/mode-toggle";
 import { Button } from "@/components/ui/button";
@@ -18,7 +18,53 @@ const navItems: NavItem[] = [
 
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('hero');
 
+  // Track the active section based on scroll position
+  useEffect(() => {
+    const handleScroll = () => {
+      // Check for sections with the 'active' class
+      const sections = ['hero', 'resume', 'projects', 'contact'];
+      
+      for (const sectionId of sections) {
+        const section = document.getElementById(sectionId);
+        if (section?.classList.contains('active')) {
+          setActiveSection(sectionId);
+          break;
+        }
+      }
+    };
+    
+    // Set up a MutationObserver to watch for class changes on the sections
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'class') {
+          handleScroll();
+        }
+      });
+    });
+    
+    // Observe each section for class changes
+    const sections = ['hero', 'resume', 'projects', 'contact'];
+    sections.forEach(sectionId => {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        observer.observe(section, { attributes: true });
+      }
+    });
+    
+    // Also listen for scroll events
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    // Initial check
+    setTimeout(handleScroll, 500);
+    
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+  
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
@@ -34,33 +80,49 @@ export function Navbar() {
         </div>
         
         <div className="hidden md:flex items-center gap-8 text-sm font-medium">
-          {navItems.map((item) => (
-            <a 
-              key={item.label}
-              href={item.href} 
-              className="hover:text-primary dark:hover:text-blue-400 transition-colors"
-              onClick={(e) => {
-                e.preventDefault();
-                const sectionId = item.href.replace('#', '');
-                const section = document.getElementById(sectionId);
-                if (section) {
-                  // Calculate any offset for fixed headers
-                  const navbarHeight = 60; // Approximate height of the navbar
-                  const offsetPosition = section.offsetTop - navbarHeight;
-                  
-                  window.scrollTo({
-                    top: offsetPosition,
-                    behavior: 'smooth'
-                  });
-                  
-                  // Update URL hash for better navigation state
-                  window.history.pushState(null, '', item.href);
-                }
-              }}
-            >
-              {item.label}
-            </a>
-          ))}
+          {navItems.map((item) => {
+            const sectionId = item.href.replace('#', '');
+            const isActive = activeSection === sectionId;
+            
+            return (
+              <a 
+                key={item.label}
+                href={item.href} 
+                className={cn(
+                  "relative py-2 hover:text-primary dark:hover:text-blue-400 transition-colors",
+                  isActive ? "text-primary dark:text-blue-400" : ""
+                )}
+                onClick={(e) => {
+                  e.preventDefault();
+                  const section = document.getElementById(sectionId);
+                  if (section) {
+                    // First, remove active class from all sections
+                    const allSections = ['hero', 'resume', 'projects', 'contact'];
+                    allSections.forEach(id => {
+                      const elem = document.getElementById(id);
+                      if (elem) {
+                        elem.classList.remove('active');
+                      }
+                    });
+                    
+                    // Then add active class to target section
+                    section.classList.add('active');
+                    
+                    // Manual scroll to section
+                    section.scrollIntoView({ behavior: 'smooth' });
+                    
+                    // Update URL hash for better navigation state
+                    window.history.pushState(null, '', item.href);
+                  }
+                }}
+              >
+                {item.label}
+                {isActive && (
+                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary dark:bg-blue-400 rounded"></span>
+                )}
+              </a>
+            );
+          })}
         </div>
         
         <div className="flex items-center gap-3">
@@ -82,14 +144,20 @@ export function Navbar() {
               e.preventDefault();
               const contactSection = document.getElementById('contact');
               if (contactSection) {
-                // Calculate any offset for fixed headers
-                const navbarHeight = 60; // Approximate height of the navbar
-                const offsetPosition = contactSection.offsetTop - navbarHeight;
-                
-                window.scrollTo({
-                  top: offsetPosition,
-                  behavior: 'smooth'
+                // First, remove active class from all sections
+                const allSections = ['hero', 'resume', 'projects', 'contact'];
+                allSections.forEach(id => {
+                  const elem = document.getElementById(id);
+                  if (elem) {
+                    elem.classList.remove('active');
+                  }
                 });
+                
+                // Then add active class to contact section
+                contactSection.classList.add('active');
+                
+                // Manual scroll to section
+                contactSection.scrollIntoView({ behavior: 'smooth' });
                 
                 // Update URL hash for better navigation state
                 window.history.pushState(null, '', '#contact');
@@ -107,34 +175,49 @@ export function Navbar() {
         mobileMenuOpen ? "block" : "hidden"
       )}>
         <div className="flex flex-col gap-2 text-sm font-medium">
-          {navItems.map((item) => (
-            <a 
-              key={item.label}
-              href={item.href} 
-              className="py-2 hover:text-primary"
-              onClick={(e) => {
-                e.preventDefault();
-                setMobileMenuOpen(false);
-                const sectionId = item.href.replace('#', '');
-                const section = document.getElementById(sectionId);
-                if (section) {
-                  // Calculate any offset for fixed headers
-                  const navbarHeight = 60; // Approximate height of the navbar
-                  const offsetPosition = section.offsetTop - navbarHeight;
-                  
-                  window.scrollTo({
-                    top: offsetPosition,
-                    behavior: 'smooth'
-                  });
-                  
-                  // Update URL hash for better navigation state
-                  window.history.pushState(null, '', item.href);
-                }
-              }}
-            >
-              {item.label}
-            </a>
-          ))}
+          {navItems.map((item) => {
+            const sectionId = item.href.replace('#', '');
+            const isActive = activeSection === sectionId;
+            
+            return (
+              <a 
+                key={item.label}
+                href={item.href} 
+                className={cn(
+                  "py-2 relative hover:text-primary border-l-2 pl-2",
+                  isActive 
+                    ? "border-primary text-primary dark:border-blue-400 dark:text-blue-400" 
+                    : "border-transparent"
+                )}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setMobileMenuOpen(false);
+                  const section = document.getElementById(sectionId);
+                  if (section) {
+                    // First, remove active class from all sections
+                    const allSections = ['hero', 'resume', 'projects', 'contact'];
+                    allSections.forEach(id => {
+                      const elem = document.getElementById(id);
+                      if (elem) {
+                        elem.classList.remove('active');
+                      }
+                    });
+                    
+                    // Then add active class to target section
+                    section.classList.add('active');
+                    
+                    // Manual scroll to section
+                    section.scrollIntoView({ behavior: 'smooth' });
+                    
+                    // Update URL hash for better navigation state
+                    window.history.pushState(null, '', item.href);
+                  }
+                }}
+              >
+                {item.label}
+              </a>
+            );
+          })}
         </div>
       </div>
     </header>
