@@ -191,23 +191,22 @@ export function ResumeSection() {
                   >
                     <h3 className="text-lg font-semibold mb-4">Technical Skills</h3>
                     
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-3">
                       {skills.map((skill, index) => (
                         <div 
                           key={index}
-                          className={`bg-gray-50 dark:bg-gray-800 p-4 rounded-lg ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}
+                          className={isVisible ? 'animate-fade-in' : 'opacity-0'}
                           style={{ animationDelay: `${index * 100}ms` }}
                         >
-                          <div className="flex flex-col">
-                            <span className="font-medium text-sm mb-1">{skill.name}</span>
-                            <div className="flex items-center gap-2">
-                              <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
-                                <span className="font-bold text-blue-600 dark:text-blue-400">{skill.years}</span>
-                              </div>
-                              <span className="text-xs text-gray-500 dark:text-gray-400">
-                                {skill.years} {skill.years === 1 ? 'year' : 'years'} of experience
-                              </span>
-                            </div>
+                          <div className="flex justify-between mb-1">
+                            <span className="font-medium text-sm">{skill.name}</span>
+                            <span className="text-xs text-gray-500 dark:text-gray-400">{skill.years} {skill.years === 1 ? 'year' : 'years'}</span>
+                          </div>
+                          <div className="relative h-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                            <div 
+                              className={`h-full ${skill.name.includes("JavaScript") ? "bg-blue-500" : skill.name.includes("React") ? "bg-blue-400" : skill.name.includes("Java") ? "bg-indigo-500" : skill.name.includes("Spring") ? "bg-green-500" : skill.name.includes("Angular") ? "bg-red-500" : skill.name.includes("Android") ? "bg-green-400" : skill.name.includes("REST") ? "bg-purple-500" : "bg-blue-600"} transition-all duration-1000 ease-in-out`}
+                              style={{ width: isVisible ? `${(skill.years / 6) * 100}%` : '0%' }}
+                            ></div>
                           </div>
                         </div>
                       ))}
@@ -220,7 +219,7 @@ export function ResumeSection() {
                   >
                     <h3 className="text-lg font-semibold mb-4">Tools & Platforms</h3>
                     
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-4 gap-3">
                       {tools.map((tool, index) => {
                         let Icon;
                         switch (tool.icon) {
@@ -236,12 +235,12 @@ export function ResumeSection() {
                         return (
                           <div 
                             key={index} 
-                            className={`flex items-center gap-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-800 
+                            className={`flex flex-col items-center justify-center p-2 rounded-lg bg-gray-50 dark:bg-gray-800 
                               hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}
                             style={{ animationDelay: `${index * 100}ms` }}
                           >
-                            <Icon className="h-6 w-6 text-primary dark:text-blue-400" />
-                            <span className="font-medium">{tool.name}</span>
+                            <Icon className="h-5 w-5 text-primary dark:text-blue-400 mb-1" />
+                            <span className="font-medium text-xs text-center">{tool.name}</span>
                           </div>
                         );
                       })}
