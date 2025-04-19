@@ -12,6 +12,7 @@ import {
   ChevronLeft,
   ChevronRight
 } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
@@ -25,6 +26,7 @@ export function ResumeSection() {
   const [currentExperienceIndex, setCurrentExperienceIndex] = useState(0);
   const [currentSkillsIndex, setCurrentSkillsIndex] = useState(0);
   const [currentEducationIndex, setCurrentEducationIndex] = useState(0);
+  const [swipeDirection, setSwipeDirection] = useState<'left' | 'right' | null>(null);
   
   useEffect(() => {
     setIsVisible(true);
@@ -61,10 +63,13 @@ export function ResumeSection() {
               {/* Left scroll button - only show if not on first card */}
               {currentExperienceIndex > 0 && (
                 <button 
-                  className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white/80 dark:bg-gray-800/80 rounded-full p-2 shadow-md hover:bg-white hover:scale-110 transition-all"
+                  className="absolute left-0 top-1/2 transform -translate-y-1/2 z-20 bg-white/80 dark:bg-gray-800/80 rounded-full p-2 shadow-md hover:bg-white hover:scale-110 transition-all"
                   onClick={() => {
-                    const newIndex = Math.max(0, currentExperienceIndex - 1);
-                    setCurrentExperienceIndex(newIndex);
+                    setSwipeDirection('right');
+                    setTimeout(() => {
+                      const newIndex = Math.max(0, currentExperienceIndex - 1);
+                      setCurrentExperienceIndex(newIndex);
+                    }, 50);
                   }}
                 >
                   <ChevronLeft className="h-6 w-6 text-primary" />
@@ -74,10 +79,13 @@ export function ResumeSection() {
               {/* Right scroll button - only show if not on last card */}
               {currentExperienceIndex < experiences.length - 1 && (
                 <button 
-                  className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white/80 dark:bg-gray-800/80 rounded-full p-2 shadow-md hover:bg-white hover:scale-110 transition-all"
+                  className="absolute right-0 top-1/2 transform -translate-y-1/2 z-20 bg-white/80 dark:bg-gray-800/80 rounded-full p-2 shadow-md hover:bg-white hover:scale-110 transition-all"
                   onClick={() => {
-                    const newIndex = Math.min(experiences.length - 1, currentExperienceIndex + 1);
-                    setCurrentExperienceIndex(newIndex);
+                    setSwipeDirection('left');
+                    setTimeout(() => {
+                      const newIndex = Math.min(experiences.length - 1, currentExperienceIndex + 1);
+                      setCurrentExperienceIndex(newIndex);
+                    }, 50);
                   }}
                 >
                   <ChevronRight className="h-6 w-6 text-primary" />
@@ -85,39 +93,59 @@ export function ResumeSection() {
               )}
               
               {/* Single experience card container */}
-              <div className="flex justify-center items-center pb-6 pt-2 px-4">
-                <div 
-                  key={experiences[currentExperienceIndex].id}
-                  className={`bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm p-5 
-                    w-full max-w-3xl mx-auto
-                    ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}
-                >
-                  <div className="flex flex-col sm:flex-row sm:justify-between mb-3">
-                    <div className="mb-2 sm:mb-0">
-                      <h3 className="text-lg font-semibold mb-0.5">{experiences[currentExperienceIndex].title}</h3>
-                      <div className="text-primary dark:text-blue-400 font-medium text-sm">{experiences[currentExperienceIndex].company}</div>
+              <div className="flex justify-center items-center pb-6 pt-2 px-4 overflow-hidden">
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.div
+                    key={experiences[currentExperienceIndex].id}
+                    initial={{ 
+                      opacity: 0, 
+                      x: swipeDirection === 'left' ? 300 : swipeDirection === 'right' ? -300 : 0 
+                    }}
+                    animate={{ 
+                      opacity: 1, 
+                      x: 0 
+                    }}
+                    exit={{ 
+                      opacity: 0, 
+                      x: swipeDirection === 'left' ? -300 : swipeDirection === 'right' ? 300 : 0 
+                    }}
+                    transition={{ 
+                      type: "spring", 
+                      stiffness: 300, 
+                      damping: 30,
+                      duration: 0.3
+                    }}
+                    className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm p-5 
+                      w-full max-w-3xl mx-auto"
+                    onAnimationComplete={() => setSwipeDirection(null)}
+                  >
+                    <div className="flex flex-col sm:flex-row sm:justify-between mb-3">
+                      <div className="mb-2 sm:mb-0">
+                        <h3 className="text-lg font-semibold mb-0.5">{experiences[currentExperienceIndex].title}</h3>
+                        <div className="text-primary dark:text-blue-400 font-medium text-sm">{experiences[currentExperienceIndex].company}</div>
+                      </div>
+                      <div className="text-left sm:text-right">
+                        <div className="text-xs text-gray-600 dark:text-gray-400">{experiences[currentExperienceIndex].period}</div>
+                        {experiences[currentExperienceIndex].current && (
+                          <Badge variant="secondary" className="mt-0.5 bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400 animate-pulse-slow text-xs">
+                            Current
+                          </Badge>
+                        )}
+                      </div>
                     </div>
-                    <div className="text-left sm:text-right">
-                      <div className="text-xs text-gray-600 dark:text-gray-400">{experiences[currentExperienceIndex].period}</div>
-                      {experiences[currentExperienceIndex].current && (
-                        <Badge variant="secondary" className="mt-0.5 bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400 animate-pulse-slow text-xs">
-                          Current
-                        </Badge>
-                      )}
-                    </div>
-                  </div>
-                  <ul className="space-y-2 text-gray-600 dark:text-gray-300">
-                    {experiences[currentExperienceIndex].responsibilities.map((item, idx) => (
-                      <li 
-                        key={idx} 
-                        className="flex items-start gap-2"
-                      >
-                        <CheckCircle2 className="h-4 w-4 text-primary dark:text-blue-400 shrink-0 mt-0.5" />
-                        <span className="text-sm">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                    <ul className="space-y-2 text-gray-600 dark:text-gray-300">
+                      {experiences[currentExperienceIndex].responsibilities.map((item, idx) => (
+                        <li 
+                          key={idx} 
+                          className="flex items-start gap-2"
+                        >
+                          <CheckCircle2 className="h-4 w-4 text-primary dark:text-blue-400 shrink-0 mt-0.5" />
+                          <span className="text-sm">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </motion.div>
+                </AnimatePresence>
               </div>
               
               {/* Dot indicators */}
@@ -130,7 +158,12 @@ export function ResumeSection() {
                         ? 'bg-primary scale-125' 
                         : 'bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500'
                     }`}
-                    onClick={() => setCurrentExperienceIndex(index)}
+                    onClick={() => {
+                      setSwipeDirection(index > currentExperienceIndex ? 'left' : 'right');
+                      setTimeout(() => {
+                        setCurrentExperienceIndex(index);
+                      }, 50);
+                    }}
                   />
                 ))}
               </div>
