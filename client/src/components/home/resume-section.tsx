@@ -36,7 +36,7 @@ export function ResumeSection() {
   
   return (
     <div className="w-full h-full overflow-x-hidden flex flex-col justify-between min-h-screen">
-      <div className="max-w-6xl mx-auto px-4 py-6 flex-grow flex flex-col justify-center">
+      <div className="max-w-[90%] md:max-w-[95%] xl:max-w-[98%] mx-auto px-2 py-6 flex-grow flex flex-col justify-center">
         <div className="text-center mb-6">
           <h2 className="text-3xl md:text-4xl font-bold">Professional Experience</h2>
         </div>
