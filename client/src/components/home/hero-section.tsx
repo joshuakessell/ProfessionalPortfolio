@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 export function HeroSection() {
   return (
-    <div className="w-full h-full min-h-screen flex items-center justify-center">
+    <div className="w-full h-full flex items-center justify-center">
       {/* Background effects */}
       <ParticlesBackground 
         quantity={40}
@@ -19,7 +19,7 @@ export function HeroSection() {
         className="opacity-30 dark:opacity-20"
       />
       
-      <div className="w-full max-w-6xl mx-auto px-4 py-20 flex flex-col md:flex-row items-center justify-center gap-8 lg:gap-16 min-h-screen">
+      <div className="w-full max-w-6xl mx-auto px-4 py-8 flex flex-col md:flex-row items-center justify-between gap-8 lg:gap-16">
         <div className="w-full md:w-1/2 space-y-6">
           <div className="flex items-center gap-2 mb-4">
             <div className="h-1 w-8 bg-primary rounded-full"></div>
@@ -55,32 +55,17 @@ export function HeroSection() {
           <div className="flex flex-col sm:flex-row gap-4">
             <a href="#projects" onClick={(e) => {
               e.preventDefault();
-              const projectsSection = document.getElementById('projects');
-              if (projectsSection) {
-                // Calculate any offset for fixed headers
-                const navbarHeight = 60; // Approximate height of the navbar
-                const offsetPosition = projectsSection.offsetTop - navbarHeight;
-                
-                window.scrollTo({
-                  top: offsetPosition,
-                  behavior: 'smooth'
-                });
-                
-                // Update URL hash for better navigation state
-                window.history.pushState(null, '', '#projects');
-              }
+              document.getElementById('projects')?.scrollIntoView({behavior: 'smooth'});
             }}>
-              <Button size="lg" className="shadow-lg shadow-primary/20 holographic-hover">
+              <Button size="lg" className="shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-shadow">
                 View My Projects
               </Button>
             </a>
-            <a 
-              href="/joshua-kessell-resume.pdf" 
-              download="Joshua_Kessell_Resume.pdf" 
-              target="_blank" 
-              rel="noopener noreferrer"
-            >
-              <Button variant="outline" size="lg" className="hover:bg-background/80 holographic-hover">
+            <a href="#resume" onClick={(e) => {
+              e.preventDefault();
+              document.getElementById('resume')?.scrollIntoView({behavior: 'smooth'});
+            }}>
+              <Button variant="outline" size="lg" className="hover:bg-background/80 transition-colors">
                 Check My Resume
               </Button>
             </a>
@@ -98,7 +83,7 @@ export function HeroSection() {
               <img 
                 src="/profile.jpg" 
                 alt="Joshua Kessell - Professional headshot"
-                className="w-full h-auto max-h-[55vh] object-cover object-center rounded-2xl"
+                className="w-full h-auto rounded-2xl"
               />
             </div>
             
@@ -117,20 +102,7 @@ export function HeroSection() {
       <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-float hidden md:block">
         <Button 
           onClick={() => {
-            const resumeSection = document.getElementById('resume');
-            if (resumeSection) {
-              // Calculate any offset for fixed headers
-              const navbarHeight = 60; // Approximate height of the navbar
-              const offsetPosition = resumeSection.offsetTop - navbarHeight;
-              
-              window.scrollTo({
-                top: offsetPosition,
-                behavior: 'smooth'
-              });
-              
-              // Update URL hash for better navigation state
-              window.history.pushState(null, '', '#resume');
-            }
+            document.getElementById('resume')?.scrollIntoView({behavior: 'smooth'});
           }}
           variant="ghost" 
           size="icon"

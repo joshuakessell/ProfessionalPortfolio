@@ -91,8 +91,8 @@ export function ContactSection() {
   }
   
   return (
-    <div className="w-full h-full overflow-y-auto min-h-screen flex flex-col justify-center">
-      <div className="max-w-6xl mx-auto px-4 py-20 flex-grow flex flex-col justify-center">
+    <div className="w-full h-full overflow-y-auto">
+      <div className="max-w-6xl mx-auto px-4 py-8">
         <div className="flex flex-col md:flex-row gap-10 lg:gap-16">
           <div 
             className={`w-full md:w-1/2 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}
@@ -135,10 +135,10 @@ export function ContactSection() {
                   <div>
                     <div className="text-sm text-gray-500 dark:text-gray-400">Phone</div>
                     <a 
-                      href="tel:+14692785289" 
+                      href="tel:+12148641386" 
                       className="text-gray-900 dark:text-gray-100 font-medium hover:text-primary dark:hover:text-blue-400 transition-colors"
                     >
-                      +1 (469) 278-5289
+                      +1 (214) 864-1386
                     </a>
                   </div>
                 </div>
@@ -159,7 +159,7 @@ export function ContactSection() {
                   href="https://github.com/joshuakessell" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="w-10 h-10 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full flex items-center justify-center transition-colors holographic-hover"
+                  className="w-10 h-10 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full flex items-center justify-center transition-colors"
                   aria-label="GitHub Profile"
                 >
                   <Github className="h-5 w-5 text-gray-700 dark:text-gray-300" />
@@ -169,7 +169,7 @@ export function ContactSection() {
                   href="https://linkedin.com/in/joshuakessell" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="w-10 h-10 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full flex items-center justify-center transition-colors holographic-hover"
+                  className="w-10 h-10 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full flex items-center justify-center transition-colors"
                   aria-label="LinkedIn Profile"
                 >
                   <Linkedin className="h-5 w-5 text-gray-700 dark:text-gray-300" />
@@ -285,7 +285,7 @@ export function ContactSection() {
                   />
                   
                   <div className="flex items-center justify-between">
-                    <Button type="submit" disabled={isSubmitting} className="holographic-hover">
+                    <Button type="submit" disabled={isSubmitting}>
                       {isSubmitting ? "Sending..." : "Send Message"}
                     </Button>
                     

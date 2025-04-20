@@ -19,8 +19,8 @@ export function ProjectsSection() {
   }, []);
   
   return (
-    <div className="w-full h-full overflow-y-auto min-h-screen flex flex-col justify-center">
-      <div className="max-w-6xl mx-auto px-4 py-20 flex-grow flex flex-col justify-center">
+    <div className="w-full h-full overflow-y-auto">
+      <div className="max-w-6xl mx-auto px-4 py-8">
         <div className="text-center mb-8">
           <h2 className="text-3xl md:text-4xl font-bold mb-3">Featured Projects</h2>
           <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
@@ -29,7 +29,7 @@ export function ProjectsSection() {
         </div>
 
         <div className="mb-8 flex justify-center">
-          <Button variant="outline" className="bg-gray-800 hover:bg-black text-white shadow-lg holographic-hover" asChild>
+          <Button variant="outline" className="bg-gray-800 hover:bg-black text-white shadow-lg hover:shadow-xl transition-all" asChild>
             <a href="https://github.com/joshuakessell" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
               <Github className="h-5 w-5" />
               View GitHub Profile
@@ -162,7 +162,7 @@ export function ProjectsSection() {
         <div className="mt-10 text-center">
           <Button 
             variant="link" 
-            className="text-primary hover:text-primary/80 dark:text-blue-400 dark:hover:text-blue-300 holographic-hover px-4 py-2 rounded-md" 
+            className="text-primary hover:text-primary/80 dark:text-blue-400 dark:hover:text-blue-300 animate-pulse-slow" 
             asChild
           >
             <a 

@@ -68,319 +68,74 @@
 .stagger-5 { animation-delay: 0.5s; }
 .stagger-6 { animation-delay: 0.6s; }
 
-/* Zoom Scroll Effect (Based on codepen.io/giana/pen/BabdgjB) */
+/* Smooth Scroll Snap Effect */
 html {
   scroll-behavior: smooth;
-  /* Create a snapping rule on the html element */
-  scroll-snap-type: y mandatory;
-  /* Create a timeline scope for animation */
-  scroll-timeline-name: --section-scroll;
-  scroll-timeline-axis: y;
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: var(--background);
 }
 
 .scroll-container {
   height: 100vh;
   overflow-y: scroll;
-  overflow-x: hidden; /* Hide horizontal scrollbar */
   scroll-snap-type: y mandatory;
-  scroll-behavior: smooth;
-  background-color: var(--background);
-  position: relative;
-  /* Handle scrollbar */
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
-}
-
-.scroll-container::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
 }
 
 .scroll-section {
   scroll-snap-align: start;
   scroll-snap-stop: always;
-  height: 100vh; /* Full viewport height for snap points */
-  min-height: 100vh; /* Ensures section is at least as tall as the viewport */
-  width: 100%;
-  position: relative;
-  box-sizing: border-box;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: center; /* Center content vertically */
-  padding: 80px 0 0; /* Adding padding to top only to account for navbar */
-  padding-top: calc(80px + 60px); /* 80px padding + 60px navbar height */
-}
-
-/* Fixed content layout for zoom effect */
-.scroll-section .scroll-content {
-  position: fixed;
-  top: 60px; /* Set to navbar height to start below navbar */
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  height: calc(100vh - 60px); /* Adjust height to account for navbar */
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 0;
-  opacity: 0;
-  visibility: hidden;
-  padding: 20px; /* Consistent padding all around */
-  max-width: 1400px; /* Match max-width with scroll-content above */
-  margin: 0 auto;
-  transform: scale(0.8);
-  filter: blur(3px);
-  transition: all 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-  overflow: hidden; /* Hide overflow to remove any scrollbars */
-}
-
-/* The active section becomes visible with zoom in effect */
-.scroll-section.active .scroll-content {
-  opacity: 1;
-  visibility: visible;
-  transform: scale(1);
-  filter: blur(0);
-  z-index: 10; /* Higher z-index to ensure active content is on top */
-}
-
-/* Special case for the resume section */
-/* Instead of making the resume content scrollable, we've made it horizontally scrollable */
-/* These styles help with the horizontal scrolling */
-.scrollbar-hide.snap-x {
-  cursor: grab;
-}
-
-/* Apply a different z-index based on section order to manage stacking when transitioning */
-#hero .scroll-content { z-index: 4; }
-#resume .scroll-content { z-index: 3; overflow: hidden; }
-#projects .scroll-content { z-index: 2; overflow: hidden; }
-#projects, #projects * { overflow-y: hidden !important; }
-#contact .scroll-content { z-index: 1; }
-
-/* Ensure scrollable containers don't show scrollbars */
-#experience-cards, #skills-cards, #education-cards {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
-  overflow-x: auto;
-}
-
-#experience-cards::-webkit-scrollbar, 
-#skills-cards::-webkit-scrollbar, 
-#education-cards::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
-}
-
-/* Hide all scrollbars on resume and projects sections */
-#resume, #projects {
-  overflow: hidden !important;
-}
-
-#resume *, #projects * {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
-}
-
-#resume *::-webkit-scrollbar, 
-#projects *::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
-}
-
-/* Add more realistic zoom in/out animations for different sections */
-/* Hero section zoom effect */
-#hero.scroll-section .scroll-content {
-  transform: scale(0.8) translateY(-30px);
-  filter: blur(3px);
-}
-
-#hero.scroll-section.active .scroll-content {
-  transform: scale(1) translateY(0);
-  filter: blur(0);
-}
-
-/* Resume section zoom effect */
-#resume.scroll-section .scroll-content {
-  transform: scale(0.85);
-  filter: blur(3px);
-}
-
-#resume.scroll-section.active .scroll-content {
-  transform: scale(1);
-  filter: blur(0);
-}
-
-/* Projects section zoom effect */
-#projects.scroll-section .scroll-content {
-  transform: scale(0.9) translateY(20px);
-  filter: blur(3px);
-}
-
-#projects.scroll-section.active .scroll-content {
-  transform: scale(1) translateY(0);
-  filter: blur(0);
-}
-
-/* Contact section zoom effect */
-#contact.scroll-section .scroll-content {
-  transform: scale(0.8) translateY(30px);
-  filter: blur(3px);
-}
-
-#contact.scroll-section.active .scroll-content {
-  transform: scale(1) translateY(0);
-  filter: blur(0);
-}
-
-/* General keyframes for reference - not directly used but can be applied to specific elements */
-@keyframes zoom-in-section {
-  from {
-    filter: blur(5px);
-    transform: scale(0.8);
-    opacity: 0;
-    visibility: hidden;
-  }
-  to {
-    filter: blur(0);
-    transform: scale(1);
-    opacity: 1;
-    visibility: visible;
-  }
-}
-
-@keyframes zoom-out-section {
-  from {
-    filter: blur(0);
-    transform: scale(1);
-    opacity: 1;
-    visibility: visible;
-  }
-  to {
-    filter: blur(5px);
-    transform: scale(1.2);
-    opacity: 0;
-    visibility: hidden;
-  }
+  position: relative;
 }
 
 /* Section background colors */
-.scroll-section:nth-of-type(1) {
+.scroll-section:nth-child(1) {
   background: linear-gradient(135deg, rgba(29, 78, 216, 0.05) 0%, rgba(30, 64, 175, 0.1) 100%);
 }
 
-.scroll-section:nth-of-type(2) {
+.scroll-section:nth-child(2) {
   background: linear-gradient(135deg, rgba(79, 70, 229, 0.05) 0%, rgba(67, 56, 202, 0.1) 100%);
 }
 
-.scroll-section:nth-of-type(3) {
+.scroll-section:nth-child(3) {
   background: linear-gradient(135deg, rgba(124, 58, 237, 0.05) 0%, rgba(109, 40, 217, 0.1) 100%);
 }
 
-.scroll-section:nth-of-type(4) {
+.scroll-section:nth-child(4) {
   background: linear-gradient(135deg, rgba(168, 85, 247, 0.05) 0%, rgba(147, 51, 234, 0.1) 100%);
 }
 
-.scroll-section:nth-of-type(5) {
+.scroll-section:nth-child(5) {
   background: linear-gradient(135deg, rgba(192, 132, 252, 0.05) 0%, rgba(168, 85, 247, 0.1) 100%);
 }
 
 /* Dark theme gradients */
-.dark .scroll-section:nth-of-type(1) {
+.dark .scroll-section:nth-child(1) {
   background: linear-gradient(135deg, rgba(29, 78, 216, 0.1) 0%, rgba(30, 64, 175, 0.2) 100%);
 }
 
-.dark .scroll-section:nth-of-type(2) {
+.dark .scroll-section:nth-child(2) {
   background: linear-gradient(135deg, rgba(79, 70, 229, 0.1) 0%, rgba(67, 56, 202, 0.2) 100%);
 }
 
-.dark .scroll-section:nth-of-type(3) {
+.dark .scroll-section:nth-child(3) {
   background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(109, 40, 217, 0.2) 100%);
 }
 
-.dark .scroll-section:nth-of-type(4) {
+.dark .scroll-section:nth-child(4) {
   background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(147, 51, 234, 0.2) 100%);
 }
 
-.dark .scroll-section:nth-of-type(5) {
+.dark .scroll-section:nth-child(5) {
   background: linear-gradient(135deg, rgba(192, 132, 252, 0.1) 0%, rgba(168, 85, 247, 0.2) 100%);
 }
 
 .scroll-content {
-  max-width: 1400px; /* Increased for wider content */
+  max-width: 1200px;
   width: 100%;
   padding: 2rem;
   margin: 0 auto;
-  min-height: 100vh; /* Minimum full height */
-  height: 100%; /* Take up all available height */
-  display: flex;
-  flex-direction: column;
-  justify-content: center; /* Center content vertically */
-  align-items: center; /* Center content horizontally */
-  /* Remove max-height constraint to allow content to be fully visible */
-}
-
-/* Add a helper class to hide scrollbars but allow scrolling */
-.scrollbar-hide {
-  /* Hide scrollbar for Chrome, Safari and Opera */
-  &::-webkit-scrollbar {
-    display: none;
-  }
-  
-  /* Hide scrollbar for IE, Edge and Firefox */
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-}
-
-/* Holographic hover effect */
-.holographic-hover {
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s ease-in-out;
-  z-index: 1;
-}
-
-.holographic-hover::before {
-  content: '';
-  position: absolute;
-  top: -10%;
-  left: -10%;
-  width: 120%;
-  height: 120%;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.05) 40%,
-    rgba(255, 255, 255, 0.2) 60%,
-    rgba(255, 255, 255, 0) 100%
-  );
-  transform: rotate(-45deg) translateY(-100%) translateX(-100%);
-  animation: none; /* Initially no animation */
-  z-index: -1;
-  transition: all 0.3s ease-in-out;
-}
-
-.holographic-hover:hover::before {
-  animation: holographic-sweep 0.8s forwards;
-}
-
-.holographic-hover:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-}
-
-@keyframes holographic-sweep {
-  0% {
-    transform: rotate(-45deg) translateY(-100%) translateX(-100%);
-  }
-  100% {
-    transform: rotate(-45deg) translateY(100%) translateX(100%);
-  }
 }
 
 /* Progress indicator */
@@ -401,7 +156,6 @@ body {
   border-radius: 50%;
   background-color: rgba(148, 163, 184, 0.5);
   transition: all 0.3s ease;
-  cursor: pointer;
 }
 
 .indicator-dot.active {
@@ -417,14 +171,6 @@ body {
   background-color: rgba(59, 130, 246, 1);
 }
 
-/* Footer styles to make it appear below the scroll sections */
-.footer-wrapper {
-  position: relative;
-  width: 100%;
-  z-index: 5;
-  margin-top: -50px; /* Adjust to create overlap with the contact section */
-}
-
 @layer base {
   * {
     @apply border-border;
@@ -433,9 +179,5 @@ body {
   body {
     @apply font-sans antialiased bg-background text-foreground;
     overflow: hidden;
-  }
-  
-  html.is-scrolling {
-    scroll-behavior: smooth;
   }
 }

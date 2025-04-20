@@ -1,214 +1,73 @@
 import { HeroSection } from "@/components/home/hero-section";
 import { ResumeSection } from "@/components/home/resume-section";
 import { ProjectsSection } from "@/components/home/projects-section";
+import { BlogSection } from "@/components/home/blog-section";
 import { ContactSection } from "@/components/home/contact-section";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { ScrollIndicator } from "@/components/ui/scroll-indicator";
-import { useEffect, useState, useRef } from "react";
+import { useEffect } from "react";
 
 export default function Home() {
-  const [isInitialized, setIsInitialized] = useState(false);
-  const [activeSection, setActiveSection] = useState('hero');
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  
-  // Sections for the scroll indicator
-  const sectionIds = ['hero', 'resume', 'projects', 'contact'];
-
-  // Handle scroll events to detect active section and apply zoom effects
+  // Detect scroll position and update active section
   useEffect(() => {
     const handleScroll = () => {
-      // This approach uses Intersection Observer API for better performance
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          // When a section is more than 50% visible, mark it as active
-          if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
-            const sectionId = entry.target.id;
-            
-            // Set active section in state
-            setActiveSection(sectionId);
-            
-            // Update classes for animation
-            sectionIds.forEach(id => {
-              const section = document.getElementById(id);
-              if (section) {
-                if (id === sectionId) {
-                  section.classList.add('active');
-                } else {
-                  section.classList.remove('active');
-                }
-              }
-            });
-          }
-        });
-      }, {
-        root: null, // Use viewport as root
-        rootMargin: "0px",
-        threshold: 0.5 // Trigger when 50% of section is visible
-      });
+      const scrollPosition = window.scrollY;
       
-      // Observe all sections
-      sectionIds.forEach(id => {
-        const section = document.getElementById(id);
-        if (section) {
-          observer.observe(section);
-        }
-      });
-      
-      return () => {
-        // Clean up observer
-        sectionIds.forEach(id => {
-          const section = document.getElementById(id);
-          if (section) {
-            observer.unobserve(section);
-          }
-        });
-      };
+      // Your scroll handling logic if needed
     };
     
-    // Initialize scroll handler
-    const cleanup = handleScroll();
-    
-    // Set initial active section (first section)
-    const firstSection = document.getElementById(sectionIds[0]);
-    if (firstSection) {
-      firstSection.classList.add('active');
-    }
-    
-    // Add wheel event listener to handle vertical scrolling between sections
-    const handleWheelEvent = (event: WheelEvent) => {
-      event.preventDefault();
-      
-      // If already scrolling, don't trigger again
-      if (document.documentElement.classList.contains('is-scrolling')) {
-        return;
-      }
-      
-      // Find current active section index
-      const currentIndex = sectionIds.indexOf(activeSection);
-      let targetIndex = currentIndex;
-      
-      // Determine scrolling direction and set target section
-      if (event.deltaY > 0 && currentIndex < sectionIds.length - 1) {
-        // Scrolling down - go to next section
-        targetIndex = currentIndex + 1;
-      } else if (event.deltaY < 0 && currentIndex > 0) {
-        // Scrolling up - go to previous section
-        targetIndex = currentIndex - 1;
-      } else {
-        return; // No change needed (first or last section)
-      }
-      
-      // Add a class to prevent multiple scroll events
-      document.documentElement.classList.add('is-scrolling');
-      
-      // Scroll to the target section
-      const targetSection = document.getElementById(sectionIds[targetIndex]);
-      if (targetSection) {
-        targetSection.scrollIntoView({ behavior: 'smooth' });
-        
-        // After scrolling is complete, remove the marker class
-        setTimeout(() => {
-          document.documentElement.classList.remove('is-scrolling');
-        }, 1000); // Adjust timing to match scroll duration
-      }
-    };
-    
-    // Add wheel event listener
-    const scrollContainer = scrollContainerRef.current;
-    if (scrollContainer) {
-      scrollContainer.addEventListener('wheel', handleWheelEvent, { passive: false });
-    }
-    
+    window.addEventListener('scroll', handleScroll);
     return () => {
-      cleanup();
-      // Remove wheel event listener
-      if (scrollContainer) {
-        scrollContainer.removeEventListener('wheel', handleWheelEvent);
-      }
+      window.removeEventListener('scroll', handleScroll);
     };
-  }, [sectionIds, activeSection]);
+  }, []);
 
-  // Handle direct navigation (hash changes and initial load)
-  useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash.replace('#', '');
-      if (hash && sectionIds.includes(hash)) {
-        const section = document.getElementById(hash);
-        if (section) {
-          // Scroll to the section with smooth behavior
-          section.scrollIntoView({ behavior: 'smooth' });
-          
-          // Manually set active section and classes
-          setActiveSection(hash);
-          
-          sectionIds.forEach(id => {
-            const elem = document.getElementById(id);
-            if (elem) {
-              elem.classList.toggle('active', id === hash);
-            }
-          });
-        }
-      }
-    };
-
-    // Initialize page and handle hash if present
-    if (!isInitialized) {
-      setIsInitialized(true);
-      
-      if (window.location.hash) {
-        handleHashChange();
-      }
-    }
-
-    // Listen for hash changes
-    window.addEventListener('hashchange', handleHashChange);
-    return () => {
-      window.removeEventListener('hashchange', handleHashChange);
-    };
-  }, [isInitialized, sectionIds]);
+  // Sections for the scroll indicator
+  const sectionIds = ['hero', 'resume', 'projects', 'blog', 'contact'];
 
   return (
-    <>
+    <div className="scroll-container">
       <Navbar />
       
       {/* Scroll Indicator */}
       <ScrollIndicator sectionIds={sectionIds} />
       
-      <div className="scroll-container" ref={scrollContainerRef}>
-        {/* Hero Section */}
-        <section id="hero" className="scroll-section">
-          <div className="scroll-content">
-            <HeroSection />
-          </div>
-        </section>
-        
-        {/* Resume Section */}
-        <section id="resume" className="scroll-section">
-          <div className="scroll-content scrollbar-hide">
-            <ResumeSection />
-          </div>
-        </section>
-        
-        {/* Projects Section */}
-        <section id="projects" className="scroll-section">
-          <div className="scroll-content">
-            <ProjectsSection />
-          </div>
-        </section>
-        
-        {/* Contact Section */}
-        <section id="contact" className="scroll-section">
-          <div className="scroll-content">
-            <ContactSection />
-          </div>
-        </section>
-        
-        {/* Footer Section - Completely below Contact */}
-        <div className="footer-wrapper">
+      {/* Hero Section */}
+      <section id="hero" className="scroll-section">
+        <div className="scroll-content">
+          <HeroSection />
+        </div>
+      </section>
+      
+      {/* Resume Section */}
+      <section id="resume" className="scroll-section">
+        <div className="scroll-content">
+          <ResumeSection />
+        </div>
+      </section>
+      
+      {/* Projects Section */}
+      <section id="projects" className="scroll-section">
+        <div className="scroll-content">
+          <ProjectsSection />
+        </div>
+      </section>
+      
+      {/* Blog Section */}
+      <section id="blog" className="scroll-section">
+        <div className="scroll-content">
+          <BlogSection />
+        </div>
+      </section>
+      
+      {/* Contact Section */}
+      <section id="contact" className="scroll-section">
+        <div className="scroll-content">
+          <ContactSection />
           <Footer />
         </div>
-      </div>
-    </>
+      </section>
+    </div>
   );
 }

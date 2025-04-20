@@ -34,7 +34,7 @@ export function ModeToggle() {
       variant="outline"
       size="icon"
       onClick={toggleDarkMode}
-      className="w-10 h-10 rounded-full border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 holographic-hover"
+      className="w-10 h-10 rounded-full border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800"
       title={`Switch to ${darkMode ? 'light' : 'dark'} mode`}
     >
       <Sun className="h-5 w-5 rotate-0 scale-100 transition-all text-yellow-500 dark:-rotate-90 dark:scale-0" />

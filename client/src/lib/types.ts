@@ -15,7 +15,7 @@ export interface Experience {
 
 export interface Skill {
   name: string;
-  years: number;
+  percentage: number;
 }
 
 export interface Tool {
