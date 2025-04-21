@@ -77,16 +77,18 @@ html {
   height: 100vh;
   overflow-y: scroll;
   scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
 }
 
 .scroll-section {
   scroll-snap-align: start;
-  scroll-snap-stop: always;
-  height: 100vh;
+  scroll-snap-stop: normal;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
+  padding: 2rem 0;
 }
 
 /* Section background colors */

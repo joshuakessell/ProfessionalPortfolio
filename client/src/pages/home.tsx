@@ -42,28 +42,28 @@ export default function Home() {
       
       {/* Resume Section */}
       <section id="resume" className="scroll-section">
-        <div className="scroll-content">
+        <div className="scroll-content pt-20">
           <ResumeSection />
         </div>
       </section>
       
       {/* Projects Section */}
       <section id="projects" className="scroll-section">
-        <div className="scroll-content">
+        <div className="scroll-content pt-20">
           <ProjectsSection />
         </div>
       </section>
       
       {/* Blog Section */}
       <section id="blog" className="scroll-section">
-        <div className="scroll-content">
+        <div className="scroll-content pt-20">
           <BlogSection />
         </div>
       </section>
       
       {/* Contact Section */}
       <section id="contact" className="scroll-section">
-        <div className="scroll-content">
+        <div className="scroll-content pt-20">
           <ContactSection />
           <Footer />
         </div>

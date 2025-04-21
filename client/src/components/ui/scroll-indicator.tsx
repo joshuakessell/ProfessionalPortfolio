@@ -44,14 +44,14 @@ export function ScrollIndicator({ sectionIds }: ScrollIndicatorProps) {
 
   return (
     <div className="fixed right-6 top-1/2 transform -translate-y-1/2 z-50 hidden md:block">
-      <div className="flex flex-col items-center space-y-4">
+      <div className="flex flex-col items-center space-y-5">
         {sectionIds.map((_, index) => (
           <button
             key={index}
             onClick={() => handleClick(index)}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
+            className={`w-4 h-4 rounded-full transition-all duration-300 ${
               activeSection === index 
-                ? 'bg-primary scale-125' 
+                ? 'bg-primary scale-125 shadow-lg shadow-primary/20' 
                 : 'bg-gray-300 dark:bg-gray-700 hover:bg-gray-400 dark:hover:bg-gray-600'
             }`}
             aria-label={`Scroll to section ${index + 1}`}
