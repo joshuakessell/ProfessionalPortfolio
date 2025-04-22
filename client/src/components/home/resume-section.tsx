@@ -46,7 +46,7 @@ export function ResumeSection() {
               Download Resume
             </Button>
           </a>
-          <span className="text-sm text-gray-500 dark:text-gray-400">Updated April 2024</span>
+          <span className="text-sm text-gray-500 dark:text-gray-400">Updated May 2024</span>
         </div>
         
         <Tabs defaultValue="experience" onValueChange={setActiveTab} className="w-full">
