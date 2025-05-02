@@ -6,6 +6,7 @@ interface ScrollIndicatorProps {
 
 export function ScrollIndicator({ sectionIds }: ScrollIndicatorProps) {
   const [activeSection, setActiveSection] = useState(0);
+  const sectionNames = ['Home', 'Resume', 'Projects', 'Blog', 'Contact'];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -65,19 +66,23 @@ export function ScrollIndicator({ sectionIds }: ScrollIndicatorProps) {
   };
 
   return (
-    <div className="fixed right-6 top-1/2 transform -translate-y-1/2 z-50 hidden md:block">
-      <div className="flex flex-col items-center space-y-5">
+    <div className="nav-indicator">
+      <div className="flex flex-col items-center space-y-6">
         {sectionIds.map((id, index) => (
-          <button
-            key={index}
-            onClick={() => handleClick(index)}
-            className={`w-4 h-4 rounded-full transition-all duration-300 ${
-              activeSection === index 
-                ? 'bg-primary scale-125 shadow-lg shadow-primary/20' 
-                : 'bg-gray-300 dark:bg-gray-700 hover:bg-gray-400 dark:hover:bg-gray-600'
-            }`}
-            aria-label={`Scroll to section ${index + 1}`}
-          />
+          <div key={index} className="relative group">
+            <button
+              onClick={() => handleClick(index)}
+              className={`nav-dot ${activeSection === index ? 'active animate-glow' : ''}`}
+              aria-label={`Scroll to ${sectionNames[index]} section`}
+            />
+            
+            {/* Label that appears on hover */}
+            <div className="absolute top-0 right-full mr-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+              <span className="bg-gray-800 text-gray-100 px-2 py-1 rounded text-xs font-semibold">
+                {sectionNames[index]}
+              </span>
+            </div>
+          </div>
         ))}
       </div>
     </div>
