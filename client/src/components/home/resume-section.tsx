@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { 
   Download, 
   Code, 
@@ -13,14 +13,43 @@ import {
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
 import { resumeTabs, experiences, skills, tools, education } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
 export function ResumeSection() {
   const [activeTab, setActiveTab] = useState("experience");
-  // Initialize isVisible to true to avoid the blink/fade-in effect on tab changes
-  const [isVisible, setIsVisible] = useState(true);
+  const [activeItems, setActiveItems] = useState<number[]>([]);
+  const tabContentRef = useRef<HTMLDivElement>(null);
+  
+  // Function to animate items sequentially
+  const animateItems = (itemCount: number, delay: number = 100) => {
+    setActiveItems([]); // Reset
+    
+    // Animate items one by one with delays
+    const newActiveItems: number[] = [];
+    
+    for (let i = 0; i < itemCount; i++) {
+      setTimeout(() => {
+        newActiveItems.push(i);
+        setActiveItems([...newActiveItems]);
+      }, i * delay);
+    }
+  };
+  
+  // When tab changes, trigger animations
+  useEffect(() => {
+    let itemCount = 0;
+    
+    if (activeTab === "experience") {
+      itemCount = experiences.length;
+    } else if (activeTab === "skills") {
+      itemCount = skills.length + tools.length;
+    } else if (activeTab === "education") {
+      itemCount = education.length;
+    }
+    
+    animateItems(itemCount);
+  }, [activeTab]);
   
   return (
     <div className="w-full h-full overflow-y-auto">
@@ -62,136 +91,136 @@ export function ResumeSection() {
             ))}
           </TabsList>
           
-          <TabsContent value="experience" className="mt-0">
-            <div className="grid md:grid-cols-2 gap-6 lg:gap-10">
-              {experiences.map((exp, index) => (
-                <div 
-                  key={exp.id}
-                  className={`bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm p-6 
-                    ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  <div className="flex justify-between mb-4">
-                    <div>
-                      <h3 className="text-lg font-semibold mb-1">{exp.title}</h3>
-                      <div className="text-primary dark:text-blue-400 font-medium">{exp.company}</div>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-sm text-gray-600 dark:text-gray-400">{exp.period}</div>
-                      {exp.current && (
-                        <Badge variant="secondary" className="mt-1 bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400 animate-pulse-slow">
-                          Current
-                        </Badge>
-                      )}
-                    </div>
-                  </div>
-                  <ul className="space-y-2 text-gray-600 dark:text-gray-300">
-                    {exp.responsibilities.map((item, idx) => (
-                      <li 
-                        key={idx} 
-                        className="flex items-start gap-2"
-                      >
-                        <CheckCircle2 className="h-5 w-5 text-primary dark:text-blue-400 shrink-0 mt-0.5" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </TabsContent>
-          
-          <TabsContent value="skills" className="mt-0">
-            <div className="grid md:grid-cols-2 gap-8">
-              <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm">
-                <div className="p-6">
-                  <h3 className="text-lg font-semibold mb-4">Technical Skills</h3>
-                  
-                  <div className="space-y-4">
-                    {skills.map((skill, index) => (
-                      <div 
-                        key={index}
-                        className={isVisible ? 'animate-fade-in' : 'opacity-0'}
-                        style={{ animationDelay: `${index * 100}ms` }}
-                      >
-                        <div className="flex justify-between mb-1">
-                          <span className="font-medium text-sm">{skill.name}</span>
-                          <span className="text-xs text-gray-500 dark:text-gray-400">{skill.percentage}%</span>
-                        </div>
-                        <Progress 
-                          value={isVisible ? skill.percentage : 0} 
-                          className={`h-2 ${skill.name.includes("AI") ? "progress-violet" : ""} transition-all duration-1000 ease-in-out`} 
-                        />
+          <div ref={tabContentRef}>
+            {/* Experience Tab */}
+            <TabsContent value="experience" className="mt-0">
+              <div className="grid md:grid-cols-2 gap-6 lg:gap-10">
+                {experiences.map((exp, index) => (
+                  <div 
+                    key={exp.id}
+                    className={`bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm p-6 transition-all duration-300 
+                      ${activeItems.includes(index) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+                  >
+                    <div className="flex justify-between mb-4">
+                      <div>
+                        <h3 className="text-lg font-semibold mb-1">{exp.title}</h3>
+                        <div className="text-primary dark:text-blue-400 font-medium">{exp.company}</div>
                       </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm">
-                <div className="p-6">
-                  <h3 className="text-lg font-semibold mb-4">Tools & Platforms</h3>
-                  
-                  <div className="grid grid-cols-2 gap-4">
-                    {tools.map((tool, index) => {
-                      let Icon;
-                      switch (tool.icon) {
-                        case "Code": Icon = Code; break;
-                        case "Server": Icon = Server; break;
-                        case "Box": Icon = Box; break;
-                        case "GitBranch": Icon = GitBranch; break;
-                        case "Database": Icon = Database; break;
-                        case "BrainCircuit": Icon = BrainCircuit; break;
-                        default: Icon = Code;
-                      }
-                      
-                      return (
-                        <div 
-                          key={index} 
-                          className={`flex items-center gap-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-800 
-                            hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}
-                          style={{ animationDelay: `${index * 100}ms` }}
+                      <div className="text-right">
+                        <div className="text-sm text-gray-600 dark:text-gray-400">{exp.period}</div>
+                        {exp.current && (
+                          <Badge variant="secondary" className="mt-1 bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400 animate-pulse-slow">
+                            Current
+                          </Badge>
+                        )}
+                      </div>
+                    </div>
+                    <ul className="space-y-2 text-gray-600 dark:text-gray-300">
+                      {exp.responsibilities.map((item, idx) => (
+                        <li 
+                          key={idx} 
+                          className="flex items-start gap-2"
                         >
-                          <Icon className="h-6 w-6 text-primary dark:text-blue-400" />
-                          <span className="font-medium">{tool.name}</span>
+                          <CheckCircle2 className="h-5 w-5 text-primary dark:text-blue-400 shrink-0 mt-0.5" />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </TabsContent>
+            
+            {/* Skills Tab */}
+            <TabsContent value="skills" className="mt-0">
+              <div className="grid md:grid-cols-2 gap-8">
+                {/* Technical Skills Card */}
+                <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm">
+                  <div className="p-6">
+                    <h3 className="text-lg font-semibold mb-4">Technical Skills</h3>
+                    
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+                      {skills.map((skill, index) => (
+                        <div 
+                          key={index}
+                          className={`flex items-center gap-2 transition-all duration-300 
+                            ${activeItems.includes(index) ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'}`}
+                        >
+                          <CheckCircle2 className="h-5 w-5 text-primary dark:text-blue-400 shrink-0" />
+                          <span className="font-medium">{skill.name}</span>
                         </div>
-                      );
-                    })}
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Tools Card */}
+                <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm">
+                  <div className="p-6">
+                    <h3 className="text-lg font-semibold mb-4">Tools & Platforms</h3>
+                    
+                    <div className="grid grid-cols-2 gap-4">
+                      {tools.map((tool, index) => {
+                        let Icon;
+                        switch (tool.icon) {
+                          case "Code": Icon = Code; break;
+                          case "Server": Icon = Server; break;
+                          case "Box": Icon = Box; break;
+                          case "GitBranch": Icon = GitBranch; break;
+                          case "Database": Icon = Database; break;
+                          case "BrainCircuit": Icon = BrainCircuit; break;
+                          default: Icon = Code;
+                        }
+                        
+                        return (
+                          <div 
+                            key={index} 
+                            className={`flex items-center gap-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-800 
+                              hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-300
+                              ${activeItems.includes(skills.length + index) ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}`}
+                          >
+                            <Icon className="h-6 w-6 text-primary dark:text-blue-400" />
+                            <span className="font-medium">{tool.name}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </TabsContent>
-          
-          <TabsContent value="education" className="mt-0">
-            <div className="space-y-8">
-              {education.map((edu, index) => (
-                <div 
-                  key={edu.id}
-                  className={`flex flex-col md:flex-row md:items-center bg-white dark:bg-gray-800 
-                    rounded-xl overflow-hidden shadow-sm ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}
-                  style={{ animationDelay: `${index * 150}ms` }}
-                >
-                  <div className="p-6 flex flex-col md:flex-row w-full">
-                    <div className="md:w-1/4 mb-4 md:mb-0">
-                      <div className="w-16 h-16 bg-blue-50 dark:bg-blue-900/20 rounded-full flex items-center justify-center mb-2 animate-float">
-                        <GraduationCap className="h-8 w-8 text-primary" />
+            </TabsContent>
+            
+            {/* Education Tab */}
+            <TabsContent value="education" className="mt-0">
+              <div className="space-y-8">
+                {education.map((edu, index) => (
+                  <div 
+                    key={edu.id}
+                    className={`flex flex-col md:flex-row md:items-center bg-white dark:bg-gray-800 
+                      rounded-xl overflow-hidden shadow-sm transition-all duration-300
+                      ${activeItems.includes(index) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+                  >
+                    <div className="p-6 flex flex-col md:flex-row w-full">
+                      <div className="md:w-1/4 mb-4 md:mb-0">
+                        <div className="w-16 h-16 bg-blue-50 dark:bg-blue-900/20 rounded-full flex items-center justify-center mb-2 animate-float">
+                          <GraduationCap className="h-8 w-8 text-primary" />
+                        </div>
+                        <div className="text-gray-600 dark:text-gray-400 text-sm">{edu.period}</div>
                       </div>
-                      <div className="text-gray-600 dark:text-gray-400 text-sm">{edu.period}</div>
-                    </div>
-                    
-                    <div className="md:w-3/4">
-                      <h3 className="text-xl font-semibold mb-2">{edu.degree}</h3>
-                      <div className="text-primary dark:text-blue-400 font-medium mb-2">{edu.institution}</div>
-                      <p className="text-gray-600 dark:text-gray-300">
-                        {edu.description}
-                      </p>
+                      
+                      <div className="md:w-3/4">
+                        <h3 className="text-xl font-semibold mb-2">{edu.degree}</h3>
+                        <div className="text-primary dark:text-blue-400 font-medium mb-2">{edu.institution}</div>
+                        <p className="text-gray-600 dark:text-gray-300">
+                          {edu.description}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          </TabsContent>
+                ))}
+              </div>
+            </TabsContent>
+          </div>
         </Tabs>
       </div>
     </div>

@@ -63,15 +63,15 @@ export const experiences: Experience[] = [
 ];
 
 export const skills: Skill[] = [
-  { name: "JavaScript/HTML5/CSS3", percentage: 95 },
-  { name: "React", percentage: 90 },
-  { name: "Java", percentage: 90 },
-  { name: "MongoDB", percentage: 85 },
-  { name: "Spring Boot", percentage: 85 },
-  { name: "Angular", percentage: 82 },
-  { name: "Android SDK", percentage: 80 },
-  { name: "REST Services", percentage: 80 },
-  { name: "Agile Development", percentage: 75 }
+  { name: "JavaScript/HTML5/CSS3" },
+  { name: "React" },
+  { name: "Java" },
+  { name: "MongoDB" },
+  { name: "Spring Boot" },
+  { name: "Angular" },
+  { name: "Android SDK" },
+  { name: "REST Services" },
+  { name: "Agile Development" }
 ];
 
 export const tools: Tool[] = [
@@ -88,17 +88,24 @@ export const tools: Tool[] = [
 export const education: Education[] = [
   {
     id: 1,
-    degree: "Certificate in Full Stack Web Development",
-    institution: "Southern Methodist University",
-    period: "October 2018 - December 2018",
-    description: "Specialized training in the MERN Stack (MongoDB, Express, React, Node.js). Developed full-stack web applications and gained hands-on experience with modern JavaScript frameworks and libraries."
+    degree: "Bachelors of Science in Computer Science",
+    institution: "University of Phoenix",
+    period: "MAY 2025 - EST 2027",
+    description: "Currently pursuing a Bachelor's degree in Computer Science with a focus on advanced programming concepts and software engineering principles."
   },
   {
     id: 2,
-    degree: "Associates of Applied Science in Game Development",
-    institution: "El Centro (Dallas County Community College)",
-    period: "2011 - 2013",
-    description: "Studied game development fundamentals, programming logic, and interactive application design. Gained valuable experience in software development principles and programming paradigms."
+    degree: "Full Stack Web Development Certificate",
+    institution: "Southern Methodist University",
+    period: "OCT 2018 - DEC 2018",
+    description: "Specialized training in the MERN Stack (MongoDB, Express, React, Node.js). Developed full-stack web applications and gained hands-on experience with modern JavaScript frameworks and libraries."
+  },
+  {
+    id: 3,
+    degree: "Associate of Science in Computer Programming",
+    institution: "El Centro Dallas County College",
+    period: "2011 - 2014",
+    description: "Studied programming fundamentals, computer science principles, and software development methodologies. Gained foundational knowledge in algorithms, data structures, and application design."
   }
 ];
 
