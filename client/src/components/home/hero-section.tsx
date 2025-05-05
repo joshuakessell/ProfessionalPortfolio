@@ -23,7 +23,7 @@ export function HeroSection() {
         <div className="w-full md:w-1/2 space-y-6">
           <div className="flex items-center gap-2 mb-4">
             <div className="h-1 w-8 bg-primary rounded-full"></div>
-            <span className="text-sm font-medium text-primary">Full Stack Developer</span>
+            <span className="text-sm font-medium text-primary dark:text-blue-400">Full Stack Developer</span>
           </div>
           
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
