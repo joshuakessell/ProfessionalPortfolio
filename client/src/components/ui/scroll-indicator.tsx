@@ -8,59 +8,68 @@ export function ScrollIndicator({ sectionIds }: ScrollIndicatorProps) {
   const [activeSection, setActiveSection] = useState(0);
 
   useEffect(() => {
+    // Function to determine which section is in view
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + (window.innerHeight / 3);
-      const viewportHeight = window.innerHeight;
+      // Get all section elements
+      const sectionElements = sectionIds.map(id => document.getElementById(id));
       
-      // Find which section is currently visible in the viewport
-      let foundActive = false;
+      // Get current scroll position and viewport dimensions
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const scrollPosition = scrollY + (windowHeight / 2); // Middle of viewport
       
-      sectionIds.forEach((id, index) => {
-        const section = document.getElementById(id);
+      // Check each section's position to determine which one is active
+      let newActiveSection = 0;
+      let closestDistance = Infinity;
+      
+      sectionElements.forEach((section, index) => {
         if (!section) return;
         
+        // Get section position
         const rect = section.getBoundingClientRect();
+        const sectionTop = scrollY + rect.top;
+        const sectionMiddle = sectionTop + (rect.height / 2);
         
-        // If section is mostly visible in the viewport
-        if (rect.top < viewportHeight * 0.5 && rect.bottom > viewportHeight * 0.3) {
-          setActiveSection(index);
-          foundActive = true;
+        // Calculate distance from viewport middle to section middle
+        const distance = Math.abs(scrollPosition - sectionMiddle);
+        
+        // Is this section completely visible or at least 50% visible?
+        const isVisible = 
+          (rect.top < windowHeight * 0.7 && rect.bottom > windowHeight * 0.3);
+        
+        // If this section is closer to viewport middle than previous ones
+        if (isVisible && distance < closestDistance) {
+          closestDistance = distance;
+          newActiveSection = index;
         }
       });
       
-      // If no section is found to be active, use scroll position to determine
-      if (!foundActive) {
-        const documentHeight = document.documentElement.scrollHeight;
-        const scrollPercentage = (scrollPosition / (documentHeight - viewportHeight)) * 100;
-        
-        // Rough estimation of active section based on scroll percentage
-        const sectionCount = sectionIds.length;
-        const sectionPercentage = 100 / sectionCount;
-        const estimatedActiveSection = Math.min(
-          sectionCount - 1,
-          Math.floor(scrollPercentage / sectionPercentage)
-        );
-        
-        setActiveSection(estimatedActiveSection);
-      }
+      // Update active section if changed
+      setActiveSection(newActiveSection);
     };
     
-    window.addEventListener('scroll', handleScroll);
-    // Initial check
-    setTimeout(handleScroll, 100); // Delay to ensure DOM is fully rendered
+    // Add scroll event listener
+    window.addEventListener('scroll', handleScroll, { passive: true });
     
+    // Initial check (with slight delay to ensure DOM is loaded)
+    setTimeout(handleScroll, 200);
+    
+    // Cleanup
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, [sectionIds]);
 
+  // Handle button click
   const handleClick = (index: number) => {
     const sectionId = sectionIds[index];
     const section = document.getElementById(sectionId);
     
     if (section) {
+      // Scroll to section
       section.scrollIntoView({ behavior: 'smooth' });
-      setActiveSection(index); // Immediately update the active section on click
+      // Set active section
+      setActiveSection(index);
     }
   };
 
