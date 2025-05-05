@@ -19,11 +19,8 @@ import { cn } from "@/lib/utils";
 
 export function ResumeSection() {
   const [activeTab, setActiveTab] = useState("experience");
-  const [isVisible, setIsVisible] = useState(false);
-  
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
+  // Initialize isVisible to true to avoid the blink/fade-in effect on tab changes
+  const [isVisible, setIsVisible] = useState(true);
   
   return (
     <div className="w-full h-full overflow-y-auto">
