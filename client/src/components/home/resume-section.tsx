@@ -23,17 +23,22 @@ export function ResumeSection() {
   
   // Function to animate items sequentially
   const animateItems = (itemCount: number, delay: number = 100) => {
-    setActiveItems([]); // Reset
+    // First hide all items
+    setActiveItems([]);
     
-    // Animate items one by one with delays
-    const newActiveItems: number[] = [];
-    
-    for (let i = 0; i < itemCount; i++) {
-      setTimeout(() => {
-        newActiveItems.push(i);
-        setActiveItems([...newActiveItems]);
-      }, i * delay);
-    }
+    // Wait a moment to ensure state update is processed
+    setTimeout(() => {
+      // Create a new array for active items
+      const newActiveItems: number[] = [];
+      
+      // Sequence of timeouts to show each item one at a time
+      for (let i = 0; i < itemCount; i++) {
+        setTimeout(() => {
+          newActiveItems.push(i);
+          setActiveItems([...newActiveItems]);
+        }, i * delay);
+      }
+    }, 50); // Small initial delay to prevent flicker
   };
   
   // When tab changes, trigger animations
@@ -141,13 +146,14 @@ export function ResumeSection() {
                     
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
                       {skills.map((skill, index) => (
-                        <div 
-                          key={index}
-                          className={`flex items-center gap-2 transition-all duration-300 
-                            ${activeItems.includes(index) ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'}`}
-                        >
-                          <CheckCircle2 className="h-5 w-5 text-primary dark:text-blue-400 shrink-0" />
-                          <span className="font-medium">{skill.name}</span>
+                        <div key={index} className="h-8 relative">
+                          <div 
+                            className={`flex items-center gap-2 transition-all duration-300 ease-out
+                              ${activeItems.includes(index) ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'}`}
+                          >
+                            <CheckCircle2 className="h-5 w-5 text-primary dark:text-blue-400 shrink-0" />
+                            <span className="font-medium">{skill.name}</span>
+                          </div>
                         </div>
                       ))}
                     </div>
@@ -173,14 +179,15 @@ export function ResumeSection() {
                         }
                         
                         return (
-                          <div 
-                            key={index} 
-                            className={`flex items-center gap-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-800 
-                              hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-300
-                              ${activeItems.includes(skills.length + index) ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}`}
-                          >
-                            <Icon className="h-6 w-6 text-primary dark:text-blue-400" />
-                            <span className="font-medium">{tool.name}</span>
+                          <div key={index} className="h-14 relative">
+                            <div 
+                              className={`flex items-center gap-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-800 
+                                hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-300 ease-out 
+                                ${activeItems.includes(skills.length + index) ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}`}
+                            >
+                              <Icon className="h-6 w-6 text-primary dark:text-blue-400" />
+                              <span className="font-medium">{tool.name}</span>
+                            </div>
                           </div>
                         );
                       })}
