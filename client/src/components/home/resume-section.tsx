@@ -138,7 +138,7 @@ export function ResumeSection() {
               Download Resume
             </Button>
           </a>
-          <span className="text-sm text-gray-500 dark:text-gray-400">Updated May 2024</span>
+          <span className="text-sm text-gray-500 dark:text-gray-400">Updated May 2025</span>
         </div>
         
         <Tabs defaultValue="experience" onValueChange={setActiveTab} className="w-full">
@@ -295,6 +295,11 @@ export function ResumeSection() {
                           <GraduationCap className="h-8 w-8 text-primary" />
                         </div>
                         <div className="text-gray-600 dark:text-gray-400 text-sm">{edu.period}</div>
+                        {edu.current && (
+                          <Badge variant="secondary" className="mt-1 bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400 animate-pulse-slow">
+                            Current
+                          </Badge>
+                        )}
                       </div>
                       
                       <div className="md:w-3/4">

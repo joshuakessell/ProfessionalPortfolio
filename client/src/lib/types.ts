@@ -29,6 +29,7 @@ export interface Education {
   institution: string;
   period: string;
   description: string;
+  current?: boolean;
 }
 
 // Project Types

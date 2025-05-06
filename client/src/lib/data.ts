@@ -12,7 +12,7 @@ export const experiences: Experience[] = [
     title: "Full Stack Developer",
     company: "TEKsystems Global Services",
     period: "January 2019 - March 2025",
-    current: true,
+    current: false,
     responsibilities: [
       "Android / Java Developer (3 years): Developed and maintained Android apps for tracking passenger luggage in a major airline",
       "Integrated RESTful APIs using Spring Boot to support real-time updates and worked in Agile sprints",
@@ -91,7 +91,8 @@ export const education: Education[] = [
     degree: "Bachelors of Science in Computer Science",
     institution: "University of Phoenix",
     period: "MAY 2025 - EST 2027",
-    description: "Currently pursuing a Bachelor's degree in Computer Science with a focus on advanced programming concepts and software engineering principles."
+    description: "Currently pursuing a Bachelor's degree in Computer Science with a focus on advanced programming concepts and software engineering principles.",
+    current: true
   },
   {
     id: 2,
