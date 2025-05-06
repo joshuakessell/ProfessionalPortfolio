@@ -9,80 +9,118 @@ export const resumeTabs: ResumeTab[] = [
 export const experiences: Experience[] = [
   {
     id: 1,
-    title: "Full Stack Developer",
-    company: "TEKsystems Global Services",
-    period: "January 2019 - March 2025",
+    title: "Android Java Developer",
+    company: "TEKsystems Global Services at United Airlines",
+    period: "2022 - 2025",
     current: false,
     responsibilities: [
-      "Android / Java Developer (3 years): Developed and maintained Android apps for tracking passenger luggage in a major airline",
-      "Integrated RESTful APIs using Spring Boot to support real-time updates and worked in Agile sprints",
-      "Backend Java Developer (1 year): Built product fulfillment API with Spring Boot and Kafka for an automobile manufacturer",
-      "Full Stack Developer (1 year): Rebuilt legacy .NET system into interactive Angular 10 web app for a healthcare training platform",
-      "DevOps Automation Engineer (1 year): Automated server migration with Ansible scripts and deployed CI/CD pipelines to AWS Government Cloud"
+      "Developed and maintained a suite of Android apps used to track passenger luggage",
+      "Integrated RESTful API using Java and Spring Boot to support real-time updates",
+      "Implemented a PIN login system for a streamlined cross-app login experience",
+      "Selected to partner with senior developers to convert a React web app to Java/Android on an accelerated timeline, completing the rewrite within a single month"
     ]
   },
   {
     id: 2,
-    title: "Software Support Analyst",
-    company: "Intuit",
-    period: "November 2017 - April 2018",
+    title: "Backend Java Developer",
+    company: "TEKsystems Global Services at GM / OnStar",
+    period: "2021 - 2022",
     current: false,
     responsibilities: [
-      "Used phone and online chat to assist professional accountants and firms in using proprietary tax software",
-      "Provided technical support and troubleshooting for tax preparation software",
-      "Helped resolve complex software issues during tax season",
-      "Ensured clients could effectively utilize software features for accurate tax preparation"
+      "Built fulfillment API using Spring Boot and Kafka",
+      "Learned Kafka on-the-job, contributing without prior experience",
+      "Worked within an Agile development environment to deliver features on schedule",
+      "Collaborated with cross-functional teams to ensure seamless integration"
     ]
   },
   {
     id: 3,
+    title: "Angular Developer",
+    company: "TEKsystems Global Services at Reliant Healthcare",
+    period: "2020 - 2021",
+    current: false,
+    responsibilities: [
+      "Modernized .NET platform into Angular 10 web app",
+      "Gamified training modules to boost engagement",
+      "Ensured secure backend data flow through cross-team collaboration",
+      "Implemented responsive UI design for better user experience across devices"
+    ]
+  },
+  {
+    id: 4,
+    title: "Automation Engineer",
+    company: "TEKsystems Global Services at Perspecta",
+    period: "2019 - 2020",
+    current: false,
+    responsibilities: [
+      "Automated server migration using Ansible scripts",
+      "Deployed CI/CD pipelines to AWS GovCloud",
+      "Project concluded early due to COVID-19",
+      "Optimized deployment workflows to improve efficiency and reduce manual errors"
+    ]
+  },
+  {
+    id: 5,
+    title: "Software Support Analyst",
+    company: "Intuit",
+    period: "2017 - 2018",
+    current: false,
+    responsibilities: [
+      "Delivered technical support to accountants using Intuit tax software",
+      "Resolved complex issues during peak tax season",
+      "Provided solutions for software functionality and user experience issues",
+      "Maintained high customer satisfaction ratings while handling numerous support requests"
+    ]
+  },
+  {
+    id: 6,
     title: "Platform Support Analyst",
     company: "Texas Instruments",
     period: "2016 - 2017",
     current: false,
     responsibilities: [
-      "Supported internal teams by resolving trouble requests and general inquiries",
-      "Acted as liaison between client and order fulfillment teams",
-      "Generated weekly reports and collaborated with analyst team to improve methods and processes",
-      "Helped streamline communication between different departments to improve efficiency"
+      "Provided internal support by resolving platform issues",
+      "Streamlined cross-team communication",
+      "Reviewed sample component requests for engineering designs",
+      "Helped optimize internal processes to improve workflow efficiency"
     ]
   },
   {
-    id: 4,
+    id: 7,
     title: "At-Home Chat Advisor",
-    company: "Apple, Inc",
+    company: "Apple",
     period: "2014 - 2016",
     current: false,
     responsibilities: [
-      "Resolved up to three simultaneous AppleCare Support live chats",
-      "Directed team meetings and shared best practices feedback with other advisors",
-      "Maintained an independent, productive and functional home-office work environment",
-      "Provided technical support for Apple products and services to customers"
+      "Provided live chat support for AppleCare",
+      "Resolved technical issues across multiple customers simultaneously",
+      "Led team discussions and shared best practices",
+      "Maintained a high-performance remote workspace"
     ]
   }
 ];
 
 export const skills: Skill[] = [
-  { name: "JavaScript/HTML5/CSS3" },
-  { name: "React" },
   { name: "Java" },
-  { name: "MongoDB" },
+  { name: "Python" },
+  { name: "JavaScript/TypeScript" },
+  { name: "React/Angular" },
   { name: "Spring Boot" },
-  { name: "Angular" },
-  { name: "Android SDK" },
-  { name: "REST Services" },
-  { name: "Agile Development" }
+  { name: "Android Development" },
+  { name: "REST APIs" },
+  { name: "Git" },
+  { name: "Agile Methodologies" }
 ];
 
 export const tools: Tool[] = [
   { name: "AWS", icon: "Server" },
+  { name: "Azure", icon: "Cloud" },
+  { name: "GCP", icon: "Cloud" },
+  { name: "Docker", icon: "Box" },
+  { name: "Kubernetes", icon: "Boxes" },
   { name: "Ansible", icon: "Code" },
-  { name: "Python", icon: "Code" },
-  { name: "Git/GitHub", icon: "GitBranch" },
-  { name: "MongoDB", icon: "Database" },
   { name: "CI/CD", icon: "Server" },
-  { name: "Automation", icon: "Code" },
-  { name: "Node.js", icon: "Code" }
+  { name: "Bash Scripting", icon: "Terminal" }
 ];
 
 export const education: Education[] = [
@@ -121,6 +159,17 @@ export const featuredProjects: Project[] = [
     githubUrl: "https://github.com/joshuakessell/CodeGenieExtension",
     featured: true,
     aiProject: true
+  },
+  {
+    id: 2,
+    title: "Real-Time Chat Application",
+    description: "Built a real-time chat application with React, Node, Express, and MongoDB using web sockets. Later migrated the backend to Spring Boot and added secure authentication.",
+    tags: ["React", "Node.js", "MongoDB", "WebSockets", "Spring Boot"],
+    imageUrl: "https://images.unsplash.com/photo-1611606063065-ee7946f0787a?w=800&h=400&fit=crop",
+    demoUrl: "https://github.com/joshuakessell/chat-app",
+    githubUrl: "https://github.com/joshuakessell/chat-app",
+    featured: true,
+    aiProject: false
   }
 ];
 
