@@ -21,39 +21,100 @@ export function ResumeSection() {
   const [activeItems, setActiveItems] = useState<number[]>([]);
   const tabContentRef = useRef<HTMLDivElement>(null);
   
-  // Function to animate items sequentially
-  const animateItems = (itemCount: number, delay: number = 100) => {
-    // First hide all items
+  // Function to ensure smooth transition between tabs
+  const resetAnimations = () => {
     setActiveItems([]);
-    
-    // Wait a moment to ensure state update is processed
-    setTimeout(() => {
-      // Create a new array for active items
-      const newActiveItems: number[] = [];
-      
-      // Sequence of timeouts to show each item one at a time
-      for (let i = 0; i < itemCount; i++) {
-        setTimeout(() => {
-          newActiveItems.push(i);
-          setActiveItems([...newActiveItems]);
-        }, i * delay);
-      }
-    }, 50); // Small initial delay to prevent flicker
+    setSectionVisible({
+      skillsHeader: false,
+      toolsHeader: false,
+      skillsCard: false,
+      toolsCard: false
+    });
   };
   
+  // Create separate animation states for section headers and contents
+  const [sectionVisible, setSectionVisible] = useState<{
+    skillsHeader: boolean;
+    toolsHeader: boolean;
+    skillsCard: boolean;
+    toolsCard: boolean;
+  }>({
+    skillsHeader: false,
+    toolsHeader: false,
+    skillsCard: false,
+    toolsCard: false
+  });
+
   // When tab changes, trigger animations
   useEffect(() => {
-    let itemCount = 0;
+    // Reset all animations first
+    resetAnimations();
     
+    // Add a small delay before starting new animations
     if (activeTab === "experience") {
-      itemCount = experiences.length;
+      // Staggered animation for experience items
+      setTimeout(() => {
+        const newActiveItems: number[] = [];
+        experiences.forEach((_, i) => {
+          setTimeout(() => {
+            newActiveItems.push(i);
+            setActiveItems([...newActiveItems]);
+          }, i * 150); // Moderate delay between experience cards
+        });
+      }, 200);
     } else if (activeTab === "skills") {
-      itemCount = skills.length + tools.length;
+      // Sequential section animations for the skills tab
+      
+      // Show skills card header first
+      setTimeout(() => {
+        setSectionVisible(prev => ({ ...prev, skillsHeader: true }));
+      }, 300);
+      
+      // Then show skills list
+      setTimeout(() => {
+        setSectionVisible(prev => ({ ...prev, skillsCard: true }));
+        // Animate skills items
+        const newActiveItems: number[] = [];
+        skills.forEach((_, i) => {
+          setTimeout(() => {
+            newActiveItems.push(i);
+            setActiveItems([...newActiveItems]);
+          }, i * 80);
+        });
+      }, 700);
+      
+      // Then show tools card header
+      setTimeout(() => {
+        setSectionVisible(prev => ({ ...prev, toolsHeader: true }));
+      }, 1100);
+      
+      // Finally show tools list
+      setTimeout(() => {
+        setSectionVisible(prev => ({ ...prev, toolsCard: true }));
+        // Animate tool items
+        const skillsCount = skills.length;
+        const newActiveItems = [...Array(skillsCount)].map((_, i) => i);
+        
+        tools.forEach((_, i) => {
+          setTimeout(() => {
+            newActiveItems.push(skillsCount + i);
+            setActiveItems([...newActiveItems]);
+          }, i * 80);
+        });
+      }, 1500);
+      
     } else if (activeTab === "education") {
-      itemCount = education.length;
+      // Create a more staggered animation for education items
+      setTimeout(() => {
+        const newActiveItems: number[] = [];
+        education.forEach((_, i) => {
+          setTimeout(() => {
+            newActiveItems.push(i);
+            setActiveItems([...newActiveItems]);
+          }, i * 300); // Longer delay between education items for more pronounced effect
+        });
+      }, 200);
     }
-    
-    animateItems(itemCount);
   }, [activeTab]);
   
   return (
@@ -81,20 +142,25 @@ export function ResumeSection() {
         </div>
         
         <Tabs defaultValue="experience" onValueChange={setActiveTab} className="w-full">
-          <TabsList className="mb-8 flex w-full justify-start border-b border-gray-200 dark:border-gray-800">
-            {resumeTabs.map((tab) => (
-              <TabsTrigger 
-                key={tab.id} 
-                value={tab.id}
-                className={cn(
-                  "px-6 py-3 data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none",
-                  "transition-all hover:bg-gray-100 dark:hover:bg-gray-800/50"
-                )}
-              >
-                {tab.label}
-              </TabsTrigger>
-            ))}
-          </TabsList>
+          <div className="flex justify-center mb-8">
+            <TabsList className="bg-gray-100 dark:bg-gray-800/50 p-1 rounded-lg h-auto">
+              {resumeTabs.map((tab) => (
+                <TabsTrigger 
+                  key={tab.id} 
+                  value={tab.id}
+                  className={cn(
+                    "px-5 py-2.5 text-sm font-medium rounded-md",
+                    "data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700",
+                    "data-[state=active]:text-primary dark:data-[state=active]:text-blue-400",
+                    "data-[state=active]:shadow-sm",
+                    "transition-all duration-200"
+                  )}
+                >
+                  {tab.label}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </div>
           
           <div ref={tabContentRef}>
             {/* Experience Tab */}
@@ -140,11 +206,19 @@ export function ResumeSection() {
             <TabsContent value="skills" className="mt-0">
               <div className="grid md:grid-cols-2 gap-8">
                 {/* Technical Skills Card */}
-                <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm">
+                <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm transition-all duration-500">
                   <div className="p-6">
-                    <h3 className="text-lg font-semibold mb-4">Technical Skills</h3>
+                    <h3 
+                      className={`text-lg font-semibold mb-4 transition-all duration-300 
+                        ${sectionVisible.skillsHeader ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}
+                    >
+                      Technical Skills
+                    </h3>
                     
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+                    <div 
+                      className={`grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4 transition-all duration-300 
+                        ${sectionVisible.skillsCard ? 'opacity-100' : 'opacity-0'}`}
+                    >
                       {skills.map((skill, index) => (
                         <div key={index} className="h-8 relative">
                           <div 
@@ -161,11 +235,19 @@ export function ResumeSection() {
                 </div>
                 
                 {/* Tools Card */}
-                <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm">
+                <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm transition-all duration-500">
                   <div className="p-6">
-                    <h3 className="text-lg font-semibold mb-4">Tools & Platforms</h3>
+                    <h3 
+                      className={`text-lg font-semibold mb-4 transition-all duration-300
+                        ${sectionVisible.toolsHeader ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}
+                    >
+                      Tools & Platforms
+                    </h3>
                     
-                    <div className="grid grid-cols-2 gap-4">
+                    <div 
+                      className={`grid grid-cols-2 gap-4 transition-all duration-300 
+                        ${sectionVisible.toolsCard ? 'opacity-100' : 'opacity-0'}`}
+                    >
                       {tools.map((tool, index) => {
                         let Icon;
                         switch (tool.icon) {
