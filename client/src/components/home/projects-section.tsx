@@ -1,10 +1,17 @@
 import { 
   ExternalLink, 
   Github, 
-  ArrowRight
+  ArrowRight,
+  Download
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { featuredProjects } from "@/lib/data";
 import { useGitHubRepos } from "@/lib/hooks";
 import { useEffect, useState } from "react";
@@ -90,10 +97,9 @@ export function ProjectsSection() {
                       {project.demoUrl && (
                         <a 
                           href={project.demoUrl} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
+                          download
                           className="text-gray-500 hover:text-primary dark:hover:text-blue-400 transition-colors hover:scale-110"
-                          aria-label={`View demo for ${project.title}`}
+                          aria-label={`Download ${project.title}`}
                         >
                           <ExternalLink className="h-5 w-5" />
                         </a>

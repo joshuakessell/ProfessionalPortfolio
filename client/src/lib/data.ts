@@ -155,21 +155,21 @@ export const featuredProjects: Project[] = [
     description: "VS Code extension that generates code using AI, allowing you to insert intelligent code completions directly in your editor with a right-click.",
     tags: ["TypeScript", "VS Code API", "OpenAI", "Node.js"],
     imageUrl: "https://images.unsplash.com/photo-1550439062-609e1531270e?w=800&h=400&fit=crop",
-    demoUrl: "https://marketplace.visualstudio.com/items?itemName=joshuakessell.code-genie",
+    demoUrl: "/downloads/code-genie-extension.vsix",
     githubUrl: "https://github.com/joshuakessell/CodeGenieExtension",
     featured: true,
     aiProject: true
   },
   {
     id: 2,
-    title: "Real-Time Chat Application",
-    description: "Built a real-time chat application with React, Node, Express, and MongoDB using web sockets. Later migrated the backend to Spring Boot and added secure authentication.",
-    tags: ["React", "Node.js", "MongoDB", "WebSockets", "Spring Boot"],
-    imageUrl: "https://images.unsplash.com/photo-1611606063065-ee7946f0787a?w=800&h=400&fit=crop",
-    demoUrl: "https://github.com/joshuakessell/chat-app",
-    githubUrl: "https://github.com/joshuakessell/chat-app",
+    title: "JavaTestData Master",
+    description: "A smart VSCode extension that generates realistic mock data for your Java classes using the OpenAI API. Select a class, choose your format (Java, JSON, CSV), and get context-aware fake data instantly — perfect for unit tests, prototyping, and fixtures.",
+    tags: ["Java", "VS Code Extension", "OpenAI", "Test Data", "Unit Testing"],
+    imageUrl: "https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?w=800&h=400&fit=crop",
+    demoUrl: "/downloads/java-test-data-master.vsix",
+    githubUrl: "https://github.com/joshuakessell/JavaTestDataMaster",
     featured: true,
-    aiProject: false
+    aiProject: true
   }
 ];
 
