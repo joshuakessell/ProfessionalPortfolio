@@ -95,25 +95,43 @@ export function ProjectsSection() {
                     <h3 className="text-lg font-semibold">{project.title}</h3>
                     <div className="flex items-center gap-2">
                       {project.demoUrl && (
-                        <a 
-                          href={project.demoUrl} 
-                          download
-                          className="text-gray-500 hover:text-primary dark:hover:text-blue-400 transition-colors hover:scale-110"
-                          aria-label={`Download ${project.title}`}
-                        >
-                          <ExternalLink className="h-5 w-5" />
-                        </a>
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <a 
+                                href={project.demoUrl} 
+                                download
+                                className="text-gray-500 hover:text-primary dark:hover:text-blue-400 transition-colors hover:scale-110"
+                                aria-label={`Download ${project.title}`}
+                              >
+                                <Download className="h-5 w-5" />
+                              </a>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Download Extension</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
                       )}
                       {project.githubUrl && (
-                        <a 
-                          href={project.githubUrl} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="text-gray-500 hover:text-gray-800 dark:hover:text-gray-300 transition-colors hover:scale-110"
-                          aria-label={`View GitHub repository for ${project.title}`}
-                        >
-                          <Github className="h-5 w-5" />
-                        </a>
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <a 
+                                href={project.githubUrl} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="text-gray-500 hover:text-gray-800 dark:hover:text-gray-300 transition-colors hover:scale-110"
+                                aria-label={`View GitHub repository for ${project.title}`}
+                              >
+                                <Github className="h-5 w-5" />
+                              </a>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>View GitHub Repository</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
                       )}
                     </div>
                   </div>
