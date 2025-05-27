@@ -187,13 +187,13 @@ export const featuredProjects: Project[] = [
   {
     id: 4,
     title: "GitIt?",
-    description: "A Git workflow and repository management tool designed to streamline version control processes and enhance developer productivity through intuitive Git operations and project organization.",
-    tags: ["Git", "Version Control", "Developer Tools", "Workflow", "Repository Management"],
-    imageUrl: "https://images.unsplash.com/photo-1556075798-4825dfaaf498?w=800&h=400&fit=crop",
+    description: "An AI-powered code explanation platform that transforms complex code into human-readable insights. Features instant code analysis, natural language to code generation, repository analysis with GitHub integration, and intelligent explanations across 20+ programming languages.",
+    tags: ["AI", "Code Analysis", "Natural Language Processing", "GitHub Integration", "Code Generation", "Repository Analysis"],
+    imageUrl: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=800&h=400&fit=crop",
     demoUrl: "",
     githubUrl: "https://github.com/joshuakessell/GitIt",
     featured: true,
-    aiProject: false
+    aiProject: true
   }
 ];
 
