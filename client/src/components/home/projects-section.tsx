@@ -190,6 +190,12 @@ export function ProjectsSection() {
                           case 'Bias Detection':
                           case 'Fact Checking':
                             return "bg-emerald-100 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400";
+                          case 'Git':
+                          case 'Version Control':
+                          case 'Developer Tools':
+                          case 'Workflow':
+                          case 'Repository Management':
+                            return "bg-slate-100 dark:bg-slate-900/20 text-slate-600 dark:text-slate-400";
                           default:
                             return "bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300";
                         }

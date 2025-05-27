@@ -183,6 +183,17 @@ export const featuredProjects: Project[] = [
     githubUrl: "https://github.com/joshuakessell/ClarifAI",
     featured: true,
     aiProject: true
+  },
+  {
+    id: 4,
+    title: "GitIt?",
+    description: "A Git workflow and repository management tool designed to streamline version control processes and enhance developer productivity through intuitive Git operations and project organization.",
+    tags: ["Git", "Version Control", "Developer Tools", "Workflow", "Repository Management"],
+    imageUrl: "https://images.unsplash.com/photo-1556075798-4825dfaaf498?w=800&h=400&fit=crop",
+    demoUrl: "",
+    githubUrl: "https://github.com/joshuakessell/GitIt",
+    featured: true,
+    aiProject: false
   }
 ];
 
