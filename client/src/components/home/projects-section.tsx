@@ -92,23 +92,40 @@ export function ProjectsSection() {
                 
                 <div className="p-6">
                   <div className="flex items-center justify-between mb-3">
-                    <h3 className="text-lg font-semibold">{project.title}</h3>
+                    <div>
+                      <h3 className="text-lg font-semibold">{project.title}</h3>
+                      {project.subtitle && (
+                        <p className="text-sm text-gray-500 dark:text-gray-400 italic">{project.subtitle}</p>
+                      )}
+                    </div>
                     <div className="flex items-center gap-2">
                       {project.demoUrl && (
                         <TooltipProvider>
                           <Tooltip>
                             <TooltipTrigger asChild>
-                              <a 
-                                href={project.demoUrl} 
-                                download
-                                className="text-gray-500 hover:text-primary dark:hover:text-blue-400 transition-colors hover:scale-110"
-                                aria-label={`Download ${project.title}`}
-                              >
-                                <Download className="h-5 w-5" />
-                              </a>
+                              {project.title === "Clarif-AI" ? (
+                                <a 
+                                  href={project.demoUrl} 
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-gray-500 hover:text-primary dark:hover:text-blue-400 transition-colors hover:scale-110"
+                                  aria-label={`Launch ${project.title}`}
+                                >
+                                  <ExternalLink className="h-5 w-5" />
+                                </a>
+                              ) : (
+                                <a 
+                                  href={project.demoUrl} 
+                                  download
+                                  className="text-gray-500 hover:text-primary dark:hover:text-blue-400 transition-colors hover:scale-110"
+                                  aria-label={`Download ${project.title}`}
+                                >
+                                  <Download className="h-5 w-5" />
+                                </a>
+                              )}
                             </TooltipTrigger>
                             <TooltipContent>
-                              <p>Download Extension</p>
+                              <p>{project.title === "Clarif-AI" ? "Launch App" : "Download Extension"}</p>
                             </TooltipContent>
                           </Tooltip>
                         </TooltipProvider>
@@ -157,7 +174,18 @@ export function ProjectsSection() {
                           case 'Firebase':
                             return "bg-red-100 dark:bg-red-900/20 text-red-600 dark:text-red-400";
                           case 'VS Code API':
+                          case 'VS Code Extension':
                             return "bg-indigo-100 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400";
+                          case 'AI':
+                          case 'Machine Learning':
+                          case 'Computer Vision':
+                            return "bg-purple-100 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400";
+                          case 'Image Processing':
+                          case 'Python':
+                            return "bg-blue-100 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400";
+                          case 'Test Data':
+                          case 'Unit Testing':
+                            return "bg-orange-100 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400";
                           default:
                             return "bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300";
                         }

@@ -151,23 +151,36 @@ export const education: Education[] = [
 export const featuredProjects: Project[] = [
   {
     id: 1,
-    title: "Code Genie VSCode Extension",
+    title: "Code Genie",
+    subtitle: "a Visual Studio Code extension",
     description: "VS Code extension that generates code using AI, allowing you to insert intelligent code completions directly in your editor with a right-click.",
-    tags: ["TypeScript", "VS Code API", "OpenAI", "Node.js"],
+    tags: ["TypeScript", "VS Code Extension", "VS Code API", "OpenAI", "Node.js"],
     imageUrl: "https://images.unsplash.com/photo-1550439062-609e1531270e?w=800&h=400&fit=crop",
-    demoUrl: "/downloads/code-genie-extension.vsix",
+    demoUrl: "https://github.com/joshuakessell/CodeGenieExtension/releases/latest/download/code-genie.vsix",
     githubUrl: "https://github.com/joshuakessell/CodeGenieExtension",
     featured: true,
     aiProject: true
   },
   {
     id: 2,
-    title: "JavaTestData Master",
+    title: "Java Fake Data Generator",
+    subtitle: "a Visual Studio Code extension",
     description: "A smart VSCode extension that generates realistic mock data for your Java classes using the OpenAI API. Select a class, choose your format (Java, JSON, CSV), and get context-aware fake data instantly — perfect for unit tests, prototyping, and fixtures.",
-    tags: ["Java", "VS Code Extension", "OpenAI", "Test Data", "Unit Testing"],
+    tags: ["Java", "VS Code Extension", "VS Code API", "OpenAI", "Test Data", "Unit Testing"],
     imageUrl: "https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?w=800&h=400&fit=crop",
-    demoUrl: "/downloads/java-test-data-master.vsix",
+    demoUrl: "https://github.com/joshuakessell/JavaTestDataMaster/releases/latest/download/java-test-data-master.vsix",
     githubUrl: "https://github.com/joshuakessell/JavaTestDataMaster",
+    featured: true,
+    aiProject: true
+  },
+  {
+    id: 3,
+    title: "Clarif-AI",
+    description: "An AI-powered image enhancement and clarification tool that uses advanced machine learning algorithms to improve image quality, reduce noise, and enhance details for better visual clarity.",
+    tags: ["AI", "Image Processing", "Machine Learning", "Computer Vision", "Python"],
+    imageUrl: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=800&h=400&fit=crop",
+    demoUrl: "",
+    githubUrl: "https://github.com/joshuakessell/ClarifAI",
     featured: true,
     aiProject: true
   }

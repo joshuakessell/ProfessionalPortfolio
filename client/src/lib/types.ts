@@ -36,6 +36,7 @@ export interface Education {
 export interface Project {
   id: number;
   title: string;
+  subtitle?: string;
   description: string;
   tags: string[];
   imageUrl: string;
