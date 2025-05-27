@@ -176,9 +176,9 @@ export const featuredProjects: Project[] = [
   {
     id: 3,
     title: "Clarif-AI",
-    description: "An AI-powered image enhancement and clarification tool that uses advanced machine learning algorithms to improve image quality, reduce noise, and enhance details for better visual clarity.",
-    tags: ["AI", "Image Processing", "Machine Learning", "Computer Vision", "Python"],
-    imageUrl: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=800&h=400&fit=crop",
+    description: "AI-powered unbiased news analysis platform that delivers factually verified, multi-perspective reporting. Features real-time news aggregation, bias detection, external article analysis, and cross-source fact-checking to provide balanced viewpoints on current events.",
+    tags: ["AI", "News Analysis", "Bias Detection", "Fact Checking", "React", "TypeScript"],
+    imageUrl: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&h=400&fit=crop",
     demoUrl: "",
     githubUrl: "https://github.com/joshuakessell/ClarifAI",
     featured: true,

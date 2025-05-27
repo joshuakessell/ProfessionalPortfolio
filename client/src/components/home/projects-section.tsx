@@ -186,6 +186,10 @@ export function ProjectsSection() {
                           case 'Test Data':
                           case 'Unit Testing':
                             return "bg-orange-100 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400";
+                          case 'News Analysis':
+                          case 'Bias Detection':
+                          case 'Fact Checking':
+                            return "bg-emerald-100 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400";
                           default:
                             return "bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300";
                         }
