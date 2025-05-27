@@ -190,7 +190,7 @@ export const featuredProjects: Project[] = [
     description: "An AI-powered code explanation platform that transforms complex code into human-readable insights. Features instant code analysis, natural language to code generation, repository analysis with GitHub integration, and intelligent explanations across 20+ programming languages.",
     tags: ["AI", "Code Analysis", "Natural Language Processing", "GitHub Integration", "Code Generation", "Repository Analysis"],
     imageUrl: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=800&h=400&fit=crop",
-    demoUrl: "",
+    demoUrl: "https://codexplainer.joshuakessell.com/",
     githubUrl: "https://github.com/joshuakessell/GitIt",
     featured: true,
     aiProject: true
