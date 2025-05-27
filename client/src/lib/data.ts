@@ -179,7 +179,7 @@ export const featuredProjects: Project[] = [
     description: "AI-powered unbiased news analysis platform that delivers factually verified, multi-perspective reporting. Features real-time news aggregation, bias detection, external article analysis, and cross-source fact-checking to provide balanced viewpoints on current events.",
     tags: ["AI", "News Analysis", "Bias Detection", "Fact Checking", "React", "TypeScript"],
     imageUrl: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&h=400&fit=crop",
-    demoUrl: "",
+    demoUrl: "https://clarif-ai.joshuakessell.com",
     githubUrl: "https://github.com/joshuakessell/ClarifAI",
     featured: true,
     aiProject: true
