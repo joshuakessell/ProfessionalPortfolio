@@ -5,6 +5,8 @@ import { BlogSection } from "@/components/home/blog-section";
 import { ContactSection } from "@/components/home/contact-section";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
+import { ParticleBackground } from "@/components/ui/particle-background";
+import { AnimatedBackground } from "@/components/ui/animated-background";
 import { useEffect } from "react";
 
 export default function Home() {
@@ -23,39 +25,48 @@ export default function Home() {
 
   return (
     <div className="scroll-container">
+      {/* Dynamic Background */}
+      <ParticleBackground 
+        particleCount={40}
+        particleSpeed={0.2}
+        connectionDistance={80}
+        showConnections={true}
+      />
+      <AnimatedBackground />
+      
       <Navbar />
       
       {/* Hero Section */}
       <section id="hero" className="scroll-section">
-        <div className="scroll-content">
+        <div className="scroll-content relative z-10">
           <HeroSection />
         </div>
       </section>
       
       {/* Resume Section */}
       <section id="resume" className="scroll-section">
-        <div className="scroll-content pt-20">
+        <div className="scroll-content pt-20 relative z-10">
           <ResumeSection />
         </div>
       </section>
       
       {/* Projects Section */}
       <section id="projects" className="scroll-section">
-        <div className="scroll-content pt-20">
+        <div className="scroll-content pt-20 relative z-10">
           <ProjectsSection />
         </div>
       </section>
       
       {/* Blog Section */}
       <section id="blog" className="scroll-section">
-        <div className="scroll-content pt-20">
+        <div className="scroll-content pt-20 relative z-10">
           <BlogSection />
         </div>
       </section>
       
       {/* Contact Section */}
       <section id="contact" className="scroll-section">
-        <div className="scroll-content pt-20">
+        <div className="scroll-content pt-20 relative z-10">
           <ContactSection />
           <Footer />
         </div>
