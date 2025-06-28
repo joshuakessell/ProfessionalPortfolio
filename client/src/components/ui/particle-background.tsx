@@ -80,12 +80,15 @@ export function ParticleBackground({
 
     // Animation loop
     const animate = () => {
-      // Clear canvas with slight trailing effect
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.02)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      // Get theme colors
+      // Clear canvas completely for crisp geometric shapes
       const isDark = document.documentElement.classList.contains('dark');
+      
+      if (isDark) {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
+      } else {
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.12)';
+      }
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       particlesRef.current.forEach((particle, index) => {
         // Update particle position
@@ -107,20 +110,25 @@ export function ParticleBackground({
         particle.x = Math.max(0, Math.min(canvas.width, particle.x));
         particle.y = Math.max(0, Math.min(canvas.height, particle.y));
 
-        // Mouse interaction with attractive force
+        // Enhanced mouse interaction with magnetic effect
         const dx = mouseRef.current.x - particle.x;
         const dy = mouseRef.current.y - particle.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
         
-        if (distance < 150) {
-          const force = (150 - distance) / 150;
-          particle.vx += dx * force * 0.0008;
-          particle.vy += dy * force * 0.0008;
-          particle.opacity = Math.min(particle.baseOpacity * 2, 0.8);
-          particle.size = Math.min(particle.size * 1.2, 3);
+        if (distance < 200) {
+          const force = (200 - distance) / 200;
+          const magneticForce = force * force; // Quadratic for stronger near-field effect
+          
+          particle.vx += dx * magneticForce * 0.001;
+          particle.vy += dy * magneticForce * 0.001;
+          particle.opacity = Math.min(particle.baseOpacity * (1 + force * 2), 1);
+          particle.size = Math.min(particle.size * (1 + force * 0.5), 4);
+          
+          // Add rotation speed based on proximity
+          particle.life += force * 2;
         } else {
           particle.opacity = particle.baseOpacity;
-          particle.size = Math.max(particle.size * 0.99, 0.5);
+          particle.size = Math.max(particle.size * 0.98, 0.5);
         }
 
         // Apply velocity damping
@@ -147,30 +155,58 @@ export function ParticleBackground({
           });
         }
 
-        // Draw particle with subtle color
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+        // Draw geometric shapes instead of circles
+        const shapeType = Math.floor(particle.life / 100) % 3; // Cycle through shapes
+        
+        ctx.save();
+        ctx.translate(particle.x, particle.y);
+        ctx.rotate(particle.life * 0.02);
         
         if (isDark) {
-          ctx.fillStyle = `hsla(${particle.hue}, 70%, 80%, ${particle.opacity})`;
+          ctx.fillStyle = `hsla(${particle.hue}, 80%, 85%, ${particle.opacity})`;
+          ctx.strokeStyle = `hsla(${particle.hue}, 90%, 90%, ${particle.opacity * 0.8})`;
         } else {
-          ctx.fillStyle = `hsla(${particle.hue}, 50%, 40%, ${particle.opacity})`;
+          ctx.fillStyle = `hsla(${particle.hue}, 60%, 25%, ${particle.opacity})`;
+          ctx.strokeStyle = `hsla(${particle.hue}, 70%, 20%, ${particle.opacity * 0.8})`;
         }
-        ctx.fill();
-
-        // Add subtle glow effect
-        if (particle.opacity > 0.3) {
+        
+        ctx.lineWidth = 0.5;
+        
+        // Draw different geometric shapes
+        if (shapeType === 0) {
+          // Square
+          const size = particle.size * 2;
+          ctx.fillRect(-size/2, -size/2, size, size);
+          ctx.strokeRect(-size/2, -size/2, size, size);
+        } else if (shapeType === 1) {
+          // Triangle
+          const size = particle.size * 2.5;
           ctx.beginPath();
-          ctx.arc(particle.x, particle.y, particle.size + 1, 0, Math.PI * 2);
-          if (isDark) {
-            ctx.fillStyle = `hsla(${particle.hue}, 70%, 80%, ${particle.opacity * 0.2})`;
-          } else {
-            ctx.fillStyle = `hsla(${particle.hue}, 50%, 40%, ${particle.opacity * 0.2})`;
-          }
+          ctx.moveTo(0, -size);
+          ctx.lineTo(-size * 0.866, size * 0.5);
+          ctx.lineTo(size * 0.866, size * 0.5);
+          ctx.closePath();
           ctx.fill();
+          ctx.stroke();
+        } else {
+          // Hexagon
+          const size = particle.size * 1.8;
+          ctx.beginPath();
+          for (let i = 0; i < 6; i++) {
+            const angle = (i * Math.PI) / 3;
+            const x = Math.cos(angle) * size;
+            const y = Math.sin(angle) * size;
+            if (i === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+          }
+          ctx.closePath();
+          ctx.fill();
+          ctx.stroke();
         }
+        
+        ctx.restore();
 
-        // Draw connections
+        // Draw geometric connections
         if (showConnections) {
           particlesRef.current.slice(index + 1).forEach(otherParticle => {
             const dx = particle.x - otherParticle.x;
@@ -178,20 +214,34 @@ export function ParticleBackground({
             const distance = Math.sqrt(dx * dx + dy * dy);
 
             if (distance < connectionDistance) {
-              const opacity = (1 - distance / connectionDistance) * 0.15;
+              const opacity = (1 - distance / connectionDistance) * 0.3;
               const avgHue = (particle.hue + otherParticle.hue) / 2;
               
-              ctx.beginPath();
-              ctx.moveTo(particle.x, particle.y);
-              ctx.lineTo(otherParticle.x, otherParticle.y);
+              // Draw segmented lines for more geometric feel
+              const segments = 8;
+              const segmentLength = distance / segments;
               
-              if (isDark) {
-                ctx.strokeStyle = `hsla(${avgHue}, 60%, 70%, ${opacity})`;
-              } else {
-                ctx.strokeStyle = `hsla(${avgHue}, 40%, 50%, ${opacity})`;
+              for (let i = 0; i < segments; i += 2) {
+                const startRatio = i / segments;
+                const endRatio = Math.min((i + 1) / segments, 1);
+                
+                const startX = particle.x + dx * startRatio;
+                const startY = particle.y + dy * startRatio;
+                const endX = particle.x + dx * endRatio;
+                const endY = particle.y + dy * endRatio;
+                
+                ctx.beginPath();
+                ctx.moveTo(startX, startY);
+                ctx.lineTo(endX, endY);
+                
+                if (isDark) {
+                  ctx.strokeStyle = `hsla(${avgHue}, 70%, 80%, ${opacity})`;
+                } else {
+                  ctx.strokeStyle = `hsla(${avgHue}, 60%, 30%, ${opacity})`;
+                }
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
               }
-              ctx.lineWidth = 0.8;
-              ctx.stroke();
             }
           });
         }

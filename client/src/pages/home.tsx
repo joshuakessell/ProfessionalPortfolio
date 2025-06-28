@@ -24,12 +24,12 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="scroll-container">
+    <div className="scroll-container geometric-bg">
       {/* Dynamic Background */}
       <ParticleBackground 
-        particleCount={40}
-        particleSpeed={0.2}
-        connectionDistance={80}
+        particleCount={35}
+        particleSpeed={0.15}
+        connectionDistance={90}
         showConnections={true}
       />
       <AnimatedBackground />
