@@ -129,7 +129,7 @@ export function ResumeSection() {
         </div>
         
         <div className="flex items-center justify-center gap-2 mb-12">
-          <a href="/joshua-kessell-resume.pdf" download target="_blank" rel="noopener noreferrer">
+          <a href="/joshua-kessell-resume-june-2025.pdf" download target="_blank" rel="noopener noreferrer">
             <Button 
               variant="outline" 
               size="sm" 
@@ -139,7 +139,7 @@ export function ResumeSection() {
               Download Resume
             </Button>
           </a>
-          <span className="text-sm text-gray-500 dark:text-gray-400">Updated May 2025</span>
+          <span className="text-sm text-gray-500 dark:text-gray-400">Updated June 2025</span>
         </div>
         
         <Tabs defaultValue="experience" onValueChange={setActiveTab} className="w-full">
@@ -267,8 +267,9 @@ export function ResumeSection() {
                         return (
                           <div key={index} className="h-14 relative">
                             <div 
-                              className={`flex items-center gap-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-800 
-                                hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-300 ease-out 
+                              className={`flex items-center gap-3 p-3 rounded-lg bg-white/20 dark:bg-black/20 
+                                hover:bg-white/30 dark:hover:bg-black/30 backdrop-blur-sm border border-white/20 dark:border-white/10
+                                transition-all duration-300 ease-out 
                                 ${activeItems.includes(skills.length + index) ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}`}
                             >
                               <Icon className="h-6 w-6 text-primary dark:text-blue-400" />
