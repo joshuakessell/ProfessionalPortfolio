@@ -26,7 +26,7 @@ export function Navbar() {
   };
 
   return (
-    <header className="fixed top-0 w-full bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm z-50 shadow-sm dark:shadow-gray-800/20">
+    <header className="fixed top-0 w-full glass-header z-50">
       <nav className="container mx-auto px-4 py-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="h-10 w-12 bg-primary text-white dark:bg-primary dark:border-2 dark:border-blue-400/30 rounded-lg flex items-center justify-center font-bold text-xl shadow-md transition-colors">

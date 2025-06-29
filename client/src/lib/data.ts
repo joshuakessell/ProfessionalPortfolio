@@ -6,6 +6,8 @@ export const resumeTabs: ResumeTab[] = [
   { id: "education", label: "Education" }
 ];
 
+export const resumeDownloadUrl = "/joshua-kessell-resume-june-2025.pdf";
+
 export const experiences: Experience[] = [
   {
     id: 1,
