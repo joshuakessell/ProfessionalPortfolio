@@ -185,7 +185,7 @@ export function ContactSection() {
               className={`w-full md:w-1/2 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}
               style={{ animationDelay: '0.3s' }}
             >
-              <div className="bg-white dark:bg-gray-800 rounded-xl p-6 md:p-8 shadow-sm">
+              <div className="glass-panel rounded-xl p-6 md:p-8">
                 <h3 className="text-2xl font-semibold mb-6">Send a Message</h3>
                 
                 <Form {...form}>

@@ -73,7 +73,7 @@ export function ProjectsSection() {
             featuredProjects.map((project, index) => (
               <div 
                 key={project.id}
-                className={`bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm h-full
+                className={`glass-panel rounded-xl overflow-hidden h-full
                   ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}
                 style={{ animationDelay: `${index * 150}ms` }}
               >

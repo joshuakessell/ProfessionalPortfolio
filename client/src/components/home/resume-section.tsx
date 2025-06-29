@@ -170,7 +170,7 @@ export function ResumeSection() {
                 {experiences.map((exp, index) => (
                   <div 
                     key={exp.id}
-                    className={`bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm p-6 transition-all duration-700 transform
+                    className={`glass-panel rounded-xl overflow-hidden p-6 transition-all duration-700 transform
                       ${activeItems.includes(index) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
                     style={{ 
                       transitionDelay: `${index * 200}ms`
@@ -210,7 +210,7 @@ export function ResumeSection() {
             <TabsContent value="skills" className="mt-0">
               <div className="grid md:grid-cols-2 gap-8">
                 {/* Technical Skills Card */}
-                <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm transition-all duration-500">
+                <div className="glass-panel rounded-xl overflow-hidden transition-all duration-500">
                   <div className="p-6">
                     <h3 
                       className={`text-lg font-semibold mb-4 transition-all duration-300 
@@ -239,7 +239,7 @@ export function ResumeSection() {
                 </div>
                 
                 {/* Tools Card */}
-                <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm transition-all duration-500">
+                <div className="glass-panel rounded-xl overflow-hidden transition-all duration-500">
                   <div className="p-6">
                     <h3 
                       className={`text-lg font-semibold mb-4 transition-all duration-300
@@ -289,8 +289,8 @@ export function ResumeSection() {
                 {education.map((edu, index) => (
                   <div 
                     key={edu.id}
-                    className={`flex flex-col md:flex-row md:items-center bg-white dark:bg-gray-800 
-                      rounded-xl overflow-hidden shadow-sm transition-all duration-300
+                    className={`flex flex-col md:flex-row md:items-center glass-panel 
+                      rounded-xl overflow-hidden transition-all duration-300
                       ${activeItems.includes(index) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
                   >
                     <div className="p-6 flex flex-col md:flex-row w-full">
