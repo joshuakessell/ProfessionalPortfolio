@@ -303,6 +303,24 @@ body {
   background-color: rgba(59, 130, 246, 1);
 }
 
+/* Disable all animations when reduce motion is active */
+.reduce-motion *,
+.reduce-motion *::before,
+.reduce-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+.reduce-motion .glass-panel::before {
+  display: none !important;
+}
+
+.reduce-motion .scroll-container {
+  scroll-behavior: auto !important;
+}
+
 @layer base {
   * {
     @apply border-border;
