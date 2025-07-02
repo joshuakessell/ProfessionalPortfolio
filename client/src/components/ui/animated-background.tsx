@@ -88,10 +88,10 @@ export function AnimatedBackground({ className = '' }: AnimatedBackgroundProps) 
       ))}
 
       {/* Enhanced geometric grid pattern */}
-      <div className="absolute inset-0 opacity-40 bg-[linear-gradient(rgba(0,0,0,0.03)_2px,transparent_2px),linear-gradient(90deg,rgba(0,0,0,0.03)_2px,transparent_2px)] dark:bg-[linear-gradient(rgba(255,255,255,0.04)_2px,transparent_2px),linear-gradient(90deg,rgba(255,255,255,0.04)_2px,transparent_2px)] bg-[size:80px_80px]" />
+      <div className="absolute inset-0 opacity-60 bg-[linear-gradient(rgba(0,0,0,0.08)_2px,transparent_2px),linear-gradient(90deg,rgba(0,0,0,0.08)_2px,transparent_2px)] dark:bg-[linear-gradient(rgba(255,255,255,0.04)_2px,transparent_2px),linear-gradient(90deg,rgba(255,255,255,0.04)_2px,transparent_2px)] bg-[size:80px_80px]" />
       
       {/* Diagonal pattern overlay */}
-      <div className="absolute inset-0 opacity-20 bg-[linear-gradient(45deg,rgba(0,0,0,0.02)_1px,transparent_1px),linear-gradient(-45deg,rgba(0,0,0,0.02)_1px,transparent_1px)] dark:bg-[linear-gradient(45deg,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(-45deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px]" />
+      <div className="absolute inset-0 opacity-35 bg-[linear-gradient(45deg,rgba(0,0,0,0.06)_1px,transparent_1px),linear-gradient(-45deg,rgba(0,0,0,0.06)_1px,transparent_1px)] dark:bg-[linear-gradient(45deg,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(-45deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px]" />
     </div>
   );
 }
