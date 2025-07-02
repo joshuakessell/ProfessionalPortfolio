@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "wouter";
 import { Menu } from "lucide-react";
 import { ModeToggle } from "@/components/ui/mode-toggle";
+import { MotionToggle } from "@/components/ui/motion-toggle";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -48,6 +49,7 @@ export function Navbar() {
         </div>
         
         <div className="flex items-center gap-3">
+          <MotionToggle />
           <ModeToggle />
           
           <Button 

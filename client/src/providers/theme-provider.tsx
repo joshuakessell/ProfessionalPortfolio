@@ -8,10 +8,12 @@ type ThemeProviderProps = {
   children: React.ReactNode;
 };
 
-// Create context for theme
+// Create context for theme and motion
 type ThemeContextType = {
   theme: Theme;
   toggleTheme: () => void;
+  reduceMotion: boolean;
+  toggleReduceMotion: () => void;
 };
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -24,6 +26,16 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     return (savedTheme === "dark" || savedTheme === "light") ? savedTheme : "light";
   });
 
+  // Get initial motion preference from localStorage or system preference
+  const [reduceMotion, setReduceMotion] = useState<boolean>(() => {
+    const savedMotion = localStorage.getItem("reduceMotion");
+    if (savedMotion !== null) {
+      return savedMotion === "true";
+    }
+    // Check system preference for reduced motion
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  });
+
   // Toggle between light and dark themes
   const toggleTheme = () => {
     setTheme(prevTheme => {
@@ -33,15 +45,31 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     });
   };
 
-  // Update document class when theme changes
+  // Toggle motion preference
+  const toggleReduceMotion = () => {
+    setReduceMotion(prevMotion => {
+      const newMotion = !prevMotion;
+      localStorage.setItem("reduceMotion", newMotion.toString());
+      return newMotion;
+    });
+  };
+
+  // Update document class when theme or motion changes
   useEffect(() => {
     const root = document.documentElement;
     root.classList.remove("light", "dark");
     root.classList.add(theme);
-  }, [theme]);
+    
+    // Add/remove motion class
+    if (reduceMotion) {
+      root.classList.add("reduce-motion");
+    } else {
+      root.classList.remove("reduce-motion");
+    }
+  }, [theme, reduceMotion]);
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider value={{ theme, toggleTheme, reduceMotion, toggleReduceMotion }}>
       {children}
     </ThemeContext.Provider>
   );

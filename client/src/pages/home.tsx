@@ -6,10 +6,14 @@ import { ContactSection } from "@/components/home/contact-section";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { ParticleBackground } from "@/components/ui/particle-background";
-import { AnimatedBackground } from "@/components/ui/animated-background";
+import { AnimatedBackground } from "@/components/ui/animated-background";  
+import { StaticBackground } from "@/components/ui/static-background";
+import { useTheme } from "@/providers/theme-provider";
 import { useEffect } from "react";
 
 export default function Home() {
+  const { reduceMotion } = useTheme();
+  
   // Detect scroll position if needed
   useEffect(() => {
     const handleScroll = () => {
@@ -25,14 +29,20 @@ export default function Home() {
 
   return (
     <div className="scroll-container geometric-bg">
-      {/* Dynamic Background */}
-      <ParticleBackground 
-        particleCount={35}
-        particleSpeed={0.15}
-        connectionDistance={90}
-        showConnections={true}
-      />
-      <AnimatedBackground />
+      {/* Conditional Background - Static when motion is reduced */}
+      {reduceMotion ? (
+        <StaticBackground />
+      ) : (
+        <>
+          <ParticleBackground 
+            particleCount={35}
+            particleSpeed={0.15}
+            connectionDistance={90}
+            showConnections={true}
+          />
+          <AnimatedBackground />
+        </>
+      )}
       
       <Navbar />
       
