@@ -70,13 +70,7 @@ GitHub repository management tool with enhanced workflow features
 - 💬 Ask me about React, Node.js, or AI integration
 - ⚡ Fun fact: I love solving complex problems with elegant solutions
 
-## 📚 Recent Blog Posts
 
-<!-- BLOG-POST-LIST:START -->
-- [Building AI-Powered Web Applications](https://your-blog.com/ai-web-apps)
-- [Modern React Patterns and Best Practices](https://your-blog.com/react-patterns)
-- [Full-Stack Development with TypeScript](https://your-blog.com/typescript-fullstack)
-<!-- BLOG-POST-LIST:END -->
 
 ## 🏆 Achievements
 

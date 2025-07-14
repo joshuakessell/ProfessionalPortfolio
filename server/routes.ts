@@ -13,7 +13,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const repos = await getGitHubRepos();
       res.json(repos);
     } catch (error) {
-      console.error("GitHub repos error:", error);
       res.status(500).json({ message: "Failed to fetch GitHub repositories" });
     }
   });
@@ -30,7 +29,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const content = await generateContent(prompt);
       res.json({ content });
     } catch (error) {
-      console.error("AI generation error:", error);
       res.status(500).json({ message: "Failed to generate content" });
     }
   });
@@ -42,7 +40,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const message = await storage.createContactMessage(validatedData);
       res.status(201).json({ message: "Message sent successfully", id: message.id });
     } catch (error) {
-      console.error("Contact form error:", error);
       if (error instanceof z.ZodError) {
         return res.status(400).json({ 
           message: "Invalid form data", 

@@ -46,48 +46,20 @@ export function smoothScrollToElement(elementId: string): void {
   const element = document.getElementById(elementId);
   
   if (!element) {
-    console.error('Element not found:', elementId);
     return;
   }
 
   // Account for fixed header
   const headerOffset = 80;
-  
-  // Use element.scrollIntoView with offset for header
   const elementTop = element.getBoundingClientRect().top + window.pageYOffset - headerOffset;
   
-  // Try multiple methods to ensure scrolling works
   try {
-    // Method 1: Native scrollTo with smooth behavior
     window.scrollTo({
       top: elementTop,
       behavior: 'smooth'
     });
-    
-    // Fallback: If the above doesn't work, try scrollIntoView
-    setTimeout(() => {
-      const currentScroll = window.pageYOffset;
-      const targetScroll = elementTop;
-      
-      // Check if we're close to the target (within 50px)
-      if (Math.abs(currentScroll - targetScroll) > 50) {
-        element.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
-        
-        // Adjust for header after scrollIntoView
-        setTimeout(() => {
-          window.scrollBy({
-            top: -headerOffset,
-            behavior: 'smooth'
-          });
-        }, 100);
-      }
-    }, 100);
   } catch (error) {
-    console.error('Scroll error:', error);
-    // Final fallback: instant scroll
+    // Fallback: instant scroll
     window.scrollTo(0, elementTop);
   }
 }
