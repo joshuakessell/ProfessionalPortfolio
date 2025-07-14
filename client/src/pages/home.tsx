@@ -29,20 +29,8 @@ export default function Home() {
 
   return (
     <div className="scroll-container geometric-bg">
-      {/* Conditional Background - Static when motion is reduced */}
-      {reduceMotion ? (
-        <StaticBackground />
-      ) : (
-        <>
-          <ParticleBackground 
-            particleCount={35}
-            particleSpeed={0.15}
-            connectionDistance={90}
-            showConnections={true}
-          />
-          <AnimatedBackground />
-        </>
-      )}
+      {/* Static Background Only */}
+      <StaticBackground />
       
       <Navbar />
       
