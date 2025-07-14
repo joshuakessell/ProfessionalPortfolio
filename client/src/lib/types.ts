@@ -60,16 +60,7 @@ export interface GitHubRepo {
 }
 
 // Blog Types
-export interface BlogPost {
-  id: number;
-  title: string;
-  excerpt: string;
-  imageUrl: string;
-  category: string;
-  date: string;
-  featured: boolean;
-  content?: string;
-}
+// BlogPost interface removed - static portfolio only
 
 // Contact Form Types
 export interface ContactFormData {

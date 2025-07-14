@@ -57,13 +57,7 @@ export function useGitHubRepos() {
   });
 }
 
-// Blog posts fetching hook
-export function useBlogPosts() {
-  return useQuery({
-    queryKey: ["/api/blog/posts"],
-    staleTime: 1000 * 60 * 5, // 5 minutes
-  });
-}
+// Blog posts removed - static portfolio only
 
 // Send contact form data hook
 export async function sendContactForm(data: {

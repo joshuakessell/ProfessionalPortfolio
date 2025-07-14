@@ -111,3 +111,5 @@ Changelog:
 - July 14, 2025. Completely removed blog section from entire site
 - July 14, 2025. Fixed smooth scrolling functionality with multiple fallback methods
 - July 14, 2025. Requested development branch workflow for all future changes
+- July 14, 2025. Switched to development branch for all ongoing work
+- July 14, 2025. Converted to static read-only portfolio by removing database storage, authentication, and dynamic content management

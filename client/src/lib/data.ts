@@ -1,4 +1,4 @@
-import { ResumeTab, Experience, Skill, Tool, Education, Project, BlogPost } from "./types";
+import { ResumeTab, Experience, Skill, Tool, Education, Project } from "./types";
 
 export const resumeTabs: ResumeTab[] = [
   { id: "experience", label: "Experience" },
@@ -199,50 +199,4 @@ export const featuredProjects: Project[] = [
   }
 ];
 
-export const blogPosts: BlogPost[] = [
-  {
-    id: 1,
-    title: "Building Android Apps for the Airline Industry",
-    excerpt: "My experience developing Android applications for tracking passenger luggage and the unique challenges of building apps for the airline industry.",
-    imageUrl: "https://images.unsplash.com/photo-1530521954074-e64f6810b32d?w=800&h=400&fit=crop",
-    category: "Android Development",
-    date: "2024-03-15",
-    featured: true
-  },
-  {
-    id: 2,
-    title: "Spring Boot and Kafka: A Powerful Combination",
-    excerpt: "How I leveraged Spring Boot and Kafka to build a robust product fulfillment API for an automobile manufacturer and lessons learned along the way.",
-    imageUrl: "https://images.unsplash.com/photo-1522542550221-31fd19575a2d?w=800&h=400&fit=crop",
-    category: "Java Development",
-    date: "2024-02-10",
-    featured: true
-  },
-  {
-    id: 3,
-    title: "Gamification in Healthcare Training Applications",
-    excerpt: "Strategies for implementing gamification elements in healthcare training platforms to improve user engagement and knowledge retention.",
-    imageUrl: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&h=400&fit=crop",
-    category: "Angular",
-    date: "2023-11-25",
-    featured: false
-  },
-  {
-    id: 4,
-    title: "Automating Server Migration with Ansible",
-    excerpt: "A practical guide to using Ansible for automating server migrations and deploying CI/CD pipelines to AWS Government Cloud environments.",
-    imageUrl: "https://images.unsplash.com/photo-1548092372-0d1bd40894a3?w=800&h=400&fit=crop",
-    category: "DevOps",
-    date: "2023-08-15",
-    featured: false
-  },
-  {
-    id: 5,
-    title: "From .NET to Angular: Modernizing Legacy Applications",
-    excerpt: "My journey transforming a legacy .NET system into a modern Angular web application for a healthcare training platform.",
-    imageUrl: "https://images.unsplash.com/photo-1556075798-4825dfaaf498?w=800&h=400&fit=crop",
-    category: "Web Development",
-    date: "2023-06-20",
-    featured: false
-  }
-];
+// Blog posts removed - static portfolio only
