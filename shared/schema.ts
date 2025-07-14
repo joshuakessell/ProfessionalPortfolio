@@ -25,6 +25,11 @@ export const insertContactMessageSchema = createInsertSchema(contactMessages).om
   read: true,
   response: true,
   respondedAt: true,
+}).extend({
+  name: z.string().min(2, "Name must be at least 2 characters").max(100, "Name must be under 100 characters").regex(/^[a-zA-Z\s'-]+$/, "Name can only contain letters, spaces, apostrophes, and hyphens"),
+  email: z.string().email("Invalid email address").max(254, "Email must be under 254 characters"),
+  subject: z.string().min(5, "Subject must be at least 5 characters").max(200, "Subject must be under 200 characters"),
+  message: z.string().min(10, "Message must be at least 10 characters").max(5000, "Message must be under 5000 characters"),
 });
 
 // Types

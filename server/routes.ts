@@ -23,9 +23,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/github/repos", async (_req, res) => {
     try {
       const repos = await getGitHubRepos();
+      
+      // Add cache headers for better performance
+      res.set({
+        'Cache-Control': 'public, max-age=300, s-maxage=600', // 5 min client, 10 min CDN
+        'ETag': `"${Date.now()}"`,
+        'Content-Type': 'application/json'
+      });
+      
       res.json(repos);
     } catch (error) {
-      res.status(500).json({ message: "Failed to fetch GitHub repositories" });
+      console.error("GitHub API error:", error instanceof Error ? error.message : "Unknown error");
+      res.status(500).json({ 
+        message: "Failed to fetch GitHub repositories",
+        error: process.env.NODE_ENV === 'development' ? error : undefined
+      });
     }
   });
 
@@ -38,10 +50,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: "Prompt is required" });
       }
       
+      if (prompt.length > 1000) {
+        return res.status(400).json({ message: "Prompt too long (max 1000 characters)" });
+      }
+      
       const content = await generateContent(prompt);
       res.json({ content });
     } catch (error) {
-      res.status(500).json({ message: "Failed to generate content" });
+      console.error("AI generation error:", error instanceof Error ? error.message : "Unknown error");
+      res.status(500).json({ 
+        message: "Failed to generate content",
+        error: process.env.NODE_ENV === 'development' ? error : undefined
+      });
     }
   });
 
@@ -55,9 +75,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (error instanceof z.ZodError) {
         return res.status(400).json({ 
           message: "Invalid form data", 
-          errors: error.errors 
+          errors: error.errors.map(err => ({
+            field: err.path.join('.'),
+            message: err.message
+          }))
         });
       }
+      console.error("Contact form error:", error instanceof Error ? error.message : "Unknown error");
       res.status(500).json({ message: "Failed to send message" });
     }
   });
