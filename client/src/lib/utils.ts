@@ -43,42 +43,27 @@ export function debounce<T extends (...args: any[]) => any>(
 }
 
 export function smoothScrollToElement(elementId: string): void {
-  console.log('Attempting to scroll to element:', elementId);
-  
-  // Debug: List all elements with IDs
-  const allIds = Array.from(document.querySelectorAll('[id]')).map(el => el.id);
-  console.log('All elements with IDs:', allIds);
-  
   const element = document.getElementById(elementId);
   
   if (!element) {
-    console.error(`Element with id '${elementId}' not found`);
-    console.log('Available elements:', allIds);
+    console.warn(`Element with id '${elementId}' not found`);
     return;
   }
-
-  console.log('Found element:', element);
-  console.log('Element position:', element.getBoundingClientRect());
 
   // Account for fixed header
   const headerOffset = 80;
   const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
   const offsetPosition = elementPosition - headerOffset;
   
-  console.log('Scrolling to position:', offsetPosition);
-  
   // Method 1: Modern smooth scrolling
-  if ('scrollBehavior' in document.documentElement.style) {
-    try {
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-      console.log('Used smooth scrollTo');
-      return;
-    } catch (error) {
-      console.warn('ScrollTo with behavior failed:', error);
-    }
+  try {
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: 'smooth'
+    });
+    return;
+  } catch (error) {
+    console.warn('ScrollTo with behavior failed:', error);
   }
   
   // Method 2: Element scrollIntoView
@@ -87,7 +72,6 @@ export function smoothScrollToElement(elementId: string): void {
       behavior: 'smooth', 
       block: 'start' 
     });
-    console.log('Used scrollIntoView');
     // Adjust for header after scrollIntoView
     setTimeout(() => {
       window.scrollBy(0, -headerOffset);
@@ -98,6 +82,5 @@ export function smoothScrollToElement(elementId: string): void {
   }
   
   // Method 3: Fallback - instant scroll
-  console.log('Using fallback scroll');
   window.scrollTo(0, offsetPosition);
 }

@@ -41,12 +41,7 @@ export function Navbar() {
           {navItems.map((item) => (
             <button 
               key={item.label}
-              onClick={(e) => {
-                e.preventDefault();
-                const targetId = item.href.substring(1);
-                console.log('Navigating to:', targetId);
-                smoothScrollToElement(targetId);
-              }}
+              onClick={() => smoothScrollToElement(item.href.substring(1))}
               className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
             >
               {item.label}
@@ -69,11 +64,7 @@ export function Navbar() {
           
           <Button 
             className="hidden sm:block"
-            onClick={(e) => {
-              e.preventDefault();
-              console.log('Connect button clicked');
-              smoothScrollToElement('contact');
-            }}
+            onClick={() => smoothScrollToElement('contact')}
           >
             Let's Connect
           </Button>
@@ -89,11 +80,8 @@ export function Navbar() {
           {navItems.map((item) => (
             <button 
               key={item.label}
-              onClick={(e) => {
-                e.preventDefault();
-                const targetId = item.href.substring(1);
-                console.log('Mobile navigating to:', targetId);
-                smoothScrollToElement(targetId);
+              onClick={() => {
+                smoothScrollToElement(item.href.substring(1));
                 setMobileMenuOpen(false);
               }}
               className="py-2 text-left text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
