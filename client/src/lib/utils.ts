@@ -27,8 +27,9 @@ export function getInitials(name: string): string {
 }
 
 export function validateEmail(email: string): boolean {
-  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return re.test(email);
+  // More comprehensive email validation regex
+  const re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+  return re.test(email.trim());
 }
 
 export function debounce<T extends (...args: any[]) => any>(
@@ -53,7 +54,7 @@ export function smoothScrollToElement(elementId: string): void {
   // Account for fixed header
   const headerOffset = 80;
   const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
-  const offsetPosition = elementPosition - headerOffset;
+  const offsetPosition = Math.max(0, elementPosition - headerOffset);
   
   // Method 1: Modern smooth scrolling
   try {
@@ -74,7 +75,9 @@ export function smoothScrollToElement(elementId: string): void {
     });
     // Adjust for header after scrollIntoView
     setTimeout(() => {
-      window.scrollBy(0, -headerOffset);
+      const currentScroll = window.pageYOffset;
+      const adjustedPosition = Math.max(0, currentScroll - headerOffset);
+      window.scrollTo(0, adjustedPosition);
     }, 100);
     return;
   } catch (error) {

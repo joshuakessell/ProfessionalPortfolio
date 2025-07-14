@@ -29,38 +29,38 @@ I'm a software developer focused on creating innovative solutions that bridge th
 
 ## 🌟 Featured Projects
 
-### 🤖 [Code Genie](https://github.com/yourusername/code-genie)
+### 🤖 [Code Genie](https://github.com/joshuakessell/code-genie)
 AI-powered code explanation platform that transforms complex code into human-readable insights
 - **Tech:** React, Node.js, OpenAI API, TypeScript
 - **Features:** Multi-language support, real-time analysis, interactive explanations
 
-### 📊 [Java Fake Data Generator](https://github.com/yourusername/java-fake-data)
+### 📊 [Java Fake Data Generator](https://github.com/joshuakessell/java-fake-data)
 Comprehensive data generation library for Java applications
 - **Tech:** Java, Maven, JUnit
 - **Features:** Realistic data patterns, customizable schemas, performance optimized
 
-### 📰 [Clarif-AI](https://github.com/yourusername/clarif-ai)
+### 📰 [Clarif-AI](https://github.com/joshuakessell/clarif-ai)
 AI-powered unbiased news analysis platform delivering factually verified insights
 - **Tech:** React, Python, FastAPI, PostgreSQL
 - **Features:** Real-time analysis, bias detection, fact verification
 
-### 🔧 [GitIt?](https://github.com/yourusername/gitit)
+### 🔧 [GitIt?](https://github.com/joshuakessell/gitit)
 GitHub repository management tool with enhanced workflow features
 - **Tech:** React, Node.js, GitHub API, MongoDB
 - **Features:** Advanced search, team collaboration, automated workflows
 
 ## 📈 GitHub Stats
 
-![Joshua's GitHub stats](https://github-readme-stats.vercel.app/api?username=yourusername&show_icons=true&theme=dark)
+![Joshua's GitHub stats](https://github-readme-stats.vercel.app/api?username=joshuakessell&show_icons=true&theme=dark)
 
-![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=yourusername&layout=compact&theme=dark)
+![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=joshuakessell&layout=compact&theme=dark)
 
 ## 🌐 Connect With Me
 
-- **Portfolio:** [joshuakessell.dev](https://your-portfolio-url.com)
-- **LinkedIn:** [linkedin.com/in/joshuakessell](https://linkedin.com/in/yourusername)
-- **Email:** your.email@example.com
-- **Twitter:** [@yourusername](https://twitter.com/yourusername)
+- **Portfolio:** [joshuakessell.dev](https://joshuakessell.dev)
+- **LinkedIn:** [linkedin.com/in/joshuakessell](https://linkedin.com/in/joshuakessell)
+- **Email:** joshua.kessell@gmail.com
+- **Twitter:** [@joshuakessell](https://twitter.com/joshuakessell)
 
 ## 🎯 Current Goals
 
@@ -85,4 +85,4 @@ GitHub repository management tool with enhanced workflow features
 
 Thanks for visiting my profile! Feel free to explore my repositories and don't hesitate to reach out if you'd like to collaborate on something awesome! 🚀
 
-![Profile Views](https://komarev.com/ghpvc/?username=yourusername&color=blueviolet)
+![Profile Views](https://komarev.com/ghpvc/?username=joshuakessell&color=blueviolet)
