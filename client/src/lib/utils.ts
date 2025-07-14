@@ -43,7 +43,6 @@ export function debounce<T extends (...args: any[]) => any>(
 }
 
 export function smoothScrollToElement(elementId: string): void {
-  console.log('Attempting to scroll to element:', elementId);
   const element = document.getElementById(elementId);
   
   if (!element) {
@@ -51,36 +50,44 @@ export function smoothScrollToElement(elementId: string): void {
     return;
   }
 
-  console.log('Element found:', element);
-  
-  // Account for fixed header (adjust this value as needed)
+  // Account for fixed header
   const headerOffset = 80;
-  const elementPosition = element.getBoundingClientRect().top;
-  const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-  console.log('Scrolling to position:', offsetPosition);
-
-  // Custom smooth scroll with 500ms duration
-  const startPosition = window.pageYOffset;
-  const distance = offsetPosition - startPosition;
-  const duration = 500; // 0.5 seconds
-  let startTime: number | null = null;
-
-  function animation(currentTime: number) {
-    if (startTime === null) startTime = currentTime;
-    const timeElapsed = currentTime - startTime;
-    const run = ease(timeElapsed, startPosition, distance, duration);
-    window.scrollTo(0, run);
-    if (timeElapsed < duration) requestAnimationFrame(animation);
+  
+  // Use element.scrollIntoView with offset for header
+  const elementTop = element.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+  
+  // Try multiple methods to ensure scrolling works
+  try {
+    // Method 1: Native scrollTo with smooth behavior
+    window.scrollTo({
+      top: elementTop,
+      behavior: 'smooth'
+    });
+    
+    // Fallback: If the above doesn't work, try scrollIntoView
+    setTimeout(() => {
+      const currentScroll = window.pageYOffset;
+      const targetScroll = elementTop;
+      
+      // Check if we're close to the target (within 50px)
+      if (Math.abs(currentScroll - targetScroll) > 50) {
+        element.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+        
+        // Adjust for header after scrollIntoView
+        setTimeout(() => {
+          window.scrollBy({
+            top: -headerOffset,
+            behavior: 'smooth'
+          });
+        }, 100);
+      }
+    }, 100);
+  } catch (error) {
+    console.error('Scroll error:', error);
+    // Final fallback: instant scroll
+    window.scrollTo(0, elementTop);
   }
-
-  // Easing function for smooth animation
-  function ease(t: number, b: number, c: number, d: number) {
-    t /= d / 2;
-    if (t < 1) return c / 2 * t * t + b;
-    t--;
-    return -c / 2 * (t * (t - 2) - 1) + b;
-  }
-
-  requestAnimationFrame(animation);
 }
