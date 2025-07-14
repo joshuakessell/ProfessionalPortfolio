@@ -27,13 +27,13 @@ export function Navbar() {
   };
 
   return (
-    <header className="fixed top-0 w-full glass-header z-50">
+    <header className="fixed top-0 w-full backdrop-blur-md bg-white/80 dark:bg-gray-900/90 border-b border-gray-200 dark:border-gray-700 z-50">
       <nav className="container mx-auto px-4 py-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="h-10 w-12 bg-primary text-white dark:bg-primary dark:border-2 dark:border-blue-400/30 rounded-lg flex items-center justify-center font-bold text-xl shadow-md transition-colors">
+          <div className="h-10 w-12 bg-blue-600 text-white dark:bg-blue-500 dark:text-gray-900 rounded-lg flex items-center justify-center font-bold text-xl shadow-md transition-colors">
             JK
           </div>
-          <span className="font-semibold text-xl hidden sm:block">Joshua Kessell</span>
+          <span className="font-semibold text-xl hidden sm:block text-gray-900 dark:text-white">Joshua Kessell</span>
         </div>
         
         <div className="hidden md:flex items-center gap-8 text-sm font-medium">
@@ -41,7 +41,7 @@ export function Navbar() {
             <a 
               key={item.label}
               href={item.href} 
-              className="hover:text-primary dark:hover:text-blue-400 transition-colors"
+              className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
             >
               {item.label}
             </a>
@@ -69,7 +69,7 @@ export function Navbar() {
       
       {/* Mobile menu */}
       <div className={cn(
-        "md:hidden px-4 py-3 border-t border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900",
+        "md:hidden px-4 py-3 border-t border-gray-200 dark:border-gray-700 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md",
         mobileMenuOpen ? "block" : "hidden"
       )}>
         <div className="flex flex-col gap-2 text-sm font-medium">
@@ -77,7 +77,7 @@ export function Navbar() {
             <a 
               key={item.label}
               href={item.href} 
-              className="py-2 hover:text-primary"
+              className="py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
               {item.label}

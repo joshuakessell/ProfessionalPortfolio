@@ -10,7 +10,7 @@ export function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-6 md:mb-0">
             <div className="flex items-center gap-2 mb-3">
-              <div className="h-8 w-10 bg-primary text-white dark:bg-primary dark:border-2 dark:border-blue-400/30 rounded-lg flex items-center justify-center font-bold text-base shadow-md transition-colors">
+              <div className="h-8 w-10 bg-blue-600 text-white dark:bg-blue-500 dark:text-gray-900 rounded-lg flex items-center justify-center font-bold text-base shadow-md transition-colors">
                 JK
               </div>
               <span className="font-semibold text-lg">Joshua Kessell</span>
