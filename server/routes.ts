@@ -5,8 +5,20 @@ import { insertContactMessageSchema } from "@shared/schema";
 import { z } from "zod";
 import { getGitHubRepos } from "./github";
 import { generateContent } from "./openai";
+import rateLimit from "express-rate-limit";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Rate limiter for AI endpoint to prevent abuse and cost overruns
+  const aiRateLimit = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 10, // limit each IP to 10 requests per windowMs
+    message: {
+      message: "Too many AI requests from this IP, please try again later."
+    },
+    standardHeaders: true,
+    legacyHeaders: false,
+  });
+
   // GitHub repos endpoint
   app.get("/api/github/repos", async (_req, res) => {
     try {
@@ -17,8 +29,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // AI content generation endpoint
-  app.post("/api/ai/generate", async (req, res) => {
+  // AI content generation endpoint with rate limiting
+  app.post("/api/ai/generate", aiRateLimit, async (req, res) => {
     try {
       const { prompt } = req.body;
       
@@ -50,16 +62,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Get contact messages (read-only, no authentication required)
-  app.get("/api/contact", async (_req, res) => {
-    try {
-      const messages = await storage.getContactMessages();
-      res.json(messages);
-    } catch (error) {
-      console.error("Contact messages error:", error);
-      res.status(500).json({ message: "Failed to fetch contact messages" });
-    }
-  });
+  // Removed GET /api/contact endpoint - exposed sensitive personal data without authentication
+  // Contact messages are now stored securely and only accessible through proper admin channels
 
   const httpServer = createServer(app);
   return httpServer;
