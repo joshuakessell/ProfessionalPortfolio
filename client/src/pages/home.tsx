@@ -1,7 +1,7 @@
 import { HeroSection } from "@/components/home/hero-section";
 import { ResumeSection } from "@/components/home/resume-section";
 import { ProjectsSection } from "@/components/home/projects-section";
-import { BlogSection } from "@/components/home/blog-section";
+
 import { ContactSection } from "@/components/home/contact-section";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
@@ -53,12 +53,7 @@ export default function Home() {
         </div>
       </section>
       
-      {/* Blog Section */}
-      <section id="blog" className="scroll-section bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-950 dark:to-purple-900">
-        <div className="scroll-content pt-20 relative z-10">
-          <BlogSection />
-        </div>
-      </section>
+
       
       {/* Contact Section */}
       <section id="contact" className="scroll-section bg-gradient-to-br from-green-50 to-green-100 dark:from-green-950 dark:to-green-900">

@@ -28,7 +28,6 @@ export function Footer() {
                 <li><button onClick={() => smoothScrollToElement('hero')} className="hover:text-primary dark:hover:text-blue-400 transition-colors">About</button></li>
                 <li><button onClick={() => smoothScrollToElement('resume')} className="hover:text-primary dark:hover:text-blue-400 transition-colors">Resume</button></li>
                 <li><button onClick={() => smoothScrollToElement('projects')} className="hover:text-primary dark:hover:text-blue-400 transition-colors">Projects</button></li>
-                <li><button onClick={() => smoothScrollToElement('blog')} className="hover:text-primary dark:hover:text-blue-400 transition-colors">Blog</button></li>
                 <li><button onClick={() => smoothScrollToElement('contact')} className="hover:text-primary dark:hover:text-blue-400 transition-colors">Contact</button></li>
               </ul>
             </div>

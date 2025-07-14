@@ -15,7 +15,6 @@ const navItems: NavItem[] = [
   { label: "About", href: "#hero" },
   { label: "Resume", href: "#resume" },
   { label: "Projects", href: "#projects" },
-  { label: "Blog", href: "#blog" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -29,6 +28,7 @@ export function Navbar() {
   return (
     <header className="fixed top-0 w-full backdrop-blur-md bg-white/80 dark:bg-gray-900/90 border-b border-gray-200 dark:border-gray-700 z-50">
       <nav className="container mx-auto px-4 py-4 flex items-center justify-between">
+        {/* Left side - Logo and title */}
         <div className="flex items-center gap-2">
           <div className="h-10 w-12 bg-blue-600 text-white dark:bg-blue-500 dark:text-gray-900 rounded-lg flex items-center justify-center font-bold text-xl shadow-md transition-colors">
             JK
@@ -36,6 +36,7 @@ export function Navbar() {
           <span className="font-semibold text-xl hidden sm:block text-gray-900 dark:text-white">Joshua Kessell</span>
         </div>
         
+        {/* Center - Navigation links */}
         <div className="hidden md:flex items-center gap-8 text-sm font-medium">
           {navItems.map((item) => (
             <button 
@@ -48,6 +49,7 @@ export function Navbar() {
           ))}
         </div>
         
+        {/* Right side - Dark mode toggle and connect button */}
         <div className="flex items-center gap-3">
           <ModeToggle />
           
