@@ -172,12 +172,13 @@ export function ResumeSection() {
                   <div 
                     key={exp.id}
                     className={`glass-panel rounded-xl overflow-hidden p-6 transition-all duration-700 transform
-                      ${activeItems.includes(index) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
+                      ${activeItems.includes(index) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}
+                      ${exp.subRoles ? 'bg-gray-50 dark:bg-gray-900/50' : ''}`}
                     style={{ 
                       transitionDelay: `${index * 200}ms`
                     }}
                   >
-                    <div className="flex flex-col md:flex-row md:justify-between mb-4">
+                    <div className={`flex flex-col md:flex-row md:justify-between ${exp.subRoles ? 'mb-6' : 'mb-4'}`}>
                       <div className="flex-1">
                         <h3 className="text-xl font-semibold mb-1">{exp.title}</h3>
                         {exp.company !== exp.title && (
@@ -207,29 +208,31 @@ export function ResumeSection() {
                       </ul>
                     )}
                     {exp.subRoles && exp.subRoles.length > 0 && (
-                      <div className="space-y-4 mt-6">
+                      <div className="space-y-6">
                         {exp.subRoles.map((subRole, subIndex) => (
                           <div 
                             key={subRole.id} 
-                            className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-5 border border-gray-200 dark:border-gray-700"
+                            className="glass-panel rounded-xl overflow-hidden p-6 bg-gray-100/50 dark:bg-gray-800/30"
                           >
-                            <div className="flex flex-col md:flex-row md:justify-between mb-3">
-                              <div>
-                                <h4 className="text-lg font-medium mb-1">{subRole.title}</h4>
+                            <div className="flex flex-col md:flex-row md:justify-between mb-4">
+                              <div className="flex-1">
+                                <h3 className="text-xl font-semibold mb-1">{subRole.title}</h3>
                                 {subRole.client && (
-                                  <div className="text-primary dark:text-blue-400 text-sm">{subRole.client}</div>
+                                  <div className="text-primary dark:text-blue-400 font-medium text-lg">{subRole.client}</div>
                                 )}
                               </div>
-                              <div className="text-sm text-gray-600 dark:text-gray-400 mt-1 md:mt-0">{subRole.period}</div>
+                              <div className="text-left md:text-right mt-2 md:mt-0">
+                                <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">{subRole.period}</div>
+                              </div>
                             </div>
-                            <ul className="space-y-2">
+                            <ul className="grid md:grid-cols-2 gap-3 text-gray-600 dark:text-gray-300">
                               {subRole.responsibilities.map((item, idx) => (
                                 <li 
                                   key={idx} 
                                   className="flex items-start gap-2"
                                 >
-                                  <CheckCircle2 className="h-4 w-4 text-primary dark:text-blue-400 shrink-0 mt-0.5" />
-                                  <span className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">{item}</span>
+                                  <CheckCircle2 className="h-5 w-5 text-primary dark:text-blue-400 shrink-0 mt-0.5" />
+                                  <span className="text-sm leading-relaxed">{item}</span>
                                 </li>
                               ))}
                             </ul>

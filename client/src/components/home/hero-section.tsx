@@ -75,8 +75,8 @@ export function HeroSection() {
         <div className="w-full md:w-1/2">
           <div className="relative">
             {/* Decorative background squares */}
-            <div className="absolute -z-10 top-4 -left-4 w-full h-full rounded-2xl bg-blue-100 dark:bg-blue-900/20"></div>
-            <div className="absolute -z-10 -top-4 left-4 w-full h-full rounded-2xl bg-violet-100 dark:bg-violet-900/20"></div>
+            <div className="absolute -z-10 top-4 left-0 w-full h-full rounded-2xl bg-blue-100 dark:bg-blue-900/20"></div>
+            <div className="absolute -z-10 top-0 left-4 w-full h-full rounded-2xl bg-violet-100 dark:bg-violet-900/20"></div>
             
             {/* Profile image */}
             <div className="relative overflow-hidden rounded-2xl bg-white dark:bg-gray-800 shadow-xl">
@@ -88,7 +88,7 @@ export function HeroSection() {
             </div>
             
             {/* Availability badge */}
-            <div className="absolute -bottom-5 -right-5 bg-white dark:bg-gray-800 rounded-xl p-4 shadow-lg animate-float">
+            <div className="absolute bottom-4 right-4 bg-white dark:bg-gray-800 rounded-xl p-4 shadow-lg animate-float">
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
                 <span className="text-sm font-medium">Available for new projects</span>
