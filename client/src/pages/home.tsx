@@ -1,12 +1,9 @@
 import { HeroSection } from "@/components/home/hero-section";
 import { ResumeSection } from "@/components/home/resume-section";
 import { ProjectsSection } from "@/components/home/projects-section";
-
 import { ContactSection } from "@/components/home/contact-section";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
-  
-
 import { useTheme } from "@/providers/theme-provider";
 import { useEffect } from "react";
 
@@ -28,8 +25,6 @@ export default function Home() {
 
   return (
     <div className="scroll-container geometric-bg">
-
-      
       <Navbar />
       
       {/* Hero Section */}
@@ -52,8 +47,6 @@ export default function Home() {
           <ProjectsSection />
         </div>
       </section>
-      
-
       
       {/* Contact Section */}
       <section id="contact" className="scroll-section bg-gradient-to-br from-green-50 to-green-100 dark:from-green-950 dark:to-green-900">

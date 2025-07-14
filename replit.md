@@ -111,3 +111,10 @@ Changelog:
 - July 14, 2025. Completely removed blog section from entire site
 - July 14, 2025. Fixed smooth scrolling functionality with multiple fallback methods
 - July 14, 2025. Requested development branch workflow for all future changes
+- July 14, 2025. Switched to development branch for all ongoing work
+- July 14, 2025. Converted to static read-only portfolio by removing database storage, authentication, and dynamic content management
+- July 14, 2025. Fixed navigation scrolling by resolving CSS overflow issue that prevented page scrolling
+- July 14, 2025. Enhanced security: Added rate limiting (10 requests per 15 minutes) to AI endpoint to prevent abuse and cost overruns
+- July 14, 2025. Enhanced security: Removed GET /api/contact endpoint that exposed sensitive personal data without authentication
+- July 14, 2025. Implemented CodeRabbit AI review recommendations: Added SEO meta tags, improved accessibility with ARIA labels, enhanced email validation, fixed README placeholder URLs, and optimized image loading
+- July 14, 2025. Applied enterprise-level improvements from AI code reviews: Enhanced error handling with proper logging, added input validation with length limits and regex patterns, improved performance with retry logic and cache headers, added double-submission prevention, and strengthened form validation

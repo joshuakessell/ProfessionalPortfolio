@@ -1,187 +1,37 @@
-import { pgTable, text, serial, integer, boolean, timestamp, json } from "drizzle-orm/pg-core";
+import { pgTable, serial, text, timestamp, boolean } from "drizzle-orm/pg-core";
+import { relations } from "drizzle-orm";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
-import { relations } from "drizzle-orm";
 
-// User Role Schema
-export const userRoles = pgTable("user_roles", {
-  id: serial("id").primaryKey(),
-  name: text("name").notNull().unique(),
-  description: text("description"),
-});
-
-// User Schema
-export const users = pgTable("users", {
-  id: serial("id").primaryKey(),
-  cognitoId: text("cognito_id").notNull().unique(),
-  email: text("email").notNull().unique(),
-  username: text("username").notNull().unique(),
-  firstName: text("first_name"),
-  lastName: text("last_name"),
-  avatarUrl: text("avatar_url"),
-  roleId: integer("role_id").references(() => userRoles.id).notNull(),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  updatedAt: timestamp("updated_at").notNull().defaultNow(),
-  lastLogin: timestamp("last_login"),
-  socialProviders: json("social_providers").$type<string[]>().default([]),
-});
-
-// Blog Post Schema
-export const blogPosts = pgTable("blog_posts", {
-  id: serial("id").primaryKey(),
-  title: text("title").notNull(),
-  excerpt: text("excerpt").notNull(),
-  content: text("content").notNull(),
-  imageUrl: text("image_url").notNull(),
-  category: text("category").notNull(),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  updatedAt: timestamp("updated_at").notNull().defaultNow(),
-  featured: boolean("featured").notNull().default(false),
-  authorId: integer("author_id").references(() => users.id).notNull(),
-  slug: text("slug").notNull().unique(),
-  status: text("status").notNull().default("draft"),
-});
-
-// Projects Schema
-export const projects = pgTable("projects", {
-  id: serial("id").primaryKey(),
-  title: text("title").notNull(),
-  description: text("description").notNull(),
-  imageUrl: text("image_url"),
-  githubUrl: text("github_url"),
-  demoUrl: text("demo_url"),
-  tags: json("tags").$type<string[]>().default([]),
-  featured: boolean("featured").notNull().default(false),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  updatedAt: timestamp("updated_at").notNull().defaultNow(),
-  authorId: integer("author_id").references(() => users.id).notNull(),
-  aiProject: boolean("ai_project").notNull().default(false),
-});
-
-// Comments Schema with forward declarations to avoid circular references
-export const comments = pgTable("comments", {
-  id: serial("id").primaryKey(),
-  content: text("content").notNull(),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  updatedAt: timestamp("updated_at").notNull().defaultNow(),
-  authorId: integer("author_id").references(() => users.id).notNull(),
-  blogPostId: integer("blog_post_id").references(() => blogPosts.id),
-  projectId: integer("project_id").references(() => projects.id),
-  parentId: integer("parent_id"), // Will be set up properly in relations
-  status: text("status").notNull().default("published"),
-});
-
-// Contact Form Schema
+// Contact messages table (static data only)
 export const contactMessages = pgTable("contact_messages", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
   email: text("email").notNull(),
   subject: text("subject").notNull(),
   message: text("message").notNull(),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  read: boolean("read").notNull().default(false),
-  responseDate: timestamp("response_date"),
-  responseContent: text("response_content"),
+  read: boolean("read").default(false).notNull(),
+  response: text("response"),
+  respondedAt: timestamp("responded_at"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
-// Relations
-export const userRolesRelations = relations(userRoles, ({ many }) => ({
-  users: many(users),
-}));
-
-export const usersRelations = relations(users, ({ one, many }) => ({
-  role: one(userRoles, {
-    fields: [users.roleId],
-    references: [userRoles.id],
-  }),
-  blogPosts: many(blogPosts),
-  projects: many(projects),
-  comments: many(comments),
-}));
-
-export const blogPostsRelations = relations(blogPosts, ({ one, many }) => ({
-  author: one(users, {
-    fields: [blogPosts.authorId],
-    references: [users.id],
-  }),
-  comments: many(comments),
-}));
-
-export const projectsRelations = relations(projects, ({ one, many }) => ({
-  author: one(users, {
-    fields: [projects.authorId],
-    references: [users.id],
-  }),
-  comments: many(comments),
-}));
-
-export const commentsRelations = relations(comments, ({ one, many }) => ({
-  author: one(users, {
-    fields: [comments.authorId],
-    references: [users.id],
-  }),
-  blogPost: one(blogPosts, {
-    fields: [comments.blogPostId],
-    references: [blogPosts.id],
-  }),
-  project: one(projects, {
-    fields: [comments.projectId],
-    references: [projects.id],
-  }),
-  parent: one(comments, {
-    fields: [comments.parentId],
-    references: [comments.id],
-  }),
-  replies: many(comments, { relationName: "replies" }),
-}));
-
-// Schema types
-export const insertUserSchema = createInsertSchema(users).omit({
-  id: true,
-  createdAt: true,
-  updatedAt: true,
-  lastLogin: true,
-});
-
-export const insertBlogPostSchema = createInsertSchema(blogPosts).omit({
-  id: true,
-  createdAt: true,
-  updatedAt: true,
-});
-
-export const insertProjectSchema = createInsertSchema(projects).omit({
-  id: true,
-  createdAt: true,
-  updatedAt: true,
-});
-
-export const insertCommentSchema = createInsertSchema(comments).omit({
-  id: true,
-  createdAt: true,
-  updatedAt: true,
-});
-
+// Insert schemas for form validation
 export const insertContactMessageSchema = createInsertSchema(contactMessages).omit({
   id: true,
   createdAt: true,
+  updatedAt: true,
   read: true,
-  responseDate: true,
-  responseContent: true,
+  response: true,
+  respondedAt: true,
+}).extend({
+  name: z.string().min(2, "Name must be at least 2 characters").max(100, "Name must be under 100 characters").regex(/^[a-zA-Z\s'-]+$/, "Name can only contain letters, spaces, apostrophes, and hyphens"),
+  email: z.string().email("Invalid email address").max(254, "Email must be under 254 characters"),
+  subject: z.string().min(5, "Subject must be at least 5 characters").max(200, "Subject must be under 200 characters"),
+  message: z.string().min(10, "Message must be at least 10 characters").max(5000, "Message must be under 5000 characters"),
 });
 
-// Export types
-export type InsertUser = z.infer<typeof insertUserSchema>;
-export type User = typeof users.$inferSelect;
-export type UserRole = typeof userRoles.$inferSelect;
-
-export type InsertBlogPost = z.infer<typeof insertBlogPostSchema>;
-export type BlogPost = typeof blogPosts.$inferSelect;
-
-export type InsertProject = z.infer<typeof insertProjectSchema>;
-export type Project = typeof projects.$inferSelect;
-
-export type InsertComment = z.infer<typeof insertCommentSchema>;
-export type Comment = typeof comments.$inferSelect;
-
+// Types
 export type InsertContactMessage = z.infer<typeof insertContactMessageSchema>;
 export type ContactMessage = typeof contactMessages.$inferSelect;

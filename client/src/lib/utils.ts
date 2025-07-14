@@ -27,8 +27,9 @@ export function getInitials(name: string): string {
 }
 
 export function validateEmail(email: string): boolean {
-  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return re.test(email);
+  // More comprehensive email validation regex
+  const re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+  return re.test(email.trim());
 }
 
 export function debounce<T extends (...args: any[]) => any>(
@@ -46,48 +47,43 @@ export function smoothScrollToElement(elementId: string): void {
   const element = document.getElementById(elementId);
   
   if (!element) {
-    console.error('Element not found:', elementId);
+    console.warn(`Element with id '${elementId}' not found`);
     return;
   }
 
   // Account for fixed header
   const headerOffset = 80;
+  const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+  const offsetPosition = Math.max(0, elementPosition - headerOffset);
   
-  // Use element.scrollIntoView with offset for header
-  const elementTop = element.getBoundingClientRect().top + window.pageYOffset - headerOffset;
-  
-  // Try multiple methods to ensure scrolling works
+  // Method 1: Modern smooth scrolling
   try {
-    // Method 1: Native scrollTo with smooth behavior
     window.scrollTo({
-      top: elementTop,
+      top: offsetPosition,
       behavior: 'smooth'
     });
-    
-    // Fallback: If the above doesn't work, try scrollIntoView
+    return;
+  } catch (error) {
+    console.warn('ScrollTo with behavior failed:', error);
+  }
+  
+  // Method 2: Element scrollIntoView
+  try {
+    element.scrollIntoView({ 
+      behavior: 'smooth', 
+      block: 'start' 
+    });
+    // Adjust for header after scrollIntoView
     setTimeout(() => {
       const currentScroll = window.pageYOffset;
-      const targetScroll = elementTop;
-      
-      // Check if we're close to the target (within 50px)
-      if (Math.abs(currentScroll - targetScroll) > 50) {
-        element.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
-        
-        // Adjust for header after scrollIntoView
-        setTimeout(() => {
-          window.scrollBy({
-            top: -headerOffset,
-            behavior: 'smooth'
-          });
-        }, 100);
-      }
+      const adjustedPosition = Math.max(0, currentScroll - headerOffset);
+      window.scrollTo(0, adjustedPosition);
     }, 100);
+    return;
   } catch (error) {
-    console.error('Scroll error:', error);
-    // Final fallback: instant scroll
-    window.scrollTo(0, elementTop);
+    console.warn('ScrollIntoView failed:', error);
   }
+  
+  // Method 3: Fallback - instant scroll
+  window.scrollTo(0, offsetPosition);
 }

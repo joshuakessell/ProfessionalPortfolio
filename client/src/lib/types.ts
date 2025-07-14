@@ -11,6 +11,15 @@ export interface Experience {
   period: string;
   current: boolean;
   responsibilities: string[];
+  subRoles?: SubRole[];
+}
+
+export interface SubRole {
+  id: number;
+  title: string;
+  client?: string;
+  period: string;
+  responsibilities: string[];
 }
 
 export interface Skill {
@@ -60,16 +69,7 @@ export interface GitHubRepo {
 }
 
 // Blog Types
-export interface BlogPost {
-  id: number;
-  title: string;
-  excerpt: string;
-  imageUrl: string;
-  category: string;
-  date: string;
-  featured: boolean;
-  content?: string;
-}
+// BlogPost interface removed - static portfolio only
 
 // Contact Form Types
 export interface ContactFormData {

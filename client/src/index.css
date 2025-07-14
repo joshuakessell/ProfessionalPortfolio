@@ -50,6 +50,20 @@
 }
 
 /* Custom styles */
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.scroll-container {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
 .progress-violet [role="progressbar"] {
   @apply bg-violet-500;
 }
@@ -118,6 +132,21 @@
 /* Enable smooth scrolling */
 html {
   scroll-behavior: smooth;
+}
+
+/* Ensure sections are properly positioned */
+section {
+  position: relative;
+}
+
+/* Ensure scroll containers work properly */
+.scroll-section {
+  min-height: 100vh;
+}
+
+.scroll-content {
+  position: relative;
+  z-index: 1;
 }
 
 /* Particle background styles */
@@ -235,15 +264,11 @@ body {
 }
 
 .scroll-container {
-  height: 100vh;
-  overflow-y: scroll;
-  scroll-snap-type: y mandatory;
+  overflow-x: hidden;
   scroll-behavior: smooth;
 }
 
 .scroll-section {
-  scroll-snap-align: start;
-  scroll-snap-stop: normal;
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -359,6 +384,7 @@ body {
 
   body {
     @apply font-sans antialiased bg-background text-foreground;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 }

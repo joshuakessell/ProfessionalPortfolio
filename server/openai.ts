@@ -26,7 +26,6 @@ export async function generateContent(prompt: string): Promise<string> {
     // Return generated content
     return response.choices[0].message.content || "No content could be generated.";
   } catch (error) {
-    console.error("Error generating content with OpenAI:", error);
     throw new Error("Failed to generate content. Please try again later.");
   }
 }
@@ -60,40 +59,8 @@ export async function enhanceProjectDescription(
     // Return enhanced description or fallback to original
     return response.choices[0].message.content || description;
   } catch (error) {
-    console.error("Error enhancing project description:", error);
     return description; // Return original description on error
   }
 }
 
-// Function to suggest blog topics
-export async function suggestBlogTopics(category: string, count: number = 5): Promise<string[]> {
-  try {
-    // Validate that OpenAI API key exists
-    if (!process.env.OPENAI_API_KEY || process.env.OPENAI_API_KEY === "default_key") {
-      throw new Error("OpenAI API key is required to suggest blog topics");
-    }
-    
-    const prompt = `Suggest ${count} engaging and relevant blog post topics related to ${category} that would be valuable for web developers and tech professionals. Format the response as a JSON array of strings.`;
-    
-    const response = await openai.chat.completions.create({
-      model: "gpt-4o", // Using the latest model
-      messages: [{ role: "user", content: prompt }],
-      response_format: { type: "json_object" },
-      max_tokens: 500,
-      temperature: 0.8,
-    });
-    
-    // Parse JSON response
-    try {
-      const content = response.choices[0].message.content || "{}";
-      const parsed = JSON.parse(content);
-      return Array.isArray(parsed.topics) ? parsed.topics : [];
-    } catch (parseError) {
-      console.error("Error parsing OpenAI response:", parseError);
-      return [];
-    }
-  } catch (error) {
-    console.error("Error suggesting blog topics:", error);
-    return [];
-  }
-}
+

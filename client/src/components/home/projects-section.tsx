@@ -37,8 +37,14 @@ export function ProjectsSection() {
 
         <div className="mb-8 flex justify-center">
           <Button variant="outline" className="bg-gray-800 hover:bg-black text-white shadow-lg hover:shadow-xl transition-all" asChild>
-            <a href="https://github.com/joshuakessell" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
-              <Github className="h-5 w-5" />
+            <a 
+              href="https://github.com/joshuakessell" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="flex items-center gap-2"
+              aria-label="View Joshua Kessell's GitHub profile"
+            >
+              <Github className="h-5 w-5" aria-hidden="true" />
               View GitHub Profile
             </a>
           </Button>
@@ -62,7 +68,7 @@ export function ProjectsSection() {
               </div>
             ))
           ) : error ? (
-            // Error state
+            // Error state with proper error handling
             <div className="col-span-full p-6 bg-white dark:bg-gray-800 rounded-xl">
               <p className="text-center text-red-500">
                 Unable to load GitHub projects. Please try again later.
