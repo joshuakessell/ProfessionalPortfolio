@@ -101,8 +101,13 @@ The application uses PostgreSQL with the following main entities:
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
+Development workflow: All future work should be done on a development branch, not directly on main.
 
 ## Changelog
 
 Changelog:
 - June 28, 2025. Initial setup
+- July 14, 2025. Restructured navigation layout (logo left, links center, controls right)
+- July 14, 2025. Completely removed blog section from entire site
+- July 14, 2025. Fixed smooth scrolling functionality with multiple fallback methods
+- July 14, 2025. Requested development branch workflow for all future changes
