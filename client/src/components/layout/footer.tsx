@@ -1,5 +1,6 @@
 import { Link } from "wouter";
 import { Github, Linkedin, Dribbble } from "lucide-react";
+import { smoothScrollToElement } from "@/lib/utils";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -24,11 +25,11 @@ export function Footer() {
             <div>
               <h4 className="font-medium mb-3">Links</h4>
               <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
-                <li><a href="#about" className="hover:text-primary dark:hover:text-blue-400 transition-colors">About</a></li>
-                <li><a href="#resume" className="hover:text-primary dark:hover:text-blue-400 transition-colors">Resume</a></li>
-                <li><a href="#projects" className="hover:text-primary dark:hover:text-blue-400 transition-colors">Projects</a></li>
-                <li><a href="#blog" className="hover:text-primary dark:hover:text-blue-400 transition-colors">Blog</a></li>
-                <li><a href="#contact" className="hover:text-primary dark:hover:text-blue-400 transition-colors">Contact</a></li>
+                <li><button onClick={() => smoothScrollToElement('hero')} className="hover:text-primary dark:hover:text-blue-400 transition-colors">About</button></li>
+                <li><button onClick={() => smoothScrollToElement('resume')} className="hover:text-primary dark:hover:text-blue-400 transition-colors">Resume</button></li>
+                <li><button onClick={() => smoothScrollToElement('projects')} className="hover:text-primary dark:hover:text-blue-400 transition-colors">Projects</button></li>
+                <li><button onClick={() => smoothScrollToElement('blog')} className="hover:text-primary dark:hover:text-blue-400 transition-colors">Blog</button></li>
+                <li><button onClick={() => smoothScrollToElement('contact')} className="hover:text-primary dark:hover:text-blue-400 transition-colors">Contact</button></li>
               </ul>
             </div>
             

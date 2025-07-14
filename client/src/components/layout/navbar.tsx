@@ -2,9 +2,9 @@ import { useState } from "react";
 import { Link } from "wouter";
 import { Menu } from "lucide-react";
 import { ModeToggle } from "@/components/ui/mode-toggle";
-import { MotionToggle } from "@/components/ui/motion-toggle";
+
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { cn, smoothScrollToElement } from "@/lib/utils";
 
 interface NavItem {
   label: string;
@@ -38,18 +38,17 @@ export function Navbar() {
         
         <div className="hidden md:flex items-center gap-8 text-sm font-medium">
           {navItems.map((item) => (
-            <a 
+            <button 
               key={item.label}
-              href={item.href} 
+              onClick={() => smoothScrollToElement(item.href.substring(1))}
               className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
             >
               {item.label}
-            </a>
+            </button>
           ))}
         </div>
         
         <div className="flex items-center gap-3">
-          <MotionToggle />
           <ModeToggle />
           
           <Button 
@@ -61,9 +60,12 @@ export function Navbar() {
             <Menu className="h-6 w-6" />
           </Button>
           
-          <a href="#contact" className="hidden sm:block">
-            <Button>Let's Connect</Button>
-          </a>
+          <Button 
+            className="hidden sm:block"
+            onClick={() => smoothScrollToElement('contact')}
+          >
+            Let's Connect
+          </Button>
         </div>
       </nav>
       
@@ -74,14 +76,16 @@ export function Navbar() {
       )}>
         <div className="flex flex-col gap-2 text-sm font-medium">
           {navItems.map((item) => (
-            <a 
+            <button 
               key={item.label}
-              href={item.href} 
-              className="py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={() => {
+                smoothScrollToElement(item.href.substring(1));
+                setMobileMenuOpen(false);
+              }}
+              className="py-2 text-left text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
             >
               {item.label}
-            </a>
+            </button>
           ))}
         </div>
       </div>

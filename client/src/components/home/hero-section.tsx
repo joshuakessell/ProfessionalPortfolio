@@ -3,6 +3,7 @@ import { useRef } from "react";
 import { AnimatedSection } from "@/components/ui/animated-section";
 import { ParticlesBackground } from "@/components/ui/particles-background";
 import { ChevronDown } from "lucide-react";
+import { smoothScrollToElement } from "@/lib/utils";
 import { cn } from "@/lib/utils";
 
 export function HeroSection() {
@@ -53,22 +54,21 @@ export function HeroSection() {
           </div>
           
           <div className="flex flex-col sm:flex-row gap-4">
-            <a href="#projects" onClick={(e) => {
-              e.preventDefault();
-              document.getElementById('projects')?.scrollIntoView({behavior: 'smooth'});
-            }}>
-              <Button size="lg" className="shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-shadow">
-                View My Projects
-              </Button>
-            </a>
-            <a href="#resume" onClick={(e) => {
-              e.preventDefault();
-              document.getElementById('resume')?.scrollIntoView({behavior: 'smooth'});
-            }}>
-              <Button variant="outline" size="lg" className="hover:bg-background/80 transition-colors">
-                Check My Resume
-              </Button>
-            </a>
+            <Button 
+              size="lg" 
+              className="shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-shadow"
+              onClick={() => smoothScrollToElement('projects')}
+            >
+              View My Projects
+            </Button>
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="hover:bg-background/80 transition-colors"
+              onClick={() => smoothScrollToElement('resume')}
+            >
+              Check My Resume
+            </Button>
           </div>
         </div>
         
@@ -101,9 +101,7 @@ export function HeroSection() {
       {/* Scroll indicator */}
       <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-float hidden md:block">
         <Button 
-          onClick={() => {
-            document.getElementById('resume')?.scrollIntoView({behavior: 'smooth'});
-          }}
+          onClick={() => smoothScrollToElement('resume')}
           variant="ghost" 
           size="icon"
           className="rounded-full opacity-70 hover:opacity-100"

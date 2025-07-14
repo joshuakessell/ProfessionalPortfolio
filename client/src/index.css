@@ -115,9 +115,9 @@
 .stagger-5 { animation-delay: 0.5s; }
 .stagger-6 { animation-delay: 0.6s; }
 
-/* Smooth Scroll Snap Effect */
+/* Smooth scroll handled by JavaScript */
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
 }
 
 /* Particle background styles */

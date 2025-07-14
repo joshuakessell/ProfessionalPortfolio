@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
+import { smoothScrollToElement } from '@/lib/utils';
 
 interface ScrollIndicatorProps {
   sectionIds: string[];
@@ -131,14 +132,8 @@ export function ScrollIndicator({ sectionIds }: ScrollIndicatorProps) {
   // Handle button click
   const handleClick = (index: number) => {
     const sectionId = sectionIds[index];
-    const section = document.getElementById(sectionId);
-    
-    if (section) {
-      // Scroll to section
-      section.scrollIntoView({ behavior: 'smooth' });
-      // Set active section
-      setActiveSection(index);
-    }
+    smoothScrollToElement(sectionId);
+    setActiveSection(index);
   };
 
   return (

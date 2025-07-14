@@ -42,7 +42,7 @@ export function debounce<T extends (...args: any[]) => any>(
   };
 }
 
-export function scrollToElement(elementId: string): void {
+export function smoothScrollToElement(elementId: string): void {
   const element = document.getElementById(elementId);
   if (element) {
     // Account for fixed header (adjust this value as needed)
@@ -50,9 +50,28 @@ export function scrollToElement(elementId: string): void {
     const elementPosition = element.getBoundingClientRect().top;
     const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
-    window.scrollTo({
-      top: offsetPosition,
-      behavior: "smooth",
-    });
+    // Custom smooth scroll with 500ms duration
+    const startPosition = window.pageYOffset;
+    const distance = offsetPosition - startPosition;
+    const duration = 500; // 0.5 seconds
+    let startTime: number | null = null;
+
+    function animation(currentTime: number) {
+      if (startTime === null) startTime = currentTime;
+      const timeElapsed = currentTime - startTime;
+      const run = ease(timeElapsed, startPosition, distance, duration);
+      window.scrollTo(0, run);
+      if (timeElapsed < duration) requestAnimationFrame(animation);
+    }
+
+    // Easing function for smooth animation
+    function ease(t: number, b: number, c: number, d: number) {
+      t /= d / 2;
+      if (t < 1) return c / 2 * t * t + b;
+      t--;
+      return -c / 2 * (t * (t - 2) - 1) + b;
+    }
+
+    requestAnimationFrame(animation);
   }
 }
