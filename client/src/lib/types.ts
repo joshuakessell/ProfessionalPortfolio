@@ -11,6 +11,15 @@ export interface Experience {
   period: string;
   current: boolean;
   responsibilities: string[];
+  subRoles?: SubRole[];
+}
+
+export interface SubRole {
+  id: number;
+  title: string;
+  client?: string;
+  period: string;
+  responsibilities: string[];
 }
 
 export interface Skill {

@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { resumeTabs, experiences, skills, tools, education } from "@/lib/data";
+import type { SubRole } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 
@@ -179,7 +180,9 @@ export function ResumeSection() {
                     <div className="flex flex-col md:flex-row md:justify-between mb-4">
                       <div className="flex-1">
                         <h3 className="text-xl font-semibold mb-1">{exp.title}</h3>
-                        <div className="text-primary dark:text-blue-400 font-medium text-lg">{exp.company}</div>
+                        {exp.company !== exp.title && (
+                          <div className="text-primary dark:text-blue-400 font-medium text-lg">{exp.company}</div>
+                        )}
                       </div>
                       <div className="text-left md:text-right mt-2 md:mt-0">
                         <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">{exp.period}</div>
@@ -190,17 +193,50 @@ export function ResumeSection() {
                         )}
                       </div>
                     </div>
-                    <ul className="grid md:grid-cols-2 gap-3 text-gray-600 dark:text-gray-300">
-                      {exp.responsibilities.map((item, idx) => (
-                        <li 
-                          key={idx} 
-                          className="flex items-start gap-2"
-                        >
-                          <CheckCircle2 className="h-5 w-5 text-primary dark:text-blue-400 shrink-0 mt-0.5" />
-                          <span className="text-sm leading-relaxed">{item}</span>
-                        </li>
-                      ))}
-                    </ul>
+                    {exp.responsibilities.length > 0 && (
+                      <ul className="grid md:grid-cols-2 gap-3 text-gray-600 dark:text-gray-300">
+                        {exp.responsibilities.map((item, idx) => (
+                          <li 
+                            key={idx} 
+                            className="flex items-start gap-2"
+                          >
+                            <CheckCircle2 className="h-5 w-5 text-primary dark:text-blue-400 shrink-0 mt-0.5" />
+                            <span className="text-sm leading-relaxed">{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                    {exp.subRoles && exp.subRoles.length > 0 && (
+                      <div className="space-y-4 mt-6">
+                        {exp.subRoles.map((subRole, subIndex) => (
+                          <div 
+                            key={subRole.id} 
+                            className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-5 border border-gray-200 dark:border-gray-700"
+                          >
+                            <div className="flex flex-col md:flex-row md:justify-between mb-3">
+                              <div>
+                                <h4 className="text-lg font-medium mb-1">{subRole.title}</h4>
+                                {subRole.client && (
+                                  <div className="text-primary dark:text-blue-400 text-sm">{subRole.client}</div>
+                                )}
+                              </div>
+                              <div className="text-sm text-gray-600 dark:text-gray-400 mt-1 md:mt-0">{subRole.period}</div>
+                            </div>
+                            <ul className="space-y-2">
+                              {subRole.responsibilities.map((item, idx) => (
+                                <li 
+                                  key={idx} 
+                                  className="flex items-start gap-2"
+                                >
+                                  <CheckCircle2 className="h-4 w-4 text-primary dark:text-blue-400 shrink-0 mt-0.5" />
+                                  <span className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">{item}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
