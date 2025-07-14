@@ -29,15 +29,25 @@ import { PrivacyPolicyModal } from "@/components/ui/privacy-policy-modal";
 const formSchema = z.object({
   name: z.string().min(2, {
     message: "Name must be at least 2 characters.",
+  }).max(100, {
+    message: "Name must be under 100 characters.",
+  }).regex(/^[a-zA-Z\s'-]+$/, {
+    message: "Name can only contain letters, spaces, apostrophes, and hyphens.",
   }),
   email: z.string().email({
     message: "Please enter a valid email address.",
+  }).max(254, {
+    message: "Email must be under 254 characters.",
   }),
   subject: z.string().min(5, {
     message: "Subject must be at least 5 characters.",
+  }).max(200, {
+    message: "Subject must be under 200 characters.",
   }),
   message: z.string().min(10, {
     message: "Message must be at least 10 characters.",
+  }).max(5000, {
+    message: "Message must be under 5000 characters.",
   }),
   privacy: z.boolean().refine(value => value === true, {
     message: "You must agree to the privacy policy.",
@@ -63,9 +73,12 @@ export function ContactSection() {
       message: "",
       privacy: false,
     },
+    mode: 'onChange',
   });
   
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    if (isSubmitting) return; // Prevent double submissions
+    
     try {
       setIsSubmitting(true);
       await sendContactForm({
@@ -82,6 +95,9 @@ export function ContactSection() {
       
       form.reset();
     } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
+      console.error("Contact form submission error:", errorMessage);
+      
       toast({
         title: "Something went wrong.",
         description: "Your message couldn't be sent. Please try again later.",

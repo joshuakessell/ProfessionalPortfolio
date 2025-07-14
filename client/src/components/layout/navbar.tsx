@@ -43,6 +43,7 @@ export function Navbar() {
               key={item.label}
               onClick={() => smoothScrollToElement(item.href.substring(1))}
               className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+              aria-label={`Navigate to ${item.label} section`}
             >
               {item.label}
             </button>
@@ -58,6 +59,8 @@ export function Navbar() {
             size="icon" 
             className="md:hidden w-10 h-10 rounded-full"
             onClick={toggleMobileMenu}
+            aria-label="Toggle mobile menu"
+            aria-expanded={mobileMenuOpen}
           >
             <Menu className="h-6 w-6" />
           </Button>
@@ -85,6 +88,7 @@ export function Navbar() {
                 setMobileMenuOpen(false);
               }}
               className="py-2 text-left text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+              aria-label={`Navigate to ${item.label} section`}
             >
               {item.label}
             </button>
