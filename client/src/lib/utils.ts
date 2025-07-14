@@ -46,20 +46,43 @@ export function smoothScrollToElement(elementId: string): void {
   const element = document.getElementById(elementId);
   
   if (!element) {
+    console.warn(`Element with id '${elementId}' not found`);
     return;
   }
 
   // Account for fixed header
   const headerOffset = 80;
-  const elementTop = element.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+  const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+  const offsetPosition = elementPosition - headerOffset;
   
-  try {
-    window.scrollTo({
-      top: elementTop,
-      behavior: 'smooth'
-    });
-  } catch (error) {
-    // Fallback: instant scroll
-    window.scrollTo(0, elementTop);
+  // Method 1: Modern smooth scrolling
+  if ('scrollBehavior' in document.documentElement.style) {
+    try {
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+      return;
+    } catch (error) {
+      console.warn('ScrollTo with behavior failed:', error);
+    }
   }
+  
+  // Method 2: Element scrollIntoView
+  try {
+    element.scrollIntoView({ 
+      behavior: 'smooth', 
+      block: 'start' 
+    });
+    // Adjust for header after scrollIntoView
+    setTimeout(() => {
+      window.scrollBy(0, -headerOffset);
+    }, 100);
+    return;
+  } catch (error) {
+    console.warn('ScrollIntoView failed:', error);
+  }
+  
+  // Method 3: Fallback - instant scroll
+  window.scrollTo(0, offsetPosition);
 }

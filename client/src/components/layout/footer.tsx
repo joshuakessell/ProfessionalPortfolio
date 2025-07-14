@@ -25,10 +25,10 @@ export function Footer() {
             <div>
               <h4 className="font-medium mb-3">Links</h4>
               <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
-                <li><button onClick={() => smoothScrollToElement('hero')} className="hover:text-primary dark:hover:text-blue-400 transition-colors">About</button></li>
-                <li><button onClick={() => smoothScrollToElement('resume')} className="hover:text-primary dark:hover:text-blue-400 transition-colors">Resume</button></li>
-                <li><button onClick={() => smoothScrollToElement('projects')} className="hover:text-primary dark:hover:text-blue-400 transition-colors">Projects</button></li>
-                <li><button onClick={() => smoothScrollToElement('contact')} className="hover:text-primary dark:hover:text-blue-400 transition-colors">Contact</button></li>
+                <li><button onClick={(e) => { e.preventDefault(); console.log('Footer: About clicked'); smoothScrollToElement('hero'); }} className="hover:text-primary dark:hover:text-blue-400 transition-colors">About</button></li>
+                <li><button onClick={(e) => { e.preventDefault(); console.log('Footer: Resume clicked'); smoothScrollToElement('resume'); }} className="hover:text-primary dark:hover:text-blue-400 transition-colors">Resume</button></li>
+                <li><button onClick={(e) => { e.preventDefault(); console.log('Footer: Projects clicked'); smoothScrollToElement('projects'); }} className="hover:text-primary dark:hover:text-blue-400 transition-colors">Projects</button></li>
+                <li><button onClick={(e) => { e.preventDefault(); console.log('Footer: Contact clicked'); smoothScrollToElement('contact'); }} className="hover:text-primary dark:hover:text-blue-400 transition-colors">Contact</button></li>
               </ul>
             </div>
             

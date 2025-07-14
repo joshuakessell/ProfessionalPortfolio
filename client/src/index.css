@@ -134,6 +134,21 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Ensure sections are properly positioned */
+section {
+  position: relative;
+}
+
+/* Ensure scroll containers work properly */
+.scroll-section {
+  min-height: 100vh;
+}
+
+.scroll-content {
+  position: relative;
+  z-index: 1;
+}
+
 /* Particle background styles */
 .particle-canvas {
   position: fixed;
