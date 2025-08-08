@@ -10,7 +10,6 @@ const ProjectsSection = lazy(() => import("@/components/home/projects-section"))
 const ContactSection = lazy(() => import("@/components/home/contact-section"));
 
 export default function Home() {
-  const { reduceMotion } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
