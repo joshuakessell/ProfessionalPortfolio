@@ -11,15 +11,6 @@ const ContactSection = lazy(() => import("@/components/home/contact-section"));
 
 export default function Home() {
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
 
   const [heroRef, heroInView] = useIntersectionObserver({ threshold: 0.1, triggerOnce: true });
   const [resumeRef, resumeInView] = useIntersectionObserver({ rootMargin: "200px", threshold: 0.1, triggerOnce: true });
