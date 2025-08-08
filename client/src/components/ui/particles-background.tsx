@@ -38,6 +38,10 @@ export function ParticlesBackground({
     const canvas = canvasRef.current;
     if (!canvas) return;
 
+    if (document.documentElement.classList.contains('reduce-motion')) {
+      return;
+    }
+
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
@@ -184,6 +188,7 @@ export function ParticlesBackground({
       ref={canvasRef} 
       className={`absolute inset-0 -z-10 ${className}`}
       style={{ pointerEvents: 'none' }}
+      aria-hidden="true"
     />
   );
 }
