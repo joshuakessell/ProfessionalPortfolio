@@ -1,7 +1,9 @@
 import { Switch, Route } from "wouter";
 import { Toaster } from "@/components/ui/toaster";
-import NotFound from "@/pages/not-found";
-import Home from "@/pages/home";
+import { Suspense, lazy } from "react";
+
+const Home = lazy(() => import("@/pages/home"));
+const NotFound = lazy(() => import("@/pages/not-found"));
 
 function Router() {
   return (
@@ -15,7 +17,9 @@ function Router() {
 function App() {
   return (
     <>
-      <Router />
+      <Suspense fallback={<div className="w-full h-screen flex items-center justify-center text-sm text-muted-foreground">Loading…</div>}>
+        <Router />
+      </Suspense>
       <Toaster />
     </>
   );

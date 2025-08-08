@@ -11,7 +11,7 @@ export function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-6 md:mb-0">
             <div className="flex items-center gap-2 mb-3">
-              <div className="h-8 w-10 bg-blue-600 text-white dark:bg-blue-500 dark:text-gray-900 rounded-lg flex items-center justify-center font-bold text-base shadow-md transition-colors">
+              <div className="h-8 w-10 bg-gradient-to-br from-blue-600 to-violet-600 text-white rounded-lg flex items-center justify-center font-bold text-base shadow-md">
                 JK
               </div>
               <span className="font-semibold text-lg">Joshua Kessell</span>
@@ -48,7 +48,7 @@ export function Footer() {
           </div>
           
           <div className="text-sm text-gray-500 dark:text-gray-500">
-            Designed & Built with <span className="text-red-500">❤</span> by Joshua Kessell
+            Designed & Built with <span className="text-red-500">❤</span> by Joshua Kessell · <span className="text-gray-400">Crafted for performance</span>
           </div>
         </div>
       </div>

@@ -17,7 +17,9 @@ import { useGitHubRepos } from "@/lib/hooks";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
-export function ProjectsSection() {
+export default ProjectsSection;
+
+function ProjectsSection() {
   const { data: githubRepos, isLoading, error } = useGitHubRepos();
   const [isVisible, setIsVisible] = useState(false);
   
@@ -87,6 +89,8 @@ export function ProjectsSection() {
                   <img 
                     src={project.imageUrl} 
                     alt={project.title}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                   />
                   {project.aiProject && (

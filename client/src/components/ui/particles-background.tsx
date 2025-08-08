@@ -38,6 +38,9 @@ export function ParticlesBackground({
     const canvas = canvasRef.current;
     if (!canvas) return;
 
+    const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) return;
+
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
@@ -50,36 +53,28 @@ export function ParticlesBackground({
       height = window.innerHeight;
       canvas.width = width;
       canvas.height = height;
-      
-      // Reinitialize particles when canvas is resized
       initParticles();
     };
 
-    // Handle window resize
     window.addEventListener('resize', resizeCanvas);
-    
-    // Handle mouse movement
+
     const handleMouseMove = (e: MouseEvent) => {
       mouseRef.current = {
         x: e.clientX,
         y: e.clientY
       };
     };
-    
+
     window.addEventListener('mousemove', handleMouseMove);
-    
-    // Initialize canvas size
+
     canvas.width = width;
     canvas.height = height;
 
-    // Initialize particles
     const initParticles = () => {
       particlesRef.current = [];
-      
       for (let i = 0; i < quantity; i++) {
         const size = Math.random() * (maxSize - minSize) + minSize;
         const randomColor = colors[Math.floor(Math.random() * colors.length)];
-        
         particlesRef.current.push({
           x: Math.random() * width,
           y: Math.random() * height,
@@ -91,46 +86,38 @@ export function ParticlesBackground({
         });
       }
     };
-    
+
     initParticles();
 
-    // Draw particles
     const draw = () => {
       if (!ctx || !canvas) return;
-      
+
       ctx.clearRect(0, 0, width, height);
-      
-      // Update and draw particles
+
       particlesRef.current.forEach((particle, i) => {
-        // Update position
         particle.x += particle.speedX;
         particle.y += particle.speedY;
-        
-        // Bounce off edges
+
         if (particle.x < 0 || particle.x > width) {
           particle.speedX = -particle.speedX;
         }
-        
+
         if (particle.y < 0 || particle.y > height) {
           particle.speedY = -particle.speedY;
         }
-        
-        // Draw particle
+
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
         ctx.fillStyle = particle.color + Math.floor(particle.opacity * 255).toString(16).padStart(2, '0');
         ctx.fill();
-        
-        // Connect particles if enabled
+
         if (connectParticles) {
-          const mouseDistance = 120; // Distance to connect with mouse
-          
-          // Connect with mouse
+          const mouseDistance = 120;
           if (mouseRef.current.x !== null && mouseRef.current.y !== null) {
             const dx = mouseRef.current.x - particle.x;
             const dy = mouseRef.current.y - particle.y;
             const distance = Math.sqrt(dx * dx + dy * dy);
-            
+
             if (distance < mouseDistance) {
               const opacity = 1 - (distance / mouseDistance);
               ctx.beginPath();
@@ -141,16 +128,15 @@ export function ParticlesBackground({
               ctx.stroke();
             }
           }
-          
-          // Connect with other particles
+
           for (let j = i + 1; j < particlesRef.current.length; j++) {
             const particle2 = particlesRef.current[j];
             const dx = particle.x - particle2.x;
             const dy = particle.y - particle2.y;
             const distance = Math.sqrt(dx * dx + dy * dy);
-            
-            const maxDistance = 100; // Maximum distance to connect particles
-            
+
+            const maxDistance = 100;
+
             if (distance < maxDistance) {
               const opacity = 1 - (distance / maxDistance);
               ctx.beginPath();
@@ -163,13 +149,12 @@ export function ParticlesBackground({
           }
         }
       });
-      
+
       animationRef.current = requestAnimationFrame(draw);
     };
-    
+
     draw();
-    
-    // Clean up
+
     return () => {
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
@@ -184,6 +169,7 @@ export function ParticlesBackground({
       ref={canvasRef} 
       className={`absolute inset-0 -z-10 ${className}`}
       style={{ pointerEvents: 'none' }}
+      aria-hidden="true"
     />
   );
 }
