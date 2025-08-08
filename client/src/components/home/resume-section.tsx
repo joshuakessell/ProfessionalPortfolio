@@ -364,3 +364,5 @@ export function ResumeSection() {
     </div>
   );
 }
+
+export default ResumeSection;

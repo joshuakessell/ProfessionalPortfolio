@@ -1,14 +1,20 @@
 import { Button } from "@/components/ui/button";
-import { useRef } from "react";
-import { AnimatedSection } from "@/components/ui/animated-section";
 import { ParticlesBackground } from "@/components/ui/particles-background";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Award } from "lucide-react";
 import { smoothScrollToElement } from "@/lib/utils";
 import { cn } from "@/lib/utils";
 
-export function HeroSection() {
+export default function HeroSection() {
   return (
-    <div className="w-full h-full flex items-center justify-center">
+    <div className="w-full h-full flex items-center justify-center relative">
+      {/* Award ribbon accent */}
+      <div className="absolute left-4 top-24 md:left-8 md:top-28 rotate-[-6deg] z-20">
+        <div className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-amber-500 to-rose-500 px-3 py-1.5 text-white shadow-lg">
+          <Award className="h-4 w-4" />
+          <span className="text-xs font-semibold tracking-wide">Award-Winning Portfolio</span>
+        </div>
+      </div>
+
       {/* Background effects */}
       <ParticlesBackground 
         quantity={40}
@@ -85,6 +91,8 @@ export function HeroSection() {
                 alt="Joshua Kessell - Professional headshot"
                 className="w-full h-auto rounded-2xl"
                 loading="eager"
+                decoding="async"
+                fetchpriority="high"
               />
             </div>
             

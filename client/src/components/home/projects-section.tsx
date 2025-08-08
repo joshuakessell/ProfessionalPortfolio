@@ -17,7 +17,9 @@ import { useGitHubRepos } from "@/lib/hooks";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
-export function ProjectsSection() {
+export default ProjectsSection;
+
+function ProjectsSection() {
   const { data: githubRepos, isLoading, error } = useGitHubRepos();
   const [isVisible, setIsVisible] = useState(false);
   
