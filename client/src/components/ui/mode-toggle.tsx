@@ -7,11 +7,7 @@ export function ModeToggle() {
   const isDark = theme === "dark";
   
   const handleToggle = () => {
-    console.log('Toggle clicked, current theme:', theme);
-    console.log('toggleTheme function:', toggleTheme);
-    console.log('toggleTheme type:', typeof toggleTheme);
     toggleTheme();
-    console.log('toggleTheme called');
   };
 
   return (

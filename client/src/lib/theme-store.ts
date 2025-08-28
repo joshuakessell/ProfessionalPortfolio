@@ -22,9 +22,7 @@ class ThemeStore {
   }
 
   toggle(): void {
-    console.log('Theme store toggle called, current:', this.theme);
     this.theme = this.theme === "light" ? "dark" : "light";
-    console.log('Theme store new theme:', this.theme);
     
     if (typeof window !== "undefined") {
       localStorage.setItem("theme", this.theme);

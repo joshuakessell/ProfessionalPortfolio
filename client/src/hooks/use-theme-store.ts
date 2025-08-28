@@ -10,10 +10,7 @@ export function useThemeStore() {
   }, []);
 
   const toggleTheme = () => {
-    console.log('useThemeStore toggleTheme called');
     themeStore.toggle();
   };
-
-  console.log('useThemeStore hook returning:', { theme, toggleTheme });
   return { theme, toggleTheme };
 }
