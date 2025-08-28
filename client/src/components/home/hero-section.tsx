@@ -72,8 +72,8 @@ export default function HeroSection() {
           </div>
         </div>
         
-        <div className="w-full md:w-1/2">
-          <div className="relative">
+        <div className="w-full md:w-1/2 flex justify-center md:justify-end">
+          <div className="relative w-80 max-w-sm">
             {/* Decorative background squares */}
             <div className="absolute -z-10 top-4 left-0 w-full h-full rounded-2xl bg-blue-100 dark:bg-blue-900/20" aria-hidden="true"></div>
             <div className="absolute -z-10 top-0 left-4 w-full h-full rounded-2xl bg-violet-100 dark:bg-violet-900/20" aria-hidden="true"></div>
@@ -86,15 +86,14 @@ export default function HeroSection() {
                 className="w-full h-auto rounded-2xl"
                 loading="eager"
                 decoding="async"
-                fetchPriority="high"
               />
             </div>
             
             {/* Availability badge */}
-            <div className="absolute bottom-4 right-4 bg-white dark:bg-gray-800 rounded-xl p-4 shadow-lg animate-float" role="status" aria-live="polite">
+            <div className="absolute bottom-4 right-4 bg-white dark:bg-gray-800 rounded-xl p-3 shadow-lg animate-float" role="status" aria-live="polite">
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" aria-hidden="true"></div>
-                <span className="text-sm font-medium">Available for new projects</span>
+                <div className="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse" aria-hidden="true"></div>
+                <span className="text-xs font-medium">Available for projects</span>
               </div>
             </div>
           </div>
