@@ -55,8 +55,10 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     console.log('Document classes:', root.className);
   }, [theme]);
 
+  const contextValue = { theme, toggleTheme };
+  
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider value={contextValue}>
       {children}
     </ThemeContext.Provider>
   );
