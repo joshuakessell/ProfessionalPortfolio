@@ -16,7 +16,9 @@ type ThemeContextType = {
 
 const ThemeContext = createContext<ThemeContextType>({
   theme: "light",
-  toggleTheme: () => {},
+  toggleTheme: () => {
+    console.log('Default toggleTheme called - this should not happen');
+  },
 });
 
 // Theme provider component

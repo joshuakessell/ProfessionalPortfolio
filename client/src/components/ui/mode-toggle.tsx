@@ -8,7 +8,13 @@ export function ModeToggle() {
   
   const handleToggle = () => {
     console.log('Toggle clicked, current theme:', theme);
-    toggleTheme();
+    console.log('toggleTheme function:', toggleTheme);
+    try {
+      toggleTheme();
+      console.log('toggleTheme called successfully');
+    } catch (error) {
+      console.error('Error calling toggleTheme:', error);
+    }
   };
 
   return (
