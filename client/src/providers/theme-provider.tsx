@@ -55,10 +55,11 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
 
   const contextValue = { 
     theme, 
-    toggleTheme: toggleTheme
+    toggleTheme
   };
   
   console.log('Provider contextValue:', contextValue);
+  console.log('toggleTheme function in provider:', toggleTheme);
   
   return (
     <ThemeContext.Provider value={contextValue}>
