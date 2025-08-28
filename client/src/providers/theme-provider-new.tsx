@@ -29,18 +29,25 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     root.classList.add(theme);
   }, [theme]);
 
-  const toggleTheme = () => {
-    setTheme(prevTheme => {
-      const newTheme = prevTheme === "light" ? "dark" : "light";
-      if (typeof window !== "undefined") {
-        localStorage.setItem("theme", newTheme);
-      }
-      return newTheme;
-    });
+  const contextValue: ThemeContextType = {
+    theme,
+    toggleTheme: () => {
+      console.log('toggleTheme function called in provider');
+      setTheme(prevTheme => {
+        const newTheme = prevTheme === "light" ? "dark" : "light";
+        console.log('Switching from', prevTheme, 'to', newTheme);
+        if (typeof window !== "undefined") {
+          localStorage.setItem("theme", newTheme);
+        }
+        return newTheme;
+      });
+    }
   };
 
+  console.log('Provider rendering with theme:', theme, 'toggleTheme:', contextValue.toggleTheme);
+
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider value={contextValue}>
       {children}
     </ThemeContext.Provider>
   );

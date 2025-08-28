@@ -1,6 +1,6 @@
 import { Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useTheme } from "@/providers/theme-provider-new";
+import { useTheme } from "@/providers/theme-provider-fixed";
 
 export function ModeToggle() {
   const { theme, toggleTheme } = useTheme();
@@ -9,12 +9,9 @@ export function ModeToggle() {
   const handleToggle = () => {
     console.log('Toggle clicked, current theme:', theme);
     console.log('toggleTheme function:', toggleTheme);
-    try {
-      toggleTheme();
-      console.log('toggleTheme called successfully');
-    } catch (error) {
-      console.error('Error calling toggleTheme:', error);
-    }
+    console.log('toggleTheme type:', typeof toggleTheme);
+    toggleTheme();
+    console.log('toggleTheme called');
   };
 
   return (
