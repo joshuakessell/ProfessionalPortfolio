@@ -1,6 +1,5 @@
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
-import { useTheme } from "@/providers/theme-provider";
 import { useEffect, Suspense, lazy } from "react";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 
