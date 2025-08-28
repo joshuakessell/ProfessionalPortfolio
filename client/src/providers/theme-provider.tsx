@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState, useCallback } from "react";
 
 // Define theme type
 type Theme = "light" | "dark";
@@ -16,9 +16,7 @@ type ThemeContextType = {
 
 const ThemeContext = createContext<ThemeContextType>({
   theme: "light",
-  toggleTheme: () => {
-    console.log('Default toggleTheme called - this should not happen');
-  },
+  toggleTheme: () => {},
 });
 
 // Theme provider component
@@ -31,7 +29,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
   });
 
   // Toggle between light and dark themes
-  const toggleTheme = () => {
+  const toggleTheme = useCallback(() => {
     console.log('toggleTheme called, current theme:', theme);
     setTheme(prevTheme => {
       const newTheme = prevTheme === "light" ? "dark" : "light";
@@ -42,7 +40,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
       }
       return newTheme;
     });
-  };
+  }, [theme]);
 
   // Update document class when theme changes
   useEffect(() => {
