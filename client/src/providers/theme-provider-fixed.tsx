@@ -31,7 +31,7 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
     root.classList.add(theme);
   }, [theme]);
 
-  const toggleTheme = useCallback(() => {
+  function toggleTheme() {
     console.log('toggleTheme called directly');
     setTheme(prevTheme => {
       const newTheme = prevTheme === "light" ? "dark" : "light";
@@ -41,16 +41,16 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
       }
       return newTheme;
     });
-  }, []);
+  }
 
-  const value = useMemo(() => {
-    const contextValue = {
-      theme,
-      toggleTheme
-    };
-    console.log('Context value created:', contextValue);
-    return contextValue;
-  }, [theme, toggleTheme]);
+  const value = {
+    theme,
+    toggleTheme
+  };
+  
+  console.log('Context value created:', value);
+  console.log('toggleTheme in context:', value.toggleTheme);
+  console.log('typeof toggleTheme in context:', typeof value.toggleTheme);
 
   return (
     <ThemeContext.Provider value={value}>
