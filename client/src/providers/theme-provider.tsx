@@ -29,7 +29,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
   });
 
   // Toggle between light and dark themes
-  const toggleTheme = useCallback(() => {
+  const toggleTheme = () => {
     console.log('Real toggleTheme called, current theme:', theme);
     setTheme(prevTheme => {
       const newTheme = prevTheme === "light" ? "dark" : "light";
@@ -40,7 +40,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
       }
       return newTheme;
     });
-  }, []);
+  };
 
   // Update document class when theme changes
   useEffect(() => {
