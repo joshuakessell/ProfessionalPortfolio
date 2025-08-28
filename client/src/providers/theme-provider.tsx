@@ -30,10 +30,13 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
 
   // Toggle between light and dark themes
   const toggleTheme = () => {
+    console.log('toggleTheme called, current theme:', theme);
     setTheme(prevTheme => {
       const newTheme = prevTheme === "light" ? "dark" : "light";
+      console.log('Toggling from', prevTheme, 'to', newTheme);
       if (typeof window !== "undefined") {
         localStorage.setItem("theme", newTheme);
+        console.log('Saved to localStorage:', newTheme);
       }
       return newTheme;
     });
