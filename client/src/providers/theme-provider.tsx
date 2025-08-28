@@ -44,6 +44,10 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     const root = document.documentElement;
     root.classList.remove("light", "dark");
     root.classList.add(theme);
+    
+    // Debug logging to help troubleshoot
+    console.log('Theme changed to:', theme);
+    console.log('Document classes:', root.className);
   }, [theme]);
 
   return (

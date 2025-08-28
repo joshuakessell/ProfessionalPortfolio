@@ -5,12 +5,17 @@ import { useTheme } from "@/providers/theme-provider";
 export function ModeToggle() {
   const { theme, toggleTheme } = useTheme();
   const isDark = theme === "dark";
+  
+  const handleToggle = () => {
+    console.log('Toggle clicked, current theme:', theme);
+    toggleTheme();
+  };
 
   return (
     <Button
       variant="outline"
       size="icon"
-      onClick={toggleTheme}
+      onClick={handleToggle}
       className="w-10 h-10 rounded-full border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800"
       title={`Switch to ${isDark ? 'light' : 'dark'} mode`}
     >
