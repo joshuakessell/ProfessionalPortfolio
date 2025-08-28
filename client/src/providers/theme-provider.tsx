@@ -30,7 +30,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
 
   // Toggle between light and dark themes
   const toggleTheme = useCallback(() => {
-    console.log('toggleTheme called, current theme:', theme);
+    console.log('Real toggleTheme called, current theme:', theme);
     setTheme(prevTheme => {
       const newTheme = prevTheme === "light" ? "dark" : "light";
       console.log('Toggling from', prevTheme, 'to', newTheme);
@@ -40,7 +40,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
       }
       return newTheme;
     });
-  }, [theme]);
+  }, []);
 
   // Update document class when theme changes
   useEffect(() => {
@@ -53,7 +53,12 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     console.log('Document classes:', root.className);
   }, [theme]);
 
-  const contextValue = { theme, toggleTheme };
+  const contextValue = { 
+    theme, 
+    toggleTheme: toggleTheme
+  };
+  
+  console.log('Provider contextValue:', contextValue);
   
   return (
     <ThemeContext.Provider value={contextValue}>
