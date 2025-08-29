@@ -3,20 +3,31 @@ import { ParticlesBackground } from "@/components/ui/particles-background";
 import { ChevronDown } from "lucide-react";
 import { smoothScrollToElement } from "@/lib/utils";
 import { cn } from "@/lib/utils";
+import { useState, useEffect } from "react";
 
 export default function HeroSection() {
+  const [isMobile, setIsMobile] = useState(false);
+  
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   return (
     <div className="w-full h-full flex items-center justify-center relative">
-
-
-      {/* Background effects */}
+      {/* Background effects - reduced on mobile for better performance */}
       <ParticlesBackground 
-        quantity={40}
+        quantity={isMobile ? 15 : 40}
         minSize={1}
         maxSize={3}
         speed={0.3}
         colors={['#3b82f6', '#8b5cf6', '#6366f1']}
-        connectParticles={true}
+        connectParticles={!isMobile}
         className="opacity-30 dark:opacity-20"
       />
       

@@ -53,6 +53,32 @@
 html, body {
   overflow-x: hidden;
   max-width: 100vw;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+/* Mobile optimization */
+@media (max-width: 768px) {
+  .body-premium-bg::before,
+  .body-premium-bg::after {
+    display: none; /* Disable heavy background effects on mobile */
+  }
+  
+  /* Optimize glass effects for mobile */
+  .glass-panel {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  
+  .glass-header {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  
+  /* Reduce animation complexity on mobile */
+  .animate-float {
+    animation: none;
+  }
 }
 
 * {
